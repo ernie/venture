@@ -1,0 +1,32 @@
+#!/bin/bash
+# If you set up a bare repository and push your Venture app/presentation to it,
+# with this in your bare repo's `hooks` directory (chmod +x), you can add your
+# repo as a remote, and when you push to it, everything will be rebuilt and the
+# server will be restarted.
+
+unset GIT_DIR
+# Point to a directory that contains your git repo and can contain the checked
+# out version as well as a backup.
+APPS_DIR=/var/www/<your-domain>/apps
+GIT_REPO=$APPS_DIR/venture.git
+TMP_GIT_CLONE=$APPS_DIR/tmp/venture
+
+export HOSTNAME=your.domain.com
+export SECRET_KEY_BASE="you-should-probably-have-a-secret-key-base"
+export PRESENTER_TOKEN="make-sure-this-is-secure"
+export MIX_ENV=prod
+
+git clone $GIT_REPO $TMP_GIT_CLONE
+cd $TMP_GIT_CLONE/client
+npm install
+npm run-script build
+cd $TMP_GIT_CLONE
+mix deps.get
+mix compile.protocols
+cd $APPS_DIR
+rm -rf venture.bak
+mv venture venture.bak
+mv $TMP_GIT_CLONE venture
+./venture.sh
+cd $HOME
+exit

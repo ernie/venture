@@ -1,0 +1,11 @@
+# App artifacts
+/_build
+/db
+/deps
+/*.ez
+
+# Generated on crash by the VM
+erl_crash.dump
+
+# /priv/static gets geterated by the webpack build
+/priv/static

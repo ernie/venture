@@ -1,0 +1,51 @@
+.options {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  font-size: 75%;
+}
+
+.option {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  margin: 0.5em 10%;
+  width: 80%;
+  overflow: hidden;
+  height: 1.5em;
+  line-height: 1.5em;
+  padding-left: 1em;
+  border: 1px solid #000;
+  &.selected {
+    box-shadow: 0 0 1em #b33;
+  }
+  &.winner {
+    > .bar {
+      border-left: 0.1em solid #3b3;
+      background-color: #3b3;
+    }
+  }
+}
+
+:global(.slide.dark) {
+  .option {
+    border: 1px solid #fff;
+  }
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 1.5em;
+  line-height: 1.5em;
+  white-space: nowrap;
+  border-left: 0.1em solid #b33;
+  text-indent: 0.9em;
+  overflow: hidden;
+  color: #fff;
+  background-color: #b33;
+  transition: width 0.25s ease-in-out, background-color 0.25s ease-in-out, border-left 0.25s ease-in-out;
+}

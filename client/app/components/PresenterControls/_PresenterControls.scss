@@ -1,0 +1,19 @@
+.controls {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 0.25em;
+  button {
+    margin: 0.25em;
+  }
+}
+
+.left {
+  display: inline-block;
+  width: 50%;
+}
+
+.right {
+  text-align: right;
+  display: inline-block;
+  width: 50%;
+}

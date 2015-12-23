@@ -1,0 +1,38 @@
+.nickList {
+  position: absolute;
+  width: 20%;
+  top: 0;
+  right: 0;
+  bottom: 2em;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  text-align: left;
+  border-left: 1px solid #eee;
+}
+
+.header {
+  font-weight: bold;
+  text-align: center;
+  padding: 0.2em 0.3em;
+  background-color: #ddd;
+}
+
+.lurkers {
+  color: #777;
+  border-bottom: 1px solid #eee;
+  padding: 0.2em 0.3em;
+}
+
+.nicks {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.nick {
+  padding: 0.2em 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
