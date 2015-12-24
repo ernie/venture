@@ -122,10 +122,24 @@ notes: |
 
 
 ---
+align: top right
+notes: |
+  Of course, there are some styles that are slide-specific. Text placement, for
+  instance.
+
+  You can specify an `align` property on slides to control placement of their
+  text.
+---
+
+# top right
+is a good place for this text.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
 background: "#aaf"
 notes: |
-  Of course, there are some styles that are slide-specific. A background color,
-  for instance.
+  Or a background color. Provide a hex color as a string or a `color` property.
 ---
 
 ```yaml
@@ -402,14 +416,15 @@ notes: |
 
 ---
 notes: |
-  "Alt" content for images is not used for an "alt" attribute. Instead, it
+  \[Alt\] content for images is not used for an "alt" attribute. Instead, it
   allows you to specify image size (in em-units). Images are sized with
   `object-fit` contain, which means the image will scale as large as it can
   within its bounding box while still maintaining its aspect ratio.
 
-  You can specify a single number, which will set the image width, `WxH` to set
-  both width and height, or `xH` to specify only an image height. note how the
-  `2x1` is sized the same as the `1` image, because the image is square and can
+  Specify a single number to set the image width, `WxH` to set both width and
+  height, or `xH` to set only a height.
+
+  Note how `2x1` is sized the same as `1`, because the image is square and can
   only scale as large as the smallest constraint.
 ---
 
@@ -425,6 +440,23 @@ notes: |
 ![2x1](images/rhindle.png)
 ![2x2](images/rhindle.png)
 ![x3](images/rhindle.png)
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  "Title" content for images sets the "title" attribute for images, but also
+  renders them in a `<figure>` with a `<figcaption>` element that contains the
+  image title. You can put markdown inside the title.
+---
+
+### <label>Images</label>
+
+![7](images/rhindle.png "A **fearsome** red dragon.")
+
+```markdown:70%
+![7](images/rhindle.png "A **fearsome** red dragon.")
 ```
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
