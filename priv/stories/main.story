@@ -298,3 +298,57 @@ background:
 ```
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+background:
+  image: poinsettia.jpg
+class: dark
+attribution: |
+  * Poinsettia Tree, Nairobi, Kenya
+  * Ernie Miller
+  * [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
+notes: |
+  Of course, if you're using images from other sources, you'll want to attribute
+  the source. The `attribution` property lets you do this. It's a markdown field
+  that expects you to provide each line of attribution in a bulleted list.
+
+  It goes to the bottom right by default.
+---
+
+```yaml:50%
+attribution: |
+  * Poinsettia Tree, Nairobi, Kenya
+  * Ernie Miller
+  * [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+background:
+  image: poinsettia.jpg
+class: dark
+attribution:
+  position: top left
+  content: |
+    * Poinsettia Tree, Nairobi, Kenya
+    * Ernie Miller
+    * [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
+notes: |
+  If you'd like to position the attribution elsewhere, just supply `position`
+  and `content` properties under the `attribution` property, instead of a
+  markdown string.
+
+  `position` works about the same as the one for `background`.
+---
+
+```yaml:50%
+attribution: |
+  position: top left
+  content: |
+    * Poinsettia Tree, Nairobi, Kenya
+    * Ernie Miller
+    * [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
