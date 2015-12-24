@@ -4,7 +4,7 @@ An application built for hosting interactive, choose-your-own-adventure-style
 presentations, originally built for the sole purpose of running a
 [single conference talk at Keep Ruby Weird 2015](http://confreaks.tv/videos/keeprubyweird2015-choices).
 
-It's built in Elixir, Phoenix, and React with ES6 (thanks, Babel!).
+It's built with Elixir, Phoenix, and React with ES6+ (thanks, Babel!).
 
 ## Building/Running Locally
 
