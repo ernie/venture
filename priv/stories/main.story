@@ -50,7 +50,7 @@ notes: |
   This is just YAML frontmatter.
 ---
 
-# My Presentation!
+## My Presentation!
 
 * Jane Doe
 * janedoe@example.com
@@ -352,3 +352,99 @@ attribution: |
 ```
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  For the most part, markdown in Venture works like GitHub Flavored Markdown.
+  There are a few quick things worth pointing out, however. Some of them are
+  syntactical additions, and some are just things that behave slightly
+  differently than you might otherwise expect.
+---
+
+# Venture Flavored Markdown
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  A label tag can be added to a slide. It will be absolutely positioned in the
+  top left. Feel free to adjust its size with a header level.
+
+  This is mostly just to add a bit of flavor text related to the contents of a
+  slide, or some context about where we are in the presentation that doesn't
+  stand out too much from the content. We'll use labels on our remaining
+  markdown discussion slides.
+---
+
+### <label>*#protip*</label>
+
+```markdown
+### <label>*#protip*</label>
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  All links open in a new window/tab, so that clicking or tapping on one won't
+  stop viewing the presentation.
+---
+
+### <label>Links</label>
+
+[Venture on GitHub](https://github.com/ernie/venture)
+
+```markdown:70%
+[Venture on GitHub](https://github.com/ernie/venture)
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  "Alt" content for images is not used for an "alt" attribute. Instead, it
+  allows you to specify image size (in em-units). Images are sized with
+  `object-fit` contain, which means the image will scale as large as it can
+  within its bounding box while still maintaining its aspect ratio.
+
+  You can specify a single number, which will set the image width, `WxH` to set
+  both width and height, or `xH` to specify only an image height. note how the
+  `2x1` is sized the same as the `1` image, because the image is square and can
+  only scale as large as the smallest constraint.
+---
+
+### <label>Images</label>
+
+![1](images/rhindle.png)
+![2x1](images/rhindle.png)
+![2x2](images/rhindle.png)
+![x3](images/rhindle.png)
+
+```markdown:70%
+![1](images/rhindle.png)
+![2x1](images/rhindle.png)
+![2x2](images/rhindle.png)
+![x3](images/rhindle.png)
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+type: title
+notes: |
+  Near the beginning of this presentation, you saw a sample `main.story` file
+  with two slides, including a title slide like this.
+
+  These work more or less like a normal slide, except that they expect a
+  bulleted list of items that will be placed along the bottom edge of the slide
+  and spaced to fit.
+
+  There's no magic going on here. The styling is just handled with CSS. You can
+  see it in `_TitleSlide.scss`.
+---
+
+## My Presentation!
+
+* Jane Doe
+* janedoe@example.com
+* JaneCo, Inc.
