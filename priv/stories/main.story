@@ -453,10 +453,69 @@ notes: |
 
 ### <label>Images</label>
 
-![7](images/rhindle.png "A **fearsome** red dragon.")
+![6](images/rhindle.png "A **fearsome** red dragon.
+Or maybe a duck.")
 
 ```markdown:70%
-![7](images/rhindle.png "A **fearsome** red dragon.")
+![6](images/rhindle.png "A **fearsome** red dragon.
+Or maybe a duck.")
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  Venture performs syntax highlighting of code in fenced code blocks using
+  [highlight.js](https://highlightjs.org). Its default theme is
+  [Solarized](http://ethanschoonover.com/solarized), specifically the "light"
+  variant. You can see or change this in `client/app/scss/app.scss` and
+  `client/app/scss/_solarized_light.scss`.
+
+  Since Venture uses [CSS Modules](https://github.com/css-modules/css-modules),
+  if you decide to change the theme just make sure to wrap it in a `:global`, as
+  done in the default theme.
+---
+
+### <label>Code</label>
+
+```elixir
+defmodule Venture.Presentation do
+  use GenServer
+  use Venture.Slide
+  alias Venture.Deck
+
+  @entry %{ story: "main", index: 0 }
+
+  ## Client API
+  # ...
+end
+```
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+notes: |
+  Venture extends language hints by allowing a font size specification after the
+  hint, separated by a colon. Here's the code from the previous slide, using
+  `elixir:50%`.
+
+  **Be sure to use % or em-units for font size specification!** The rule of
+  thumb for Venture presentations is that **px are bad**!
+---
+
+### <label>Code</label>
+
+```elixir:50%
+defmodule Venture.Presentation do
+  use GenServer
+  use Venture.Slide
+  alias Venture.Deck
+
+  @entry %{ story: "main", index: 0 }
+
+  ## Client API
+  # ...
+end
 ```
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
