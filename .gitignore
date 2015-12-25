@@ -9,3 +9,5 @@ erl_crash.dump
 
 # /priv/static gets geterated by the webpack build
 /priv/static
+
+.DS_Store

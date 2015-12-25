@@ -539,3 +539,36 @@ notes: |
 * Jane Doe
 * janedoe@example.com
 * JaneCo, Inc.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+type: poll
+background:
+  image: monty-python-bridgekeeper.jpg
+  size: cover
+  darken: 0.5
+class: dark
+options:
+  - Red!
+  - No, blue!
+notes: |
+  Now that we've gotten all of that boring formatting stuff out of the way, it's
+  time for the fun stuff. This is a "poll" slide. Set the `type` property to
+  "poll" and you can supply multiple options for attendees to vote on in the
+  `options` property. This one was set up like this:
+
+  ```yaml
+  type: poll
+  options:
+    - Red!
+    - No, blue!
+  ```
+
+  Go ahead and try it out! You can open multiple windows and point at your
+  presentation. You'll notice that each "attendee" can vote, and can change
+  their vote at any time. The currently winning vote will be highlighted green,
+  and their current selection will glow red.
+---
+
+What is your favorite color?
