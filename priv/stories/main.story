@@ -572,3 +572,41 @@ notes: |
 ---
 
 What is your favorite color?
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+---
+type: fork
+background: fork.jpg
+class: [dark, shadow]
+paths:
+  - left
+  - right
+notes: |
+  The "fork" slide type is where the really interesting stuff happens. It's like
+  a poll, except that each option refers to another slide in the presentation.
+
+  Each path the presentation can take is listed in the `paths` property, like
+  this:
+
+  ```yaml
+  type: fork
+  paths:
+    - left
+    - right
+  ```
+
+  A "path" is in the format `<story>:<zero-based-slide-index>`. Normally, you'll
+  just leave off the slide index and use the default of `0`, as seen here.
+
+  The path is represented by a thumbnail view of the slide that will shown when
+  clicked. On this slide, we used a trick of setting each slide's background to
+  a cropped version of the main slide's image so they seem to be transparent.
+
+  Note that the presenter overlay doesn't show a preview of the next slide,
+  since we don't know what the next slide will be until we pick one.
+
+  Click an option to proceed.
+---
+
+#### **Which way?**

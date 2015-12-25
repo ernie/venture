@@ -99,7 +99,7 @@ export default class ForkSlide extends React.Component {
     return (
       <div className={'content'}>
         <div
-          className={slideStyles.markdown}
+          className={classNames('markdown', slideStyles.markdown)}
           dangerouslySetInnerHTML={
             { __html: Markdown.render(this.props.content) }
           }

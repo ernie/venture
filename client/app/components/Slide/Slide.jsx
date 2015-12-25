@@ -20,7 +20,7 @@ export default class Slide extends React.Component {
     let { content } = this.props;
     return (
       <div
-        className={classNames('content', styles.markdown)}
+        className={classNames('content', 'markdown', styles.markdown)}
         dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
       />
     );

@@ -19,6 +19,7 @@ describe('Slide', () => {
       let result = renderer.getRenderOutput();
       assert.equal(result.type, 'div');
       assert.include(result.props.className, styles.markdown);
+      assert.include(result.props.className, 'markdown');
       assert.deepEqual(
         result.props.dangerouslySetInnerHTML,
         { __html: "<p>Content <em>with formatting</em></p>\n" }
@@ -31,6 +32,7 @@ describe('Slide', () => {
       let result = renderer.getRenderOutput();
       assert.equal(result.type, 'div');
       assert.include(result.props.className, styles.markdown);
+      assert.include(result.props.className, 'markdown');
       assert.deepEqual(
         result.props.dangerouslySetInnerHTML,
         { __html: '' }

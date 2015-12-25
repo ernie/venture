@@ -20,7 +20,11 @@ export default class TitleSlide extends React.Component {
     let { content } = this.props;
     return (
       <div
-        className={classNames('content', slideStyles.markdown, styles.markdown)}
+        className={
+          classNames(
+            'content', 'markdown', slideStyles.markdown, styles.markdown
+          )
+        }
         dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
       />
     );

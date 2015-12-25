@@ -19,6 +19,7 @@ describe('TitleSlide', () => {
       renderer.render(<TitleSlide content={fakeContent} />);
       let result = renderer.getRenderOutput();
       assert.equal(result.type, 'div');
+      assert.include(result.props.className, 'markdown');
       assert.include(result.props.className, slideStyles.markdown);
       assert.include(result.props.className, styles.markdown);
       assert.deepEqual(

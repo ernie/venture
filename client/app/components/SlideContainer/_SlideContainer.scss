@@ -10,25 +10,7 @@
   background-size: contain;
   background-color: #fff;
   color: #000;
-  &.dark {
-    background-color: #000;
-    color: #fff;
-  }
-  &.light {
-    background-color: #fff;
-    color: #000;
-  }
-  &.shadow {
-    h1, h2, h3, h4, h5, h6 {
-      text-shadow: 0 0 0.1em #333;
-    }
-  }
-  &.font-75 {
-    font-size: 75%;
-  }
-  &.font-50 {
-    font-size: 50%;
-  }
+
   > .filter {
     position: absolute;
     top: 0;
@@ -37,6 +19,7 @@
     right: 0;
     opacity: 0;
   }
+
   > .canvas {
     display: flex;
     flex-direction: row;
@@ -67,4 +50,39 @@
     vertical-align: middle;
     object-fit: contain;
   }
+
+  &.dark {
+    background-color: #000;
+    color: #fff;
+  }
+
+  &.light {
+    background-color: #fff;
+    color: #000;
+  }
+
+  // Markdown styles need to target specific children, or they will bleed into
+  // child SlideContainers on Fork slides.
+
+  &.shadow > .canvas {
+    > .content.markdown,
+    > .content > .markdown {
+      h1, h2, h3, h4, h5, h6 {
+        text-shadow: 0 0 0.1em #333;
+      }
+    }
+  }
+  &.font-75 > .canvas {
+    > .content.markdown,
+    > .content > .markdown {
+      font-size: 75%;
+    }
+  }
+  &.font-50 > .canvas {
+    > .content.markdown,
+    > .content > .markdown {
+      font-size: 50%;
+    }
+  }
+
 }
