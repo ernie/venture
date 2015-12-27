@@ -4,6 +4,7 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ---
+next: chat
 notes: And this recap of our chosen order lives in `egg-chicken.story`.
 ---
 
