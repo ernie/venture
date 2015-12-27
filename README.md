@@ -6,6 +6,10 @@ presentations, originally built for the sole purpose of running a
 
 It's built with Elixir, Phoenix, and React with ES6+ (thanks, Babel!).
 
+If you'd like to learn more about how to create presentations with Venture, then
+follow the steps in the next section, and view the default presentation, which
+explains and demonstrates available features.
+
 ## Building/Running Locally
 
 The app consists of two components when running locally: the Phoenix application
