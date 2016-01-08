@@ -20,8 +20,7 @@ notes: |
 
   To continue a presentation from the end of a story, we need to connect it to
   another story. If our story doesn't end with a fork, we can set the `next`
-  `next` property on a slide. We want to talk about includes next, so we'll add
-  this to our slide:
+  property on a slide. Like this:
 
   ```yaml
   next: includes

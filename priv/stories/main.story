@@ -129,6 +129,12 @@ notes: |
 
   You can specify an `align` property on slides to control placement of their
   text.
+
+  This slide's YAML includes the following:
+
+  ```yaml
+  align: top right
+  ```
 ---
 
 # top right
@@ -157,7 +163,9 @@ notes: |
   poinsettia tree.
 
   If you supply a string to the `background` property of the slide, it'll load a
-  corresponding file in the `client/app/assets/backgrounds` directory.
+  corresponding file in the `client/app/assets/backgrounds` directory. Or, you
+  can supply an `image` inside the `background` property, along with other
+  values we'll discuss shortly.
 
   By default, backgrounds use `contain`. This means they will resize as large
   as possible while still allowing their dimensions to fit within the slide.
