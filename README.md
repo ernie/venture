@@ -15,7 +15,7 @@ explains and demonstrates available features.
 The app consists of two components when running locally: the Phoenix application
 serving the slides and handling user interactions, and a
 [webpack-dev-server](https://github.com/webpack/webpack-dev-server) hosting the
-frontend. You'll need a recent version of Elixir (developed/tested on 1.1.1) and
+frontend. You'll need a recent version of Elixir (developed/tested on 1.2.0) and
 node.js (5.3.0 is what I'm currently using) to get going.
 
 **Backend: /**
