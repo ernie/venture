@@ -9,7 +9,7 @@ export PORT=3000
 # Point this at your checked-out copy of Venture.
 cd /var/www/<your-domain>/apps/venture
 
-pid=$(lsof -i tcp:3000 | grep LISTEN | cut -d ' ' -f 2)
+pid=$(lsof -i tcp:$PORT | grep LISTEN | cut -d ' ' -f 2)
 
 if [ $pid ]; then
   kill $pid
