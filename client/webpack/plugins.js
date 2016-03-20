@@ -42,6 +42,7 @@ if (DEBUG) {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       },
+      __PROTOCOL__: JSON.stringify(appconfig.PROTOCOL),
       __HOSTNAME__: JSON.stringify(appconfig.HOSTNAME),
       __ROOT__: JSON.stringify(appconfig.ROOT)
     }),
