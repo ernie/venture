@@ -40,7 +40,7 @@ defmodule Venture.ChannelMonitor do
     case Map.fetch(state.channels, pid) do
       :error                   -> {:noreply, state}
       {:ok, {mod, func, args}} ->
-        Task.start_link(fn -> apply(mod, func, args) end)
+        Task.Supervisor.start_child(Venture.TaskSupervisor, mod, func, args)
         {:noreply, drop_channel(state, pid)}
     end
   end
