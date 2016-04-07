@@ -1,15 +1,22 @@
 defmodule Venture.ChatChannel do
   use Phoenix.Channel
 
+  alias Venture.ChannelMonitor
   alias Venture.Nicks
 
   def join("chat:channel", %{"name" => name}, socket) do
+    :ok = ChannelMonitor.monitor(
+      :chat, self(), {__MODULE__, :leave, [socket]}
+    )
     send self, {:after_join, name}
     Nicks.put(socket, nil)
     { :ok, %{nicks: Nicks.all}, assign(socket, :activity, []) }
   end
 
   def join("chat:channel", _auth_msg, socket) do
+    :ok = ChannelMonitor.monitor(
+      :chat, self(), {__MODULE__, :leave, [socket]}
+    )
     send self, {:after_join, nil}
     Nicks.put(socket, nil)
     { :ok, %{nicks: Nicks.all}, assign(socket, :activity, []) }
@@ -88,13 +95,13 @@ defmodule Venture.ChatChannel do
     end
   end
 
-  def terminate(_reason, socket = %{assigns: %{name: name}}) do
+  def leave(socket = %{assigns: %{name: name}}) do
     Nicks.delete(socket.id)
     broadcast! socket, "leave", %{name: name, id: socket.id}
     :ok
   end
 
-  def terminate(_reason, socket) do
+  def leave(socket) do
     Nicks.delete(socket.id)
     broadcast! socket, "leave", %{name: nil, id: socket.id}
     :ok

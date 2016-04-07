@@ -2,11 +2,16 @@ defmodule Venture.PresentationChannel do
   use Phoenix.Channel
   use Venture.Slide
 
+  alias Venture.ChannelMonitor
+
   def join(
     "presentation:presenter",
     _auth_msg,
     socket = %{assigns: %{presenter: true}}
   ) do
+    :ok = ChannelMonitor.monitor(
+      :presentation, self(), {__MODULE__, :leave, [socket]}
+    )
     slide = Venture.Presentation.current_slide
     selections = Venture.Selections.current
     connections = Venture.Connections.connect(socket)
@@ -22,6 +27,9 @@ defmodule Venture.PresentationChannel do
     _auth_msg,
     socket = %{assigns: %{presenter: false}}
   ) do
+    :ok = ChannelMonitor.monitor(
+      :presentation, self(), {__MODULE__, :leave, [socket]}
+    )
     slide = Venture.Presentation.current_slide
     selections = Venture.Selections.current
     Venture.Connections.connect(socket)
@@ -74,7 +82,7 @@ defmodule Venture.PresentationChannel do
     {:noreply, socket}
   end
 
-  def terminate(_reason, socket) do
+  def leave(socket) do
     selections = Venture.Selections.deregister(socket)
     Venture.Connections.disconnect(socket)
     case Venture.Presentation.current_slide do

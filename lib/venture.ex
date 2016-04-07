@@ -10,6 +10,10 @@ defmodule Venture do
 
     children = [
       supervisor(Venture.Endpoint, []),
+      worker(Venture.ChannelMonitor, [:presentation],
+        id: :presentation_monitor),
+      worker(Venture.ChannelMonitor, [:chat],
+        id: :chat_monitor),
       worker(Venture.Deck, []),
       worker(Venture.Presentation, [ets]),
       worker(Venture.Selections, []),
