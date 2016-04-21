@@ -37,7 +37,7 @@ defmodule Venture.NicksTest do
 
   test "allows deleting a given socket", %{socket: socket} do
     Nicks.put(socket, "Ernie")
-    assert Nicks.delete(socket.id) == :ok
+    assert Nicks.delete(socket.id) == "Ernie"
     second_socket = socket("user:another-uuid", %{uuid: "another-uuid"})
     assert Nicks.put(second_socket, "Ernie") == {:ok, "Ernie"}
   end

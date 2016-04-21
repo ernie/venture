@@ -95,15 +95,13 @@ defmodule Venture.ChatChannel do
     end
   end
 
-  def leave(socket = %{assigns: %{name: name}}) do
-    Nicks.delete(socket.id)
-    broadcast! socket, "leave", %{name: name, id: socket.id}
-    :ok
-  end
-
   def leave(socket) do
-    Nicks.delete(socket.id)
-    broadcast! socket, "leave", %{name: nil, id: socket.id}
+    name = Nicks.delete(socket.id)
+    # We need to broadcast from the endpoint, because this socket has already
+    # disconnected.
+    Venture.Endpoint.broadcast!(
+      "chat:channel", "leave", %{name: name, id: socket.id}
+    )
     :ok
   end
 

@@ -72,16 +72,16 @@ defmodule Venture.Nicks do
   end
 
   def handle_call({:delete, id}, _from, state) do
-    taken = case Dict.fetch(state.nicks, id) do
-      {:ok, %Nick{name: nil}}  -> state.taken
+    {deleted_name, taken} = case Dict.fetch(state.nicks, id) do
+      {:ok, %Nick{name: nil}}  -> { nil, state.taken }
       {:ok, %Nick{name: name}} ->
-        Dict.delete(state.taken, String.downcase(name))
-      :error                   -> state.taken
+        { name, Dict.delete(state.taken, String.downcase(name)) }
+      :error                   -> { nil, state.taken }
     end
     nicks = Dict.delete(state.nicks, id)
     {
       :reply,
-      :ok,
+      deleted_name,
       %{ state | taken: taken, nicks: nicks }
     }
   end
