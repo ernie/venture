@@ -17,7 +17,7 @@ defmodule Venture.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {Venture, []},
-     applications: [:phoenix, :cowboy, :logger, :yaml_elixir]]
+     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :yaml_elixir]]
   end
 
   # Specifies which paths to compile per environment
@@ -29,7 +29,8 @@ defmodule Venture.Mixfile do
   # Type `mix help deps` for examples and options
   defp deps do
     [
-      {:phoenix, "~> 1.0.3"},
+      {:phoenix, "~> 1.2.0"},
+      {:phoenix_pubsub, "~> 1.0"},
       {:cowboy, "~> 1.0"},
       {:uuid, "~> 1.0.1"},
       {:yaml_elixir, "~> 1.0.0"},
