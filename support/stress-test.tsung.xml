@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="info" dumptraffic="light" version="1.0">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="64000" />
+  </clients>
+
+  <servers>
+    <server host="your-host-name-goes-here.com" port="443" type="ssl" />
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users maxnumber="1000" arrivalrate="1000" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
+
+  <sessions>
+    <session name="websocket" probability="100" type="ts_websocket">
+      <request>
+        <websocket type="connect" path="/socket/websocket"></websocket>
+      </request>
+
+      <request subst="true">
+        <websocket type="message">{"topic":"presentation:attendee", "event":"phx_join", "payload": {}, "ref":"1"}</websocket>
+      </request>
+
+      <for var="i" from="1" to="1000" incr="1">
+        <thinktime value="30"/>
+      </for>
+    </session>
+  </sessions>
+</tsung>
