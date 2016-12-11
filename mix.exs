@@ -33,8 +33,7 @@ defmodule Venture.Mixfile do
       {:phoenix_pubsub, "~> 1.0"},
       {:cowboy, "~> 1.0"},
       {:uuid, "~> 1.0.1"},
-      {:yaml_elixir, "~> 1.0.0"},
-      {:yamerl, github: "yakaz/yamerl"}
+      {:yaml_elixir, "~> 1.2.1"}
     ]
   end
 end
