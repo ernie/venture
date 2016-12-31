@@ -3,6 +3,16 @@ defmodule Venture.Endpoint do
 
   socket "/socket", Venture.UserSocket
 
+  def redirect_index(conn = %Plug.Conn{path_info: []}, _opts) do
+    %Plug.Conn{conn | path_info: ["index.html"]}
+  end
+
+  def redirect_index(conn, _opts) do
+    conn
+  end
+
+  plug :redirect_index
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
