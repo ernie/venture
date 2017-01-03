@@ -334,9 +334,11 @@ end
 
 ---
 ## What's not a process in Venture?
+* Story
+* Slide
 \\\\\\\\\\\
 ---
 
 ---
-## Venturebot 
+## Venturebot
 \\\\\\\\\\\

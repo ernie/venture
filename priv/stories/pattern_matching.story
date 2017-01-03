@@ -15,9 +15,6 @@
   end
 ```
 \\\\\\\\\\\
----
-next: main:8  
----
 ## Pattern matching in function dispatch
 ```elixir
   def two_headed_function(map = %{a: a}) do
@@ -27,6 +24,16 @@ next: main:8
 
   def two_headed_function({one, two}) do
     IO.puts("I got a two tuple with: #{one} and #{two}")
+  end
+```
+\\\\\\\\\\\
+---
+next: main:8
+---
+## The pipeline operator
+```elixir
+  def pipeline_example do
+    "string" |> String.capitalize |> String.split("")
   end
 ```
 \\\\\\\\\\\
