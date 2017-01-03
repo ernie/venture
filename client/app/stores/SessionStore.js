@@ -9,7 +9,7 @@ import AppConstants from '../constants/AppConstants';
 import SessionConstants from '../constants/SessionConstants';
 import { Socket } from '../phoenix';
 
-const ENDPOINT = `${__PROTOCOL__}${__HOSTNAME__}${__ROOT__}socket`;
+const ENDPOINT = `${__PROTOCOL__}${__HOSTNAME__ || window.location.host}${__ROOT__}socket`;
 
 class SessionStore extends EventEmitter {
 
