@@ -22,6 +22,9 @@ npm install
 npm run-script build
 cd $TMP_GIT_CLONE
 mix deps.get
+mix local.rebar --force
+mix deps.compile
+mix compile
 mix compile.protocols
 cd $APPS_DIR
 rm -rf venture.bak
