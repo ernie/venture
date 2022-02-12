@@ -1,0 +1,53 @@
+.message {
+  width: 100%;
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+.messageNick {
+  text-align: right;
+  background-color: #ddd;
+  flex-basis: 20%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.2em;
+}
+
+.messageContent {
+  flex-basis: 90%;
+  word-wrap: break-word;
+  background-color: #fff;
+  color: #000;
+  margin: 0.2em 0.3em;
+  white-space: pre-wrap;
+}
+
+.message-emote {
+  color: #aaa;
+  font-style: italic;
+}
+
+.message-error {
+  color: #f00;
+}
+
+.message-system {
+  color: #00f;
+}
+
+.messageIndicator {
+  display: inline-block;
+  margin-top: -0.2em;
+  margin-bottom: -0.2em;
+  margin-left: -0.3em;
+  margin-right: 0.3em;
+  padding-top: calc(0.2em + 1px);
+  padding-bottom: calc(0.2em + 1px);
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  background-color: #eee;
+  font-weight: bold;
+}

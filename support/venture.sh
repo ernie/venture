@@ -1,7 +1,7 @@
 #!/bin/bash
 # This is an extremely simple start script to kick off a launch/re-launch of a
 # Venture server. Intended to be used after a post-receive hook has run to
-# handle the build process. Tested on Ubuntu 14.04.
+# handle the build process. Tested on Ubuntu 20.04.
 
 export MIX_ENV=prod
 export PORT=3000
@@ -15,6 +15,6 @@ if [ $pid ]; then
   kill $pid
 fi
 
-elixir -pa _build/prod/consolidated -S mix phoenix.server > stdout.log 2> stderr.log &
+mix phx.server > stdout.log 2> stderr.log &
 
 echo "Server started on port $PORT."

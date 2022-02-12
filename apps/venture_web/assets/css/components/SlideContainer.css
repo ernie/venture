@@ -1,0 +1,77 @@
+.slide {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #fff;
+  color: #000;
+}
+.slide > .filter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+.slide > .canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+.slide > .canvas > .content {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.slide a {
+  text-decoration: none;
+  color: inherit;
+  transition: text-shadow 0.25s ease-out;
+}
+.slide a:hover {
+  text-shadow: 0.05em 0.05em 0.1em #333;
+}
+.slide img {
+  vertical-align: middle;
+  object-fit: contain;
+}
+.slide.dark {
+  background-color: #000;
+  color: #fff;
+}
+.slide.light {
+  background-color: #fff;
+  color: #000;
+}
+.slide.shadow > .canvas > .content.markdown h1, .slide.shadow > .canvas > .content.markdown h2, .slide.shadow > .canvas > .content.markdown h3, .slide.shadow > .canvas > .content.markdown h4, .slide.shadow > .canvas > .content.markdown h5, .slide.shadow > .canvas > .content.markdown h6,
+.slide.shadow > .canvas > .content > .markdown h1,
+.slide.shadow > .canvas > .content > .markdown h2,
+.slide.shadow > .canvas > .content > .markdown h3,
+.slide.shadow > .canvas > .content > .markdown h4,
+.slide.shadow > .canvas > .content > .markdown h5,
+.slide.shadow > .canvas > .content > .markdown h6 {
+  text-shadow: 0 0 0.1em #333;
+}
+.slide.font-75 > .canvas > .content.markdown,
+.slide.font-75 > .canvas > .content > .markdown {
+  font-size: 75%;
+}
+.slide.font-50 > .canvas > .content.markdown,
+.slide.font-50 > .canvas > .content > .markdown {
+  font-size: 50%;
+}

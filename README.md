@@ -4,7 +4,7 @@ An application built for hosting interactive, choose-your-own-adventure-style
 presentations, originally built for the sole purpose of running a
 [single conference talk at Keep Ruby Weird 2015](http://confreaks.tv/videos/keeprubyweird2015-choices).
 
-It's built with Elixir, Phoenix, and React with ES6+ (thanks, Babel!).
+It's built with Elixir, Phoenix, and React.
 
 If you'd like to learn more about how to create presentations with Venture, then
 follow the steps in the next section, and view the default presentation, which
@@ -12,29 +12,28 @@ explains and demonstrates available features.
 
 ## Building/Running Locally
 
-The app consists of two components when running locally: the Phoenix application
-serving the slides and handling user interactions, and a
-[webpack-dev-server](https://github.com/webpack/webpack-dev-server) hosting the
-frontend. You'll need a recent version of Elixir (developed/tested on 1.2.0) and
-node.js (5.4.0 is what I'm currently using) to get going.
+**Frontend: /apps/venture_web/assets**
+
+    $ pnpm install
 
 **Backend: /**
 
-    $ mix deps.get
-    $ mix deps.compile
-    $ mix phoenix.server
+    $ mix phx.server
 
-**Frontend: /client**
-
-You may want to check out a few configurable items in `webpack/appconfig.js`.
-Then:
-
-    $ npm start
-
-You can then connect to your frontend app at `http://localhost:8000`. In dev
+You can then connect to the Venture app at `http://localhost:4000`. In dev mode
 mode, the presenter token is `abc123` by default. You can change this in
-`config/config.exs`, if you'd like. **If you plan to host your presentation from
-your laptop running in dev mode, you most certainly should change it.**
+`config/config.exs`, if you'd like. **If you plan to host your presentation
+from your laptop running in dev mode, you most certainly should change it.**
+
+In production, the presenter token is read from the `PRESENTER_TOKEN`
+environment variable.
+
+## Creating Your Presentation
+
+The updated version of Venture is an umbrella app. The static assets for your
+presentation live in
+`apps/venture_web/priv/static` and the story files themselves live in
+`apps/venture/priv/stories`.
 
 ## Running Tests
 
@@ -42,9 +41,10 @@ your laptop running in dev mode, you most certainly should change it.**
 
     $ mix test
 
-**Frontend: /client**
+**Frontend: /apps/venture_web/assets**
 
-    $ npm test
+Test bankruptcy declared. Will be rewriting all of these tests (and the FE code
+itself) as a learning exercise in the future.
 
 ## Deploying
 

@@ -1,0 +1,45 @@
+.fork-slide p {
+  margin: 0.25em;
+}
+
+.forkOptions {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.forkOption {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  width: 40%;
+  font-size: 40%;
+  margin: 0.5% 1%;
+}
+.forkOption >.slide-container {
+  border: 1px solid #000;
+}
+.forkOption.selected {
+  box-shadow: 0 0 1em #b33;
+}
+.forkOption.winner > .selectionCount {
+  background-color: #3b3;
+}
+
+.slide.dark .forkOption >.slide-container {
+  border: 1px solid #fff;
+}
+
+.forkSelectionCount {
+  position: absolute;
+  font-weight: bold;
+  font-size: 150%;
+  border-radius: 0.25em 0 0 0;
+  background-color: #b33;
+  color: #fff;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  min-width: 2em;
+  padding: 0.25em;
+}

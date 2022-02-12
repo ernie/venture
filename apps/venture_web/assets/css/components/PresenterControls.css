@@ -1,0 +1,19 @@
+.presenterControls {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 0.25em;
+}
+.presenterControls button {
+  margin: 0.25em;
+}
+
+.presenterControlsLeft {
+  display: inline-block;
+  width: 50%;
+}
+
+.presenterControlsRight {
+  text-align: right;
+  display: inline-block;
+  width: 50%;
+}

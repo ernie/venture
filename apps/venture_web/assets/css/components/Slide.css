@@ -1,0 +1,132 @@
+@charset "UTF-8";
+.slideMarkdown p {
+  margin: 0.5em;
+}
+.slideMarkdown h1 {
+  margin: 0.15em;
+}
+.slideMarkdown h2 {
+  margin: 0.175em;
+}
+.slideMarkdown h3 {
+  margin: 0.2em;
+}
+.slideMarkdown h4 {
+  margin: 0.25em;
+}
+.slideMarkdown h5 {
+  margin: 0.3em;
+}
+.slideMarkdown h6 {
+  margin: 0.375em;
+}
+.slideMarkdown ol {
+  display: table;
+  margin: 0.5em auto;
+  max-width: 90%;
+  text-align: left;
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+.slideMarkdown ol > li {
+  text-indent: -1em;
+  margin-left: 1em;
+}
+.slideMarkdown ul {
+  display: table;
+  margin: 0.5em auto;
+  max-width: 90%;
+  text-align: left;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+.slideMarkdown ul > li {
+  text-indent: -1em;
+  margin-left: 1em;
+}
+.slideMarkdown dl {
+  display: table;
+  margin: 0.5em auto;
+  max-width: 90%;
+  text-align: left;
+}
+.slideMarkdown dl dt {
+  margin-bottom: 0.5em;
+}
+.slideMarkdown dl dd {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  margin-left: 2em;
+  text-indent: -1em;
+}
+.slideMarkdown dl dd.no-indent {
+  margin-left: 1em;
+  text-indent: 0;
+}
+.slideMarkdown label {
+  opacity: 0.1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-shadow: none;
+}
+.slideMarkdown figure {
+  display: inline-block;
+}
+.slideMarkdown figure > img {
+  max-width: 100%;
+  box-shadow: 0 0 0.2em #aaa;
+}
+.slideMarkdown figure > figcaption {
+  font-size: 50%;
+  margin-top: 0.25em;
+}
+.slideMarkdown figure > figcaption > p {
+  margin-bottom: 0;
+}
+.slideMarkdown blockquote {
+  quotes: "“" "”" "‘" "’";
+  margin: 0 1em;
+}
+.slideMarkdown blockquote:before {
+  content: open-quote;
+  font-size: 700%;
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 0.025em;
+}
+.slideMarkdown blockquote:after {
+  content: close-quote;
+  font-size: 700%;
+  opacity: 0.2;
+  position: absolute;
+  margin-right: 0.025em;
+  margin-bottom: -0.6em;
+  bottom: 0;
+  right: 0;
+}
+.slideMarkdown cite {
+  display: block;
+  text-align: left;
+  text-indent: -1em;
+  margin-top: 2em;
+  margin-left: 50%;
+  font-size: 50%;
+}
+.slideMarkdown cite:before {
+  content: "—";
+}
+.slideMarkdown table {
+  margin: 0 auto;
+}
+.slideMarkdown table th {
+  background-color: #ccc;
+  padding: 0.1em 0.25em;
+  border: 1px solid #000;
+}
+.slideMarkdown table td {
+  padding: 0.1em 0.25em;
+  border: 1px solid #000;
+}

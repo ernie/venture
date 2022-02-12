@@ -1,0 +1,24 @@
+.slide:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 75%;
+}
+
+@media all and (max-aspect-ratio: 4/3) {
+  .attendee {
+    width: 100vw;
+    font-size: 5vw;
+    height: 75vw;
+    position: absolute;
+    margin-top: calc(50vh - 37.5vw);
+  }
+}
+@media not all and (max-aspect-ratio: 4/3) {
+  .attendee {
+    width: 133.3333333333vh;
+    height: 100vh;
+    font-size: 6.6666666667vh;
+    margin: 0 auto;
+  }
+}
