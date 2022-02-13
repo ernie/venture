@@ -1,8 +1,8 @@
-import React from 'react';
-import SessionStore from '../../stores/SessionStore';
-import SlideStore from '../../stores/SlideStore';
-import TokenRequester from '../TokenRequester/TokenRequester';
-import SlideViewer from '../SlideViewer/SlideViewer';
+import React from "react";
+import SessionStore from "../../stores/SessionStore";
+import SlideStore from "../../stores/SlideStore";
+import TokenRequester from "../TokenRequester/TokenRequester";
+import SlideViewer from "../SlideViewer/SlideViewer";
 
 function getState() {
   return {

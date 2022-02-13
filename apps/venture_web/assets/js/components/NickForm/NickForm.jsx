@@ -11,7 +11,7 @@ export default class NickForm extends React.Component {
     active: PropTypes.bool.isRequired
   }
 
-  state = { name: this.props.nick.name };
+  state = { name: this.props.nick.name || "" };
 
   componentDidMount() {
     this.refs.input.focus();

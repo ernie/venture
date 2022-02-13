@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import SlideContainer from '../SlideContainer/SlideContainer';
 import PresenterOverlay from '../PresenterOverlay/PresenterOverlay';
 
-export default class SlideViewer extends React.Component {
+type SlideViewerProps = {
+  slide: Object;
+  isPresenter: boolean;
+  channel: Object;
+}
+
+export default class SlideViewer extends React.Component<SlideViewerProps> {
 
   static propTypes = {
     slide: PropTypes.object.isRequired,

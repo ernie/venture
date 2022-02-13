@@ -1,13 +1,13 @@
-import Immutable from 'immutable';
+import Immutable from "immutable";
 
 export default class Slide extends Immutable.Record({
-  type: 'slide',
+  type: "slide",
   location: {story: undefined, index: undefined},
   next: undefined,
   background: undefined,
   class: undefined,
   content: undefined,
-  notes: '',
+  notes: "",
   attribution: undefined,
-  align: ''
+  align: ""
 }) { }

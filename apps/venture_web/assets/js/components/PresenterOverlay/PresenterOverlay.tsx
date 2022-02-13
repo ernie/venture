@@ -1,11 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import PresenterControls from '../PresenterControls/PresenterControls';
-import ConnectionsDisplay from '../ConnectionsDisplay/ConnectionsDisplay';
-import Notes from '../Notes/Notes';
-import SlidePreview from '../SlidePreview/SlidePreview';
+import React from "react";
+import PropTypes from "prop-types";
+import PresenterControls from "../PresenterControls/PresenterControls";
+import ConnectionsDisplay from "../ConnectionsDisplay/ConnectionsDisplay";
+import Notes from "../Notes/Notes";
+import SlidePreview from "../SlidePreview/SlidePreview";
+import Slide from "../../records/Slide";
 
-export default class PresenterOverlay extends React.Component {
+type PresenterOverlayProps = {
+  slide: Slide;
+  channel: Object;
+  isPresenter: boolean;
+}
+
+export default class PresenterOverlay extends React.Component<PresenterOverlayProps> {
 
   static propTypes = {
     slide: PropTypes.object.isRequired,
