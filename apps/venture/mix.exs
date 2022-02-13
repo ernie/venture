@@ -12,6 +12,7 @@ defmodule Venture.MixProject do
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -39,6 +40,15 @@ defmodule Venture.MixProject do
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.3"},
       {:yaml_elixir, "~> 2.8" }
+    ]
+  end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      setup: ["deps.get"]
     ]
   end
 end

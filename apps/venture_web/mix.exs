@@ -13,6 +13,7 @@ defmodule VentureWeb.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -52,4 +53,15 @@ defmodule VentureWeb.MixProject do
       {:uuid, "~> 1.1" }
     ]
   end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      setup: ["deps.get"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+    ]
+  end
+
 end
