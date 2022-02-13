@@ -21,7 +21,7 @@ pnpm install
 cd $TMP_GIT_CLONE
 mix deps.get --only prod
 mix compile
-mix phx.digest
+mix assets.deploy
 cd $APPS_DIR
 rm -rf venture.bak
 mv venture venture.bak
