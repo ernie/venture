@@ -22,7 +22,7 @@
 .forkOption.selected {
   box-shadow: 0 0 1em #b33;
 }
-.forkOption.winner > .selectionCount {
+.forkOption.winner > .forkSelectionCount {
   background-color: #3b3;
 }
 
