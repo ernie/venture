@@ -2,6 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/events': ^3.0.0
+  '@types/flux': ^3.1.11
+  '@types/keymirror': ^0.1.1
   '@types/marked': ^4.0.2
   '@types/phoenix': ^1.5.4
   '@types/phoenix_live_view': ^0.15.1
@@ -32,6 +34,8 @@ dependencies:
 
 devDependencies:
   '@types/events': 3.0.0
+  '@types/flux': 3.1.11
+  '@types/keymirror': 0.1.1
   '@types/marked': 4.0.2
   '@types/phoenix': 1.5.4
   '@types/phoenix_live_view': 0.15.1
@@ -42,6 +46,21 @@ packages:
 
   /@types/events/3.0.0:
     resolution: {integrity: sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==}
+    dev: true
+
+  /@types/fbemitter/2.0.32:
+    resolution: {integrity: sha1-jtIE2g9U6cjq7DGx7skeJRMtCCw=}
+    dev: true
+
+  /@types/flux/3.1.11:
+    resolution: {integrity: sha512-Aq4UB1ZqAKcPbhB0GpgMw2sntvOh71he9tjz53TLKrI7rw3Y3LxCW5pTYY9IV455hQapm4pmxFjpqlWOs308Yg==}
+    dependencies:
+      '@types/fbemitter': 2.0.32
+      '@types/react': 17.0.39
+    dev: true
+
+  /@types/keymirror/0.1.1:
+    resolution: {integrity: sha1-H+SObl4qlpyv7PDyRIWuI8cqvTA=}
     dev: true
 
   /@types/marked/4.0.2:
