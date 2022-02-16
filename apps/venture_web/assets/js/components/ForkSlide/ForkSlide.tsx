@@ -1,20 +1,39 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SlideActions from '../../actions/SlideActions';
-import SelectionsStore from '../../stores/SelectionsStore';
+import React from "react";
+import PropTypes from "prop-types";
+import SlideActions from "../../actions/SlideActions";
+import SelectionsStore from "../../stores/SelectionsStore";
 
-import Markdown from '../../Markdown';
-import classNames from 'classnames';
+import Markdown from "../../Markdown";
+import classNames from "classnames";
 
-import SlideContainer from '../SlideContainer/SlideContainer';
+import SlideContainer from "../SlideContainer/SlideContainer";
+
+import SlideRecord from "../../records/Slide";
 
 function getState() {
   return {
     selections: SelectionsStore.get()
-  };
+  } as ForkSlideState;
 }
 
-export default class ForkSlide extends React.Component {
+interface ForkSlideProps {
+  paths: Array<SlideRecord>;
+  content: string;
+  channel: Object;
+  active: boolean;
+}
+
+interface ForkSlideState {
+  selections:  Object;
+  selected:    string | undefined;
+}
+
+interface Location {
+  story: string;
+  index: number;
+}
+
+export default class ForkSlide extends React.Component<ForkSlideProps> {
 
   static propTypes = {
     paths: PropTypes.array.isRequired,
@@ -37,7 +56,7 @@ export default class ForkSlide extends React.Component {
     SelectionsStore.removeChangeListener(this.handleChange);
   }
 
-  selectOption = (e) => {
+  selectOption = (e: React.UIEvent<HTMLLIElement>) => {
     e.preventDefault();
     if (this.props.active) {
       this.setState({ selected: e.currentTarget.dataset.option });
@@ -49,7 +68,7 @@ export default class ForkSlide extends React.Component {
     this.setState(getState());
   }
 
-  locationString(loc) {
+  locationString(loc: Location) {
     return `${loc.story}:${loc.index}`;
   }
 
@@ -66,7 +85,7 @@ export default class ForkSlide extends React.Component {
     return max;
   }
 
-  renderPath = (pathSlide) => {
+  renderPath = (pathSlide: SlideRecord) => {
     let max = this.maxSelections();
     let location = this.locationString(pathSlide.location);
     let selected = (this.state.selected === location ? "selected" : null);

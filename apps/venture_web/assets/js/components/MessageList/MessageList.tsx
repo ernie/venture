@@ -1,20 +1,31 @@
-import Immutable from 'immutable';
+import Immutable from "immutable";
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Message from '../Message/Message';
+import Message from "../Message/Message";
+import MessageRecord from "../../records/Message";
 
-export default class MessageList extends React.Component {
+interface MessageListProps {
+  messages: Immutable.List<MessageRecord>;
+}
+
+export default class MessageList extends React.Component<MessageListProps> {
+  messages: React.RefObject<HTMLDivElement>
+  autoScrolling = false;
+  userScrolling = false;
 
   static propTypes = {
     messages: PropTypes.instanceOf(Immutable.List).isRequired
   }
 
-  autoScrolling = false;
-  userScrolling = false;
+  constructor(props: MessageListProps) {
+    super(props);
+    this.messages = React.createRef();
+  }
 
-  renderMessage(message, index) {
+
+  renderMessage(message: MessageRecord, index: number) {
     return (
       <Message
         key={index}
@@ -24,7 +35,7 @@ export default class MessageList extends React.Component {
   }
 
   scrolled = () => {
-    let msgs = this.refs.messages;
+    let msgs = this.messages.current;
     if (!this.autoScrolling) {
       if (msgs.scrollTop < (msgs.scrollHeight - (msgs.clientHeight + 5))) {
         this.userScrolling = true;
@@ -37,7 +48,7 @@ export default class MessageList extends React.Component {
   componentDidUpdate() {
     if (!this.userScrolling) {
       this.autoScrolling = true;
-      this.refs.messages.scrollTop = this.refs.messages.scrollHeight;
+      this.messages.current.scrollTop = this.messages.current.scrollHeight;
       this.autoScrolling = false;
     }
   }
@@ -47,7 +58,7 @@ export default class MessageList extends React.Component {
       <div
         className="messages"
         onScroll={this.scrolled}
-        ref="messages"
+        ref={this.messages}
       >
         <div className="messageList">
           {this.props.messages.map(this.renderMessage)}

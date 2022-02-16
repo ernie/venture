@@ -8,14 +8,14 @@ import Slide from "../../records/Slide";
 
 import classNames from "classnames";
 
-type SlideContainerProps = {
+interface SlideContainerProps {
   slide: Slide;
   channel: Object;
   className: string;
   active: boolean;
 }
 
-type SlideStyles = {
+interface SlideStyles {
   image:     string | undefined;
   size:      string | undefined;
   repeat:    string | undefined;
@@ -23,7 +23,7 @@ type SlideStyles = {
   color:     string | undefined;
 }
 
-type BackgroundStyles = {
+interface BackgroundStyles {
   backgroundImage:     string | undefined;
   backgroundSize:      string | undefined;
   backgroundRepeat:    string | undefined;

@@ -1,17 +1,17 @@
-import Immutable from 'immutable';
-import { EventEmitter } from 'events';
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import Immutable from "immutable";
+import { EventEmitter } from "events";
+import AppDispatcher from "../dispatcher/AppDispatcher";
 
-import ChatActions from '../actions/ChatActions';
-import ChatConstants from '../constants/ChatConstants';
-import MessageConstants from '../constants/MessageConstants';
-import SlideStore from '../stores/SlideStore';
-import SlideConstants from '../constants/SlideConstants';
-import SessionConstants from '../constants/SessionConstants';
+import ChatActions from "../actions/ChatActions";
+import ChatConstants from "../constants/ChatConstants";
+import MessageConstants from "../constants/MessageConstants";
+import SlideStore from "../stores/SlideStore";
+import SlideConstants from "../constants/SlideConstants";
+import SessionConstants from "../constants/SessionConstants";
 
 class MessageStore extends EventEmitter {
 
-  message = '';
+  message = "";
   history = [];
 
   getHistory() {
@@ -45,18 +45,18 @@ store.dispatchToken = AppDispatcher.register((action) => {
       store.emitChange();
       break;
     case ChatConstants.MESSAGE_SENT:
-      if (action.data.trim() != '' &&
+      if (action.data.trim() != "" &&
           store.history.indexOf(action.data) === -1) {
         store.history = [action.data].concat(store.history.slice(0, 19));
       }
-      store.message = '';
+      store.message = "";
       store.emitChange();
     case SessionConstants.CONNECTED:
     case SlideConstants.SLIDE_RECEIVED:
       AppDispatcher.waitFor([SlideStore.dispatchToken]);
       let slide = SlideStore.get();
-      if (slide.type !== 'chat') {
-        store.message = '';
+      if (slide.type !== "chat") {
+        store.message = "";
       }
       store.emitChange();
     default:

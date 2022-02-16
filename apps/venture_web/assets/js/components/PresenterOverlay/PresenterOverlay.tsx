@@ -6,7 +6,7 @@ import Notes from "../Notes/Notes";
 import SlidePreview from "../SlidePreview/SlidePreview";
 import Slide from "../../records/Slide";
 
-type PresenterOverlayProps = {
+interface PresenterOverlayProps {
   slide: Slide;
   channel: Object;
   isPresenter: boolean;

@@ -1,11 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import MessageRecord from '../../records/Message';
+import MessageRecord from "../../records/Message";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-export default class Message extends React.Component {
+interface MessageProps {
+  message: MessageRecord;
+}
+
+export default class Message extends React.Component<MessageProps> {
 
   static propTypes = {
     message: PropTypes.instanceOf(MessageRecord).isRequired
@@ -14,14 +18,14 @@ export default class Message extends React.Component {
   privmsgIndicator = () => {
     let message = this.props.message;
     switch(message.type) {
-      case 'priv_in':
+      case "priv_in":
         return (
           <div className="messageIndicator">
             &rarr; you
           </div>
         );
         break;
-      case 'priv_out':
+      case "priv_out":
         return (
           <div className="messageIndicator">
             &rarr; {message.recipient}

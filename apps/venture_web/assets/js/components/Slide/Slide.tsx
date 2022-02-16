@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from '../../Markdown';
 
-export default class Slide extends React.Component {
+interface SlideProps {
+  content: string;
+  active: boolean;
+}
+
+export default class Slide extends React.Component<SlideProps> {
 
   static propTypes = {
     content: PropTypes.string.isRequired,

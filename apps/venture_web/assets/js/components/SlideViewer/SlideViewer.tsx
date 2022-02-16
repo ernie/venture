@@ -1,11 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import SlideContainer from '../SlideContainer/SlideContainer';
-import PresenterOverlay from '../PresenterOverlay/PresenterOverlay';
+import SlideContainer from "../SlideContainer/SlideContainer";
+import PresenterOverlay from "../PresenterOverlay/PresenterOverlay";
 
-type SlideViewerProps = {
-  slide: Object;
+import SlideRecord from "../../records/Slide";
+
+interface SlideViewerProps {
+  slide: SlideRecord;
   isPresenter: boolean;
   channel: Object;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SessionActions from "../../actions/SessionActions";
 
-type TokenRequesterProps = {
+interface TokenRequesterProps {
   didRequestToken: boolean;
 }
 

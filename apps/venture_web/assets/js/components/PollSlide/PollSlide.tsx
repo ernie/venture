@@ -9,10 +9,22 @@ import classNames from 'classnames';
 function getState() {
   return {
     selections: SelectionsStore.get()
-  };
+  } as PollSlideState;
 }
 
-export default class PollSlide extends React.Component {
+interface PollSlideProps {
+  options:  Array<string>;
+  content:  string;
+  channel:  Object;
+  active:   boolean;
+}
+
+interface PollSlideState {
+  selections:  Object;
+  selected:    string | undefined;
+}
+
+export default class PollSlide extends React.Component<PollSlideProps> {
 
   static propTypes = {
     options: PropTypes.array.isRequired,
@@ -35,7 +47,7 @@ export default class PollSlide extends React.Component {
     SelectionsStore.removeChangeListener(this.handleChange);
   }
 
-  selectOption = (e) => {
+  selectOption = (e: React.UIEvent<HTMLLIElement>) => {
     this.setState({ selected: e.currentTarget.dataset.option });
     SlideActions.selectOption(this.props.channel, e.currentTarget.dataset.option);
   }
@@ -57,7 +69,7 @@ export default class PollSlide extends React.Component {
     return max;
   }
 
-  stylesFor = (option) => {
+  stylesFor = (option: string) => {
     let max = this.maxSelections();
     if (max === 0) {
       return { width: 0 }
@@ -66,7 +78,7 @@ export default class PollSlide extends React.Component {
     }
   }
 
-  renderOption = (option) => {
+  renderOption = (option: string) => {
     let max = this.maxSelections();
     let selected = (this.state.selected === option ? "selected" : null);
     let winner = null;

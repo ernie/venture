@@ -31,11 +31,11 @@ export default {
   },
 
   setNick(channel, name) {
-    channel.push('nick', {name: name});
+    channel.push("nick", {name: name});
   },
 
   sendMessage(channel, content) {
-    channel.push('message', {content: content});
+    channel.push("message", {content: content});
     AppDispatcher.dispatch({
       actionType: ChatConstants.MESSAGE_SENT,
       data: content
@@ -57,7 +57,7 @@ export default {
   },
 
   receiveMessage(message) {
-    if (message.type === 'priv_in' && notification) {
+    if (message.type === "priv_in" && notification) {
       notification.pause();
       notification.currentTime = 0;
       notification.play();
