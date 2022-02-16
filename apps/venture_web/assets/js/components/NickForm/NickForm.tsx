@@ -1,9 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import ChatActions from '../../actions/ChatActions';
+import ChatActions from "../../actions/ChatActions";
 
-export default class NickForm extends React.Component {
+import NickRecord from "../../records/Nick";
+
+interface NickFormProps {
+  channel:  Object;
+  nick:     NickRecord;
+  active:   boolean;
+}
+
+export default class NickForm extends React.Component<NickFormProps> {
+  input: React.RefObject<HTMLInputElement>;
 
   static propTypes = {
     channel: PropTypes.object,
@@ -11,10 +20,15 @@ export default class NickForm extends React.Component {
     active: PropTypes.bool.isRequired
   }
 
+  constructor(props: NickFormProps) {
+    super(props);
+    this.input = React.createRef();
+  }
+
   state = { name: this.props.nick.name || "" };
 
   componentDidMount() {
-    this.refs.input.focus();
+    this.input.current.focus();
   }
 
   handleInput = (e) => {
@@ -39,8 +53,8 @@ export default class NickForm extends React.Component {
           onChange={this.props.active ? this.handleInput : null}
           placeholder="Nickname"
           readOnly={!this.props.active}
-          ref="input"
-          tabIndex="-1"
+          ref={this.input}
+          tabIndex={-1}
           value={this.state.name}
         />
         <button

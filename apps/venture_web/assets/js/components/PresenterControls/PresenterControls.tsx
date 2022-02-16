@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import SlideActions from '../../actions/SlideActions';
 
-export default class PresenterControls extends React.Component {
+interface PresenterControlsProps {
+  channel: Object;
+}
+
+export default class PresenterControls extends React.Component<PresenterControlsProps> {
 
   static propTypes = {
     channel: PropTypes.object.isRequired
@@ -33,22 +37,24 @@ export default class PresenterControls extends React.Component {
     SlideActions.reloadDeck(this.props.channel);
   }
 
-  handleKeyPress = (e) => {
-    switch(e.keyCode) {
-      case 33: // Page up
-      case 37: // Left arrow
+  handleKeyPress = (e: KeyboardEvent) => {
+    switch(e.key) {
+      case "PageUp":
+      case "ArrowLeft":
         this.prevSlide();
         break;
-      case 32: // Space
-      case 34: // Page down
-      case 39: // Right arrow
+      case " ":
+      case "Spacebar": // Older browsers
+      case "PageDown":
+      case "ArrowRight":
         this.nextSlide();
         break
-      case 27:  // Escape
-      case 116: // F5
+      case "Escape":
+      case "F5":
         // Anything on "present" button?
         break;
-      case 190: // Period
+      case ".":
+      case "Decimal": // Older browsers
         // Anything on "clear screen" button?
         break;
       default:

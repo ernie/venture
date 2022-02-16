@@ -1,9 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import SlideContainer from '../SlideContainer/SlideContainer';
+import SlideContainer from "../SlideContainer/SlideContainer";
 
-export default class SlidePreview extends React.Component {
+import SlideRecord from "../../records/Slide";
+
+interface SlidePreviewProps {
+  channel: object;
+  slide: SlideRecord;
+}
+
+export default class SlidePreview extends React.Component<SlidePreviewProps> {
 
   static propTypes = {
     channel: PropTypes.object.isRequired,
