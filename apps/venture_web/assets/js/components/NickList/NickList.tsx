@@ -1,20 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import ChatActions from '../../actions/ChatActions';
+import ChatActions from "../../actions/ChatActions";
 
-export default class NickList extends React.Component {
+import NickRecord from "../../records/Nick";
+
+interface NickListProps {
+  nicks:   Array<NickRecord>;
+  active:  boolean;
+}
+
+export default class NickList extends React.Component<NickListProps> {
 
   static propTypes = {
     nicks: PropTypes.array.isRequired,
     active: PropTypes.bool.isRequired
   }
 
-  nickClicked = (e) => {
-    ChatActions.nickClicked(e.target.innerText);
+  nickClicked = (e: React.UIEvent<HTMLDivElement>) => {
+    ChatActions.nickClicked((e.target as HTMLDivElement).innerText);
   }
 
-  renderNick = (nick, index) => {
+  renderNick = (nick: NickRecord, index: number) => {
     return (
       <div
         className="nick"
@@ -27,16 +34,14 @@ export default class NickList extends React.Component {
     );
   }
 
-  lurkers(count) {
+  lurkers(count: number) {
     switch(count) {
       case 0:
         return false;
-        break;
       case 1:
         return (
           <div className="lurkers">1 lurker</div>
         );
-        break;
       default:
         return (
           <div className="lurkers">{count} lurkers</div>

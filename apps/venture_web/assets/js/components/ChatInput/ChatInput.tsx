@@ -1,10 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import NickForm from '../NickForm/NickForm';
-import MessageForm from '../MessageForm/MessageForm';
+import NickForm from "../NickForm/NickForm";
+import MessageForm from "../MessageForm/MessageForm";
 
-export default class ChatSlide extends React.Component {
+import NickRecord from "../../records/Nick";
+
+interface ChatInputProps {
+  active: boolean;
+  nick: NickRecord;
+  channel: Object;
+  editing: boolean;
+}
+
+export default class ChatInput extends React.Component<ChatInputProps> {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,

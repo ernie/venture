@@ -16,7 +16,12 @@ function getState() {
   };
 }
 
-export default class ChatSlide extends React.Component {
+interface ChatSlideProps {
+  content: string;
+  active:  boolean;
+}
+
+export default class ChatSlide extends React.Component<ChatSlideProps> {
 
   static propTypes = {
     content: PropTypes.string.isRequired,
@@ -37,12 +42,12 @@ export default class ChatSlide extends React.Component {
     ChatStore.removeChangeListener(this.handleChange);
   }
 
-  handleKeyPress = (e) => {
-    switch(e.keyCode) {
-      case 33: // Page up
-      case 34: // Page down
-      case 27:  // Escape
-      case 116: // F5
+  handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    switch(e.key) {
+      case "PageUp":
+      case "PageDown":
+      case "Escape":
+      case "F5":
         break;
       default:
         e.stopPropagation();

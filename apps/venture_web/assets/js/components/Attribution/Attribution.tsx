@@ -2,7 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from '../../Markdown';
 
-export default class Attribution extends React.Component {
+interface AttributionProps {
+  content: string;
+  position: string;
+}
+
+interface AttributionStyle {
+  top: number | undefined;
+  bottom: number | undefined;
+  left: number | undefined;
+  right: number | undefined;
+  textAlign: "left" | "center" | "right" | undefined;
+}
+
+export default class Attribution extends React.Component<AttributionProps> {
 
   static propTypes = {
     content: PropTypes.string,
@@ -11,7 +24,7 @@ export default class Attribution extends React.Component {
 
   style = () => {
     let position = (this.props.position || 'bottom right').toLowerCase().trim();
-    let style = {top: undefined, left: undefined, right: undefined, bottom: undefined, textAlign: undefined};
+    let style = {} as AttributionStyle;
     position.split(/\s+/).forEach( (instruction) => {
       switch(instruction) {
         case 'top':

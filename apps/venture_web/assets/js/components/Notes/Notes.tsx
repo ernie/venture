@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 
 import Markdown from '../../Markdown';
 
-export default class Notes extends React.Component {
+interface NotesProps {
+  notes: string;
+}
+
+export default class Notes extends React.Component<NotesProps> {
 
   static propTypes = {
     notes: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    notes: ''
+    notes: ""
   }
 
   render() {

@@ -1,8 +1,13 @@
 import React from 'react';
 import ConnectionsStore from '../../stores/ConnectionsStore';
 
+interface Connections {
+  presenters:  number;
+  attendees:   number;
+}
+
 function getState() {
-  return ConnectionsStore.get();
+  return ConnectionsStore.get() as Connections;
 }
 
 export default class ConnectionsDisplay extends React.Component {

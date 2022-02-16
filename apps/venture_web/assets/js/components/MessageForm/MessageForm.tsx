@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import MessageStore from '../../stores/MessageStore';
-import ChatActions from '../../actions/ChatActions';
+import MessageStore from "../../stores/MessageStore";
+import ChatActions from "../../actions/ChatActions";
+
+import NickRecord from "../../records/Nick";
 
 function getState() {
   return {
@@ -12,12 +14,24 @@ function getState() {
   }
 }
 
-export default class MessageForm extends React.Component {
+interface MessageFormProps {
+  channel: Object;
+  nick: NickRecord;
+  active: boolean;
+}
+
+export default class MessageForm extends React.Component<MessageFormProps> {
+  input: React.RefObject<HTMLInputElement>;
 
   static propTypes = {
     channel: PropTypes.object.isRequired,
     nick: PropTypes.object.isRequired,
     active: PropTypes.bool.isRequired
+  }
+
+  constructor(props: MessageFormProps) {
+    super(props);
+    this.input = React.createRef();
   }
 
   state = getState();
@@ -30,10 +44,10 @@ export default class MessageForm extends React.Component {
     MessageStore.removeChangeListener(this.handleChange);
   }
 
-  handleKeyPress = (e) => {
+  handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let index = this.state.index;
-    switch(e.keyCode) {
-      case 38: // Up arrow
+    switch(e.key) {
+      case "ArrowUp":
         e.stopPropagation();
         if (index + 1 < this.state.history.length) {
           this.setState({
@@ -42,7 +56,7 @@ export default class MessageForm extends React.Component {
           });
         }
         break;
-      case 40: // Down arrow
+      case "ArrowDown":
         e.stopPropagation();
         if (index - 1 < 0) {
           this.setState({
@@ -60,7 +74,7 @@ export default class MessageForm extends React.Component {
     }
   }
 
-  handleInput = (e) => {
+  handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ message: e.target.value });
   }
 
@@ -68,7 +82,7 @@ export default class MessageForm extends React.Component {
     this.setState(getState());
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = (e: React.UIEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (this.props.active) {
       ChatActions.sendMessage(this.props.channel, this.state.message.trim());
@@ -80,7 +94,7 @@ export default class MessageForm extends React.Component {
   }
 
   componentDidUpdate() {
-    this.refs.input.focus();
+    this.input.current.focus();
   }
 
   render() {
@@ -104,8 +118,8 @@ export default class MessageForm extends React.Component {
             onKeyDown={this.props.active ? this.handleKeyPress : null}
             placeholder="Message"
             readOnly={!this.props.active}
-            ref="input"
-            tabIndex="-1"
+            ref={this.input}
+            tabIndex={-1}
             value={this.state.message}
           />
           <button type="submit">Send</button>
