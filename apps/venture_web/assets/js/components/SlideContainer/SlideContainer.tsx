@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import Filter from "../Filter/Filter";
 import Canvas from "../Canvas/Canvas";
 
-import Slide from "../../records/Slide";
+import SlideRecord from "../../records/Slide";
 
 import classNames from "classnames";
 
 interface SlideContainerProps {
-  slide: Slide;
+  slide: SlideRecord;
   channel: Object;
   className: string;
   active: boolean;

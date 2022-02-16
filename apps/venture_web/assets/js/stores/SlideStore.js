@@ -5,29 +5,24 @@ import { EventEmitter } from 'events';
 
 import Slide from '../records/Slide';
 import TitleSlide from '../records/TitleSlide';
-import Fork from '../records/Fork';
-import Poll from '../records/Poll';
-import Chat from '../records/Chat';
+import ForkSlide from '../records/ForkSlide';
+import PollSlide from '../records/PollSlide';
+import ChatSlide from '../records/ChatSlide';
 import EmptySlide from '../records/EmptySlide';
 
 function newSlide(data) {
   switch(data.type) {
     case 'slide':
       return new Slide(data);
-      break;
     case 'title':
       return new TitleSlide(data);
-      break;
     case 'fork':
       data.paths = data.paths.map(newSlide);
-      return new Fork(data);
-      break;
+      return new ForkSlide(data);
     case 'poll':
-      return new Poll(data);
-      break;
+      return new PollSlide(data);
     case 'chat':
-      return new Chat(data);
-      break;
+      return new ChatSlide(data);
     default:
       return new EmptySlide(data);
   }

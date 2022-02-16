@@ -10,11 +10,11 @@ import TitleSlide from "../TitleSlide/TitleSlide";
 import Attribution from "../Attribution/Attribution";
 
 import SlideRecord from "../../records/Slide";
-import PollRecord from "../../records/Poll";
-import ForkRecord from "../../records/Fork";
+import PollRecord from "../../records/PollSlide";
+import ForkRecord from "../../records/ForkSlide";
 import TitleRecord from "../../records/TitleSlide";
 import EmptyRecord from "../../records/EmptySlide";
-import ChatRecord from "../../records/Chat";
+import ChatRecord from "../../records/ChatSlide";
 
 interface CanvasProps {
   active: boolean;

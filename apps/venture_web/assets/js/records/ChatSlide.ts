@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-export default class Chat extends Immutable.Record({
+export default class ChatSlide extends Immutable.Record({
   type: 'chat',
   location: {story: undefined, index: undefined},
   next: undefined,

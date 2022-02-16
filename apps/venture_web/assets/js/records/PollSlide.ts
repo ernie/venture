@@ -1,10 +1,10 @@
 import Immutable from 'immutable';
 
-export default class Fork extends Immutable.Record({
-  type: 'fork',
+export default class PollSlide extends Immutable.Record({
+  type: 'poll',
   location: {story: undefined, index: undefined},
   next: undefined,
-  paths: [],
+  options: [],
   background: undefined,
   class: undefined,
   content: undefined,
