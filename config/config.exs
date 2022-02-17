@@ -33,7 +33,7 @@ config :venture_web,
 config :venture_web, VentureWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: VentureWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Venture.PubSub,
+  pubsub_server: VentureWeb.PubSub,
   live_view: [signing_salt: "K4bwc2jv"]
 
 # Configure esbuild (the version is required)

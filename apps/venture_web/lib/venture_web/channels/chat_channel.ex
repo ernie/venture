@@ -1,31 +1,29 @@
 defmodule VentureWeb.ChatChannel do
   use VentureWeb, :channel
 
-  alias Venture.ChannelMonitor
   alias Venture.Nicks
+  alias VentureWeb.Presence
 
+  @impl true
   def join("chat:channel", %{"name" => name}, socket) do
-    :ok = ChannelMonitor.monitor(
-      :chat, self(), {__MODULE__, :leave, [socket]}
-    )
     send self(), {:after_join, name}
     Nicks.put(socket, nil)
-    { :ok, %{nicks: Nicks.all}, assign(socket, :activity, []) }
+    { :ok, %{}, assign(socket, :activity, []) }
   end
 
+  @impl true
   def join("chat:channel", _auth_msg, socket) do
-    :ok = ChannelMonitor.monitor(
-      :chat, self(), {__MODULE__, :leave, [socket]}
-    )
     send self(), {:after_join, nil}
     Nicks.put(socket, nil)
-    { :ok, %{nicks: Nicks.all}, assign(socket, :activity, []) }
+    { :ok, %{}, assign(socket, :activity, []) }
   end
 
+  @impl true
   def handle_in("message", %{"content" => content}, socket) do
     handle_message(String.trim(content), socket)
   end
 
+  @impl true
   def handle_in("nick", %{"name" => name}, socket = %{assigns: %{name: prev}})
       when name == prev
   do
@@ -33,6 +31,7 @@ defmodule VentureWeb.ChatChannel do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_in(
     "nick", %{"name" => name}, socket = %{assigns: %{name: prev}}
   ) do
@@ -42,6 +41,7 @@ defmodule VentureWeb.ChatChannel do
           { :ok, processed } -> push socket,
                                      "nick_set",
                                      %{id: socket.id, name: processed}
+                                {:ok, _} = Presence.update(socket, socket.id, %{ id: socket.id, name: processed })
                                 broadcast! socket,
                                            "nick",
                                            %{
@@ -61,21 +61,29 @@ defmodule VentureWeb.ChatChannel do
     end
   end
 
+  @impl true
   def handle_in(_event, _msg, socket) do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_info({:after_join, nil}, socket) do
+    {:ok, _} = Presence.track(socket, socket.id, %{ id: socket.id, name: nil })
+    push(socket, "presence_state", Presence.list(socket))
     broadcast! socket, "join", %{name: nil, id: socket.id}
     welcome(socket, nil)
     {:noreply, assign(socket, :name, nil)}
   end
 
+  @impl true
   def handle_info({:after_join, name}, socket) do
     case Nicks.put(socket, name) do
       { :ok, processed } -> push socket,
                                  "nick_set",
                                  %{id: socket.id, name: processed}
+                            {:ok, _} =
+                              Presence.track(socket, socket.id, %{ id: socket.id, name: processed })
+                              push(socket, "presence_state", Presence.list(socket))
                             broadcast! socket,
                                        "nick",
                                        %{
@@ -88,21 +96,14 @@ defmodule VentureWeb.ChatChannel do
       { :error, reason } -> push socket,
                                  "nick_error",
                                  %{type: "error", content: reason}
-                            broadcast! socket,
-                                       "join", %{name: nil, id: socket.id}
+                            {:ok, _} =
+                              Presence.track(socket, socket.id, %{ id: socket.id, name: nil })
+                              push(socket, "presence_state", Presence.list(socket))
+                            # broadcast! socket,
+                            #            "join", %{name: nil, id: socket.id}
                             welcome(socket, nil)
                             {:noreply, assign(socket, :name, nil)}
     end
-  end
-
-  def leave(socket) do
-    name = Nicks.delete(socket.id)
-    # We need to broadcast from the endpoint, because this socket has already
-    # disconnected.
-    VentureWeb.Endpoint.broadcast!(
-      "chat:channel", "leave", %{name: name, id: socket.id}
-    )
-    :ok
   end
 
   defp handle_message(_content, socket = %{assigns: %{name: nil}}) do
@@ -303,6 +304,15 @@ defmodule VentureWeb.ChatChannel do
       true  -> {:throttle, assign(socket, :activity, activity)}
       false -> {:ok, assign(socket, :activity, [current | activity])}
     end
+  end
+
+  @impl true
+  def terminate(_reason, %{id: id, assigns: %{name: name}}) do
+    name = Nicks.delete(id)
+    VentureWeb.Endpoint.broadcast!(
+      "chat:channel", "leave", %{id: id, name: name}
+    )
+    :ok
   end
 
 end

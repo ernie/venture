@@ -8,10 +8,14 @@ defmodule VentureWeb.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start the PubSub system
+      {Phoenix.PubSub, name: VentureWeb.PubSub},
       # Start the Telemetry supervisor
       VentureWeb.Telemetry,
+      # Start Presence
+      VentureWeb.Presence,
       # Start the Endpoint (http/https)
-      VentureWeb.Endpoint
+      VentureWeb.Endpoint,
       # Start a worker by calling: VentureWeb.Worker.start_link(arg)
       # {VentureWeb.Worker, arg}
     ]

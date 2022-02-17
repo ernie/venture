@@ -2,16 +2,12 @@ defmodule VentureWeb.PresentationChannel do
   use VentureWeb, :channel
   use Venture.Slide
 
-  alias Venture.ChannelMonitor
-
+  @impl true
   def join(
     "presentation:presenter",
     _auth_msg,
     socket = %{assigns: %{presenter: true}}
   ) do
-    :ok = ChannelMonitor.monitor(
-      :presentation, self(), {__MODULE__, :leave, [socket]}
-    )
     slide = Venture.Presentation.current_slide
     selections = Venture.Selections.current
     connections = Venture.Connections.connect(socket)
@@ -22,14 +18,12 @@ defmodule VentureWeb.PresentationChannel do
     }
   end
 
+  @impl true
   def join(
     "presentation:attendee",
     _auth_msg,
     socket = %{assigns: %{presenter: false}}
   ) do
-    :ok = ChannelMonitor.monitor(
-      :presentation, self(), {__MODULE__, :leave, [socket]}
-    )
     slide = Venture.Presentation.current_slide
     selections = Venture.Selections.current
     Venture.Connections.connect(socket)
@@ -40,10 +34,12 @@ defmodule VentureWeb.PresentationChannel do
     }
   end
 
+  @impl true
   def join("presentation:" <> _any, _auth_msg, _socket) do
     {:error, %{reason: "unauthorized"}}
   end
 
+  @impl true
   def handle_in("next", _msg, socket = %{assigns: %{presenter: true}}) do
     case Venture.Presentation.next do
       nil -> nil
@@ -52,6 +48,7 @@ defmodule VentureWeb.PresentationChannel do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_in("prev", _msg, socket = %{assigns: %{presenter: true}}) do
     case Venture.Presentation.prev do
       nil -> nil
@@ -60,6 +57,7 @@ defmodule VentureWeb.PresentationChannel do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_in("reset", _msg, socket = %{assigns: %{presenter: true}}) do
     Venture.Deck.reload
     Venture.Presentation.reset
@@ -67,6 +65,7 @@ defmodule VentureWeb.PresentationChannel do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_in("reload", _msg, socket = %{assigns: %{presenter: true}}) do
     Venture.Deck.reload
     Venture.Presentation.reset_selections
@@ -74,23 +73,14 @@ defmodule VentureWeb.PresentationChannel do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_in("select", %{"option" => option}, socket) do
     handle_selection(Venture.Presentation.current_slide, option, socket)
   end
 
+  @impl true
   def handle_in(_event, _msg, socket) do
     {:noreply, socket}
-  end
-
-  def leave(socket) do
-    selections = Venture.Selections.deregister(socket)
-    Venture.Connections.disconnect(socket)
-    case Venture.Presentation.current_slide do
-      %Fork{} -> broadcast_selections! selections
-      %Poll{} -> broadcast_selections! selections
-      _       -> nil
-    end
-    :ok
   end
 
   defp strip_nonpresenter_data(slide = %Fork{}) do
@@ -172,6 +162,18 @@ defmodule VentureWeb.PresentationChannel do
       {:ok, selections} -> broadcast_selections! selections
     end
     {:noreply, socket}
+  end
+
+  @impl true
+  def terminate(_reason, socket) do
+    selections = Venture.Selections.deregister(socket)
+    Venture.Connections.disconnect(socket)
+    case Venture.Presentation.current_slide do
+      %Fork{} -> broadcast_selections! selections
+      %Poll{} -> broadcast_selections! selections
+      _       -> nil
+    end
+    :ok
   end
 
 end

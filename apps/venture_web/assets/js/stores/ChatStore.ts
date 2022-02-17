@@ -1,6 +1,6 @@
 import Immutable from "immutable";
 import { EventEmitter } from "events";
-import { Channel } from "phoenix";
+import { Channel, Presence } from "phoenix";
 
 import AppDispatcher, { Action } from "../dispatcher/AppDispatcher";
 
@@ -24,6 +24,7 @@ class ChatStore extends EventEmitter {
   messages: Immutable.List<object>;
   nicks: Immutable.Map<string, Nick>;
   channel?: Channel;
+  presence?: Presence;
   dispatchToken?: string;
 
   constructor() {
@@ -32,7 +33,6 @@ class ChatStore extends EventEmitter {
     this.editing = true;
     this.messages = Immutable.List();
     this.nicks = Immutable.Map();
-    this.channel = undefined;
   }
 
   isEditing() {
@@ -65,12 +65,23 @@ class ChatStore extends EventEmitter {
     });
   }
 
+  presenceSync(presence: Presence) {
+    this.nicks = Immutable.Map(
+      presence.list((_id, {metas: [meta, ..._rest]}) => {
+        return([meta.id, new Nick({ id: meta.id, name: meta.name })]);
+      })
+    );
+    this.emitChange();
+  }
+
   joinChannel() {
     if (!this.channel || this.channel.state === "closed") {
       let socket = SessionStore.getSocket();
       let channel = socket.channel(
         "chat:channel", {name: this.nick.name}
       );
+      let presence = new Presence(channel);
+      presence.onSync( () => this.presenceSync(presence));
       channel.onError( () => channel.leave() );
       channel.on("message", (message: Message) => {
         ChatActions.receiveMessage(message);
@@ -98,6 +109,7 @@ class ChatStore extends EventEmitter {
           });
         });
       this.channel = channel;
+      this.presence = presence;
     }
   }
 
@@ -157,23 +169,10 @@ store.dispatchToken = AppDispatcher.register((action: Action) => {
       sessionStorage.removeItem("name");
       store.emitChange();
       break;
-    case ChatConstants.CHANNEL_JOINED:
-      store.nicks = Immutable.Map(
-        action.data.nicks.map( (nick: Nick) => [nick.id, new Nick(nick)] )
-      );
-      store.emitChange();
-      break;
-    case ChatConstants.CHANNEL_JOIN_ERROR:
-      sessionStorage.removeItem("name");
-      store.channel = undefined;
-      store.emitChange();
-      break;
     case ChatConstants.USER_JOINED:
-      store.nicks = store.nicks.set(action.data.id, new Nick(action.data));
       store.emitChange();
       break;
     case ChatConstants.USER_CHANGED:
-      store.nicks = store.nicks.set(action.data.id, new Nick(action.data));
       var { prev, name } = action.data;
       if (prev !== name) {
         if (prev) {
@@ -221,7 +220,6 @@ store.dispatchToken = AppDispatcher.register((action: Action) => {
           )
         );
       }
-      store.nicks = store.nicks.delete(action.data.id);
       store.emitChange();
       break;
     case ChatConstants.MESSAGE_RECEIVED:
