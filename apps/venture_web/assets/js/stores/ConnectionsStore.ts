@@ -3,11 +3,10 @@ import SessionConstants from "../constants/SessionConstants";
 import ConnectionConstants from "../constants/ConnectionConstants";
 import { EventEmitter } from "events";
 
-interface Connections {
+export interface Connections {
   presenters:  number;
   attendees:   number;
 }
-
 
 class ConnectionStore extends EventEmitter {
   dispatchToken?: string;

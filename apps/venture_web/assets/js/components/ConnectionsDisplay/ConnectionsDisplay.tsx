@@ -1,10 +1,5 @@
 import React from 'react';
-import ConnectionsStore from '../../stores/ConnectionsStore';
-
-interface Connections {
-  presenters:  number;
-  attendees:   number;
-}
+import ConnectionsStore, { Connections } from '../../stores/ConnectionsStore';
 
 function getState(): Connections {
   return ConnectionsStore.get();
