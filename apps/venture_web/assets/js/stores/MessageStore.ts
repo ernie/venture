@@ -1,8 +1,6 @@
-import Immutable from "immutable";
 import { EventEmitter } from "events";
-import AppDispatcher from "../dispatcher/AppDispatcher";
+import AppDispatcher, { Action } from "../dispatcher/AppDispatcher";
 
-import ChatActions from "../actions/ChatActions";
 import ChatConstants from "../constants/ChatConstants";
 import MessageConstants from "../constants/MessageConstants";
 import SlideStore from "../stores/SlideStore";
@@ -10,6 +8,7 @@ import SlideConstants from "../constants/SlideConstants";
 import SessionConstants from "../constants/SessionConstants";
 
 class MessageStore extends EventEmitter {
+  dispatchToken: string;
 
   message = "";
   history = [];
@@ -26,11 +25,11 @@ class MessageStore extends EventEmitter {
     this.emit(MessageConstants.MESSAGES_UPDATED);
   }
 
-  addChangeListener(callback) {
+  addChangeListener(callback: () => void) {
     this.on(MessageConstants.MESSAGES_UPDATED, callback);
   }
 
-  removeChangeListener(callback) {
+  removeChangeListener(callback: () => void) {
     this.removeListener(MessageConstants.MESSAGES_UPDATED, callback);
   }
 
@@ -38,7 +37,7 @@ class MessageStore extends EventEmitter {
 
 let store = new MessageStore();
 
-store.dispatchToken = AppDispatcher.register((action) => {
+store.dispatchToken = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
     case ChatConstants.NICK_CLICKED:
       store.message = `/msg "${action.data}" `

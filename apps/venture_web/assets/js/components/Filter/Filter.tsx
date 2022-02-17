@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import SlideRecord from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 interface FilterProps {
-  slide: SlideRecord;
+  slide: Slide;
 }
 
 interface FilterStyles {

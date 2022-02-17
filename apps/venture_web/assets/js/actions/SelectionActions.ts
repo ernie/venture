@@ -4,7 +4,7 @@ import SelectionConstants from '../constants/SelectionConstants';
 
 export default {
 
-  receiveSelections(data) {
+  receiveSelections(data: object) {
     AppDispatcher.dispatch({
       actionType: SelectionConstants.SELECTIONS_RECEIVED,
       data: data

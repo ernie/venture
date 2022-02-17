@@ -1,16 +1,22 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import SessionConstants from '../constants/SessionConstants';
 
+interface JoinData {
+  slide: object;
+  selections: object;
+  connections?: object;
+}
+
 export default {
 
-  handleConnection(data) {
+  handleConnection(data: JoinData) {
     AppDispatcher.dispatch({
       actionType: SessionConstants.CONNECTED,
       data: data
     });
   },
 
-  setToken(token) {
+  setToken(token: string) {
     AppDispatcher.dispatch({
       actionType: SessionConstants.SET_TOKEN,
       data: token

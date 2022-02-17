@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
+
 import PresenterControls from "../PresenterControls/PresenterControls";
 import ConnectionsDisplay from "../ConnectionsDisplay/ConnectionsDisplay";
 import Notes from "../Notes/Notes";
 import SlidePreview from "../SlidePreview/SlidePreview";
-import Slide from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 interface PresenterOverlayProps {
   slide: Slide;
-  channel: Object;
+  channel: Channel;
   isPresenter: boolean;
 }
 

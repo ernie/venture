@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import ChatActions from "../../actions/ChatActions";
 
 import NickRecord from "../../records/Nick";
 
 interface NickFormProps {
-  channel:  Object;
+  channel:  Channel;
   nick:     NickRecord;
   active:   boolean;
 }

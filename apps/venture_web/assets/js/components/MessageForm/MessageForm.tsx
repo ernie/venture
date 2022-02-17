@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import MessageStore from "../../stores/MessageStore";
 import ChatActions from "../../actions/ChatActions";
@@ -15,7 +16,7 @@ function getState() {
 }
 
 interface MessageFormProps {
-  channel: Object;
+  channel: Channel;
   nick: NickRecord;
   active: boolean;
 }

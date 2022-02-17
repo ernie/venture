@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
+
 import SlideActions from "../../actions/SlideActions";
 import SelectionsStore from "../../stores/SelectionsStore";
 
@@ -8,7 +10,7 @@ import classNames from "classnames";
 
 import SlideContainer from "../SlideContainer/SlideContainer";
 
-import SlideRecord from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 function getState() {
   return {
@@ -17,15 +19,15 @@ function getState() {
 }
 
 interface ForkSlideProps {
-  paths: Array<SlideRecord>;
+  paths: Array<Slide>;
   content: string;
-  channel: Object;
+  channel: Channel;
   active: boolean;
 }
 
 interface ForkSlideState {
-  selections:  Object;
-  selected:    string | undefined;
+  selections:  object;
+  selected?:    string;
 }
 
 interface Location {
@@ -85,7 +87,7 @@ export default class ForkSlide extends React.Component<ForkSlideProps> {
     return max;
   }
 
-  renderPath = (pathSlide: SlideRecord) => {
+  renderPath = (pathSlide: Slide) => {
     let max = this.maxSelections();
     let location = this.locationString(pathSlide.location);
     let selected = (this.state.selected === location ? "selected" : null);

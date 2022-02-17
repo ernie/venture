@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import NickForm from "../NickForm/NickForm";
 import MessageForm from "../MessageForm/MessageForm";
@@ -9,7 +10,7 @@ import NickRecord from "../../records/Nick";
 interface ChatInputProps {
   active: boolean;
   nick: NickRecord;
-  channel: Object;
+  channel: Channel;
   editing: boolean;
 }
 

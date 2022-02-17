@@ -1,5 +1,8 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import ChatConstants from '../constants/ChatConstants';
+import AppDispatcher from "../dispatcher/AppDispatcher";
+import ChatConstants from "../constants/ChatConstants";
+import { Channel } from "phoenix";
+import NickRecord from "../records/Nick";
+import Message from "../records/Message";
 
 let notification = undefined;
 if (window.HTMLAudioElement) {
@@ -10,14 +13,14 @@ let loadAudio = () => {
   if (notification.readyState !== 4) {
     notification.load();
   }
-  document.removeEventListener('click', loadAudio, false);
+  document.removeEventListener("click", loadAudio, false);
 }
 
-window.addEventListener('click', loadAudio, false);
+window.addEventListener("click", loadAudio, false);
 
 export default {
 
-  nickClicked(nick) {
+  nickClicked(nick: string) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.NICK_CLICKED,
       data: nick
@@ -30,11 +33,11 @@ export default {
     });
   },
 
-  setNick(channel, name) {
+  setNick(channel: Channel, name: string) {
     channel.push("nick", {name: name});
   },
 
-  sendMessage(channel, content) {
+  sendMessage(channel: Channel, content: string) {
     channel.push("message", {content: content});
     AppDispatcher.dispatch({
       actionType: ChatConstants.MESSAGE_SENT,
@@ -42,21 +45,21 @@ export default {
     });
   },
 
-  receiveNickSet(nick) {
+  receiveNickSet(nick: NickRecord) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.NICK_SET,
       data: nick
     });
   },
 
-  receiveNickError(message) {
+  receiveNickError(message: Message) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.MESSAGE_RECEIVED,
       data: message
     });
   },
 
-  receiveMessage(message) {
+  receiveMessage(message: Message) {
     if (message.type === "priv_in" && notification) {
       notification.pause();
       notification.currentTime = 0;
@@ -68,24 +71,24 @@ export default {
     });
   },
 
-  receiveJoin(join) {
+  receiveJoin(nick: NickRecord) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.USER_JOINED,
-      data: join
+      data: nick
     });
   },
 
-  receiveLeave(leave) {
+  receiveLeave(nick: NickRecord) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.USER_LEFT,
-      data: leave
+      data: nick
     });
   },
 
-  receiveNickChange(change) {
+  receiveNickChange(nick: NickRecord) {
     AppDispatcher.dispatch({
       actionType: ChatConstants.USER_CHANGED,
-      data: change
+      data: nick
     });
   }
 

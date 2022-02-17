@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import EmptySlide from "../EmptySlide/EmptySlide";
 import Slide from "../Slide/Slide";
@@ -9,23 +10,25 @@ import ChatSlide from "../ChatSlide/ChatSlide";
 import TitleSlide from "../TitleSlide/TitleSlide";
 import Attribution from "../Attribution/Attribution";
 
-import SlideRecord from "../../records/Slide";
-import PollRecord from "../../records/PollSlide";
-import ForkRecord from "../../records/ForkSlide";
-import TitleRecord from "../../records/TitleSlide";
-import EmptyRecord from "../../records/EmptySlide";
-import ChatRecord from "../../records/ChatSlide";
+import {
+  EmptySlide as EmptyRecord,
+  ChatSlide as ChatRecord,
+  PollSlide as PollRecord,
+  ForkSlide as ForkRecord,
+  TitleSlide as TitleRecord,
+  Slide as SlideRecord
+} from "../../records/Slides";
 
 interface CanvasProps {
   active: boolean;
-  channel: Object;
+  channel: Channel;
   slide: SlideRecord | ForkRecord | PollRecord | TitleRecord | EmptyRecord | ChatRecord;
 }
 
 interface CanvasStyles {
-  alignItems:      "center" | "flex-start" | "flex-end" | undefined;
-  justifyContent:  "center" | "flex-start" | "flex-end" | undefined;
-  textAlign:       "center" | "left" | "right" | undefined;
+  alignItems?:      "center" | "flex-start" | "flex-end";
+  justifyContent?:  "center" | "flex-start" | "flex-end";
+  textAlign?:       "center" | "left" | "right";
 }
 
 export default class Canvas extends React.Component<CanvasProps> {
@@ -109,7 +112,6 @@ export default class Canvas extends React.Component<CanvasProps> {
             paths={typedSlide.paths}
           />
         );
-        break;
       case "poll":
         typedSlide = slide as PollRecord;
         return (
@@ -120,7 +122,6 @@ export default class Canvas extends React.Component<CanvasProps> {
             options={typedSlide.options}
           />
         );
-        break;
       case "chat":
         typedSlide = slide as ChatRecord;
         return (
@@ -129,7 +130,6 @@ export default class Canvas extends React.Component<CanvasProps> {
             content={typedSlide.content}
           />
         );
-        break;
       default:
         return (<div>Unknown slide type: {slide.type}</div>);
     }

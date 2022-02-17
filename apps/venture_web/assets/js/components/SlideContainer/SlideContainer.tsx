@@ -1,34 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Channel } from "phoenix";
+
 import Filter from "../Filter/Filter";
 import Canvas from "../Canvas/Canvas";
 
-import SlideRecord from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 import classNames from "classnames";
 
 interface SlideContainerProps {
-  slide: SlideRecord;
-  channel: Object;
+  slide: Slide;
+  channel: Channel;
   className: string;
   active: boolean;
 }
 
 interface SlideStyles {
-  image:     string | undefined;
-  size:      string | undefined;
-  repeat:    string | undefined;
-  position:  string | undefined;
-  color:     string | undefined;
+  image?:     string;
+  size?:      string;
+  repeat?:    string;
+  position?:  string;
+  color?:     string;
 }
 
 interface BackgroundStyles {
-  backgroundImage:     string | undefined;
-  backgroundSize:      string | undefined;
-  backgroundRepeat:    string | undefined;
-  backgroundPosition:  string | undefined;
-  backgroundColor:     string | undefined;
+  backgroundImage?:     string;
+  backgroundSize?:      string;
+  backgroundRepeat?:    string;
+  backgroundPosition?:  string;
+  backgroundColor?:     string;
 }
 
 export default class SlideContainer extends React.Component<SlideContainerProps> {

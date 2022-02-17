@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import SlideContainer from "../SlideContainer/SlideContainer";
 import PresenterOverlay from "../PresenterOverlay/PresenterOverlay";
 
-import SlideRecord from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 interface SlideViewerProps {
-  slide: SlideRecord;
+  slide: Slide;
   isPresenter: boolean;
-  channel: Object;
+  channel: Channel;
 }
 
 export default class SlideViewer extends React.Component<SlideViewerProps> {

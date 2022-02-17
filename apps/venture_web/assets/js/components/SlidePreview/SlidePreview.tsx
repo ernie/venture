@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
 import SlideContainer from "../SlideContainer/SlideContainer";
 
-import SlideRecord from "../../records/Slide";
+import { Slide } from "../../records/Slides";
 
 interface SlidePreviewProps {
-  channel: object;
-  slide: SlideRecord;
+  channel: Channel;
+  slide: Slide;
 }
 
 export default class SlidePreview extends React.Component<SlidePreviewProps> {

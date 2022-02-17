@@ -1,10 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SlideActions from '../../actions/SlideActions';
-import SelectionsStore from '../../stores/SelectionsStore';
+import React from "react";
+import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
-import Markdown from '../../Markdown';
-import classNames from 'classnames';
+import SlideActions from "../../actions/SlideActions";
+import SelectionsStore from "../../stores/SelectionsStore";
+
+import Markdown from "../../Markdown";
+import classNames from "classnames";
 
 function getState() {
   return {
@@ -15,13 +17,13 @@ function getState() {
 interface PollSlideProps {
   options:  Array<string>;
   content:  string;
-  channel:  Object;
+  channel:  Channel;
   active:   boolean;
 }
 
 interface PollSlideState {
-  selections:  Object;
-  selected:    string | undefined;
+  selections:  object;
+  selected?:    string;
 }
 
 export default class PollSlide extends React.Component<PollSlideProps> {
@@ -105,7 +107,7 @@ export default class PollSlide extends React.Component<PollSlideProps> {
 
   render() {
     return (
-      <div className={'content'}>
+      <div className="content">
         <div
           className="markdown"
           dangerouslySetInnerHTML={

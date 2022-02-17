@@ -8,11 +8,11 @@ interface AttributionProps {
 }
 
 interface AttributionStyle {
-  top: number | undefined;
-  bottom: number | undefined;
-  left: number | undefined;
-  right: number | undefined;
-  textAlign: "left" | "center" | "right" | undefined;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+  textAlign?: "left" | "center" | "right";
 }
 
 export default class Attribution extends React.Component<AttributionProps> {

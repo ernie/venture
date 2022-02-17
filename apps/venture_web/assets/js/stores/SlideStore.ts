@@ -1,16 +1,19 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppDispatcher, { Action } from '../dispatcher/AppDispatcher';
 import SessionConstants from '../constants/SessionConstants';
 import SlideConstants from '../constants/SlideConstants';
 import { EventEmitter } from 'events';
 
-import Slide from '../records/Slide';
-import TitleSlide from '../records/TitleSlide';
-import ForkSlide from '../records/ForkSlide';
-import PollSlide from '../records/PollSlide';
-import ChatSlide from '../records/ChatSlide';
-import EmptySlide from '../records/EmptySlide';
+import {
+  EmptySlide,
+  ChatSlide,
+  PollSlide,
+  ForkSlide,
+  TitleSlide,
+  Slide,
+  SlideLike
+} from "../records/Slides";
 
-function newSlide(data) {
+function newSlide(data: SlideLike) {
   switch(data.type) {
     case 'slide':
       return new Slide(data);
@@ -29,8 +32,10 @@ function newSlide(data) {
 }
 
 class SlideStore extends EventEmitter {
+  slide?: Slide;
+  dispatchToken?: string;
 
-  get() {
+  get(): Slide {
     return this.slide || new EmptySlide();
   }
 
@@ -38,18 +43,18 @@ class SlideStore extends EventEmitter {
     this.emit(SlideConstants.SLIDE_UPDATED);
   }
 
-  addChangeListener(callback) {
+  addChangeListener(callback: () => void) {
     this.on(SlideConstants.SLIDE_UPDATED, callback);
   }
 
-  removeChangeListener(callback) {
+  removeChangeListener(callback: () => void) {
     this.removeListener(SlideConstants.SLIDE_UPDATED, callback);
   }
 }
 
 let store = new SlideStore();
 
-store.dispatchToken = AppDispatcher.register((action) => {
+store.dispatchToken = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
     case SessionConstants.CONNECTED:
       store.slide = newSlide(action.data.slide);

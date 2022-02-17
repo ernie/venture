@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import { Channel } from "phoenix";
 
-import SlideActions from '../../actions/SlideActions';
+import SlideActions from "../../actions/SlideActions";
 
 interface PresenterControlsProps {
-  channel: Object;
+  channel: Channel;
 }
 
 export default class PresenterControls extends React.Component<PresenterControlsProps> {
@@ -14,11 +15,11 @@ export default class PresenterControls extends React.Component<PresenterControls
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyPress, false);
+    window.addEventListener("keydown", this.handleKeyPress, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyPress, false);
+    window.removeEventListener("keydown", this.handleKeyPress, false);
   }
 
   nextSlide = () => {

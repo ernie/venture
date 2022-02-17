@@ -1,25 +1,37 @@
-import Immutable from 'immutable';
-import { EventEmitter } from 'events';
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import Immutable from "immutable";
+import { EventEmitter } from "events";
+import { Channel } from "phoenix";
 
-import ChatActions from '../actions/ChatActions';
-import ChatConstants from '../constants/ChatConstants';
-import SlideConstants from '../constants/SlideConstants';
-import SlideStore from '../stores/SlideStore';
-import SessionConstants from '../constants/SessionConstants';
-import SessionStore from '../stores/SessionStore';
+import AppDispatcher, { Action } from "../dispatcher/AppDispatcher";
 
-import Message from '../records/Message';
-import Nick from '../records/Nick';
+import ChatActions from "../actions/ChatActions";
+import ChatConstants from "../constants/ChatConstants";
+import SlideConstants from "../constants/SlideConstants";
+import SlideStore from "../stores/SlideStore";
+import SessionConstants from "../constants/SessionConstants";
+import SessionStore from "../stores/SessionStore";
+
+import Message from "../records/Message";
+import Nick from "../records/Nick";
+
+interface JoinData {
+  nicks: Immutable.Map<string, Nick>;
+}
 
 class ChatStore extends EventEmitter {
+  nick: Nick;
+  editing: boolean;
+  messages: Immutable.List<object>;
+  nicks: Immutable.Map<string, Nick>;
+  channel?: Channel;
+  dispatchToken?: string;
 
-  constructor(...args) {
-    super(...args);
-    this.nick = new Nick({name: sessionStorage.getItem('name')});
+  constructor() {
+    super();
+    this.nick = new Nick({name: sessionStorage.getItem("name")});
     this.editing = true;
-    this.messages = new Immutable.List();
-    this.nicks = new Immutable.Map();
+    this.messages = Immutable.List();
+    this.nicks = Immutable.Map();
     this.channel = undefined;
   }
 
@@ -40,8 +52,8 @@ class ChatStore extends EventEmitter {
   }
 
   reset() {
-    this.nicks = new Immutable.Map();
-    this.messages = new Immutable.List();
+    this.nicks = Immutable.Map();
+    this.messages = Immutable.List();
   }
 
   getNicks() {
@@ -54,32 +66,32 @@ class ChatStore extends EventEmitter {
   }
 
   joinChannel() {
-    if (!this.channel || this.channel.state === 'closed') {
+    if (!this.channel || this.channel.state === "closed") {
       let socket = SessionStore.getSocket();
       let channel = socket.channel(
-        'chat:channel', {name: this.nick.name}
+        "chat:channel", {name: this.nick.name}
       );
       channel.onError( () => channel.leave() );
-      channel.on("message", (message) => {
+      channel.on("message", (message: Message) => {
         ChatActions.receiveMessage(message);
       });
-      channel.on("join", (join) => {
+      channel.on("join", (join: Nick) => {
         ChatActions.receiveJoin(join);
       });
-      channel.on("leave", (leave) => {
+      channel.on("leave", (leave: Nick) => {
         ChatActions.receiveLeave(leave);
       });
-      channel.on("nick", (change) => {
+      channel.on("nick", (change: Nick) => {
         ChatActions.receiveNickChange(change);
       });
-      channel.on("nick_set", (change) => {
+      channel.on("nick_set", (change: Nick) => {
         ChatActions.receiveNickSet(change);
       });
-      channel.on("nick_error", (error) => {
+      channel.on("nick_error", (error: Message) => {
         ChatActions.receiveNickError(error);
       });
       channel.join()
-        .receive('ok', (data) => {
+        .receive("ok", (data: JoinData) => {
           AppDispatcher.dispatch({
             actionType: ChatConstants.CHANNEL_JOINED,
             data: data
@@ -100,11 +112,11 @@ class ChatStore extends EventEmitter {
     this.emit(ChatConstants.CHAT_UPDATED);
   }
 
-  addChangeListener(callback) {
+  addChangeListener(callback: () => void) {
     this.on(ChatConstants.CHAT_UPDATED, callback);
   }
 
-  removeChangeListener(callback) {
+  removeChangeListener(callback: () => void) {
     this.removeListener(ChatConstants.CHAT_UPDATED, callback);
   }
 
@@ -112,13 +124,13 @@ class ChatStore extends EventEmitter {
 
 let store = new ChatStore();
 
-store.dispatchToken = AppDispatcher.register((action) => {
+store.dispatchToken = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
     case SessionConstants.CONNECTED:
     case SlideConstants.SLIDE_RECEIVED:
       AppDispatcher.waitFor([SlideStore.dispatchToken]);
       let slide = SlideStore.get();
-      if (slide.type === 'chat') {
+      if (slide.type === "chat") {
         store.joinChannel();
       } else {
         store.reset();
@@ -131,10 +143,10 @@ store.dispatchToken = AppDispatcher.register((action) => {
       break;
     case ChatConstants.NICK_SET:
       if (action.data.name) {
-        sessionStorage.setItem('name', action.data.name);
+        sessionStorage.setItem("name", action.data.name);
         store.editing = false;
       } else {
-        sessionStorage.removeItem('name');
+        sessionStorage.removeItem("name");
         store.editing = true;
       }
       store.nick = new Nick(action.data);
@@ -142,17 +154,17 @@ store.dispatchToken = AppDispatcher.register((action) => {
       break;
     case ChatConstants.NICK_ERROR:
       store.editing = true;
-      sessionStorage.removeItem('name');
+      sessionStorage.removeItem("name");
       store.emitChange();
       break;
     case ChatConstants.CHANNEL_JOINED:
-      store.nicks = new Immutable.Map(
-        action.data.nicks.map( (nick) => [nick.id, new Nick(nick)] )
+      store.nicks = Immutable.Map(
+        action.data.nicks.map( (nick: Nick) => [nick.id, new Nick(nick)] )
       );
       store.emitChange();
       break;
     case ChatConstants.CHANNEL_JOIN_ERROR:
-      sessionStorage.removeItem('name');
+      sessionStorage.removeItem("name");
       store.channel = undefined;
       store.emitChange();
       break;
@@ -169,7 +181,7 @@ store.dispatchToken = AppDispatcher.register((action) => {
             store.messages = store.messages.push(
               new Message(
                 {
-                  type: 'system',
+                  type: "system",
                   content: `${prev} is now known as ${name}.`
                 }
               )
@@ -178,7 +190,7 @@ store.dispatchToken = AppDispatcher.register((action) => {
             store.messages = store.messages.push(
               new Message(
                 {
-                  type: 'system',
+                  type: "system",
                   content: `${prev} slips back into the shadows.`
                 }
               )
@@ -188,7 +200,7 @@ store.dispatchToken = AppDispatcher.register((action) => {
           store.messages = store.messages.push(
             new Message(
               {
-                type: 'system',
+                type: "system",
                 content: `${name} emerges from the shadows.`
               }
             )
@@ -203,7 +215,7 @@ store.dispatchToken = AppDispatcher.register((action) => {
         store.messages = store.messages.push(
           new Message(
             {
-              type: 'system',
+              type: "system",
               content: `${name} has left.`
             }
           )

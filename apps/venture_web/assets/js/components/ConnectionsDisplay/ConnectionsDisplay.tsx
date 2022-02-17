@@ -6,8 +6,8 @@ interface Connections {
   attendees:   number;
 }
 
-function getState() {
-  return ConnectionsStore.get() as Connections;
+function getState(): Connections {
+  return ConnectionsStore.get();
 }
 
 export default class ConnectionsDisplay extends React.Component {
