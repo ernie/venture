@@ -21,12 +21,6 @@ export default {
       actionType: SessionConstants.SET_KEY,
       data: key
     });
-  },
-
-  skipKey() {
-    AppDispatcher.dispatch({
-      actionType: SessionConstants.SKIP_KEY
-    });
   }
 
 }

@@ -7,9 +7,9 @@ import SlideViewer from "../SlideViewer/SlideViewer";
 function getState() {
   return {
     slide: SlideStore.get(),
-    channel: SessionStore.getChannel(),
+    channel: SessionStore.channel,
     isPresenter: SessionStore.isPresenter(),
-    didRequestKey: SessionStore.didRequestKey()
+    accessKey: SessionStore.accessKey
   };
 }
 
@@ -35,13 +35,13 @@ export default class App extends React.Component {
     return (
       <div className="app">
         {
-          this.state.didRequestKey ?
+          this.state.accessKey ?
             <SlideViewer
               channel={this.state.channel}
               isPresenter={this.state.isPresenter}
               slide={this.state.slide}
             /> :
-            <KeyRequester didRequestKey={this.state.didRequestKey} />
+            <KeyRequester  />
         }
       </div>
     );

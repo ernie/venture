@@ -13,7 +13,6 @@ class SessionStore extends EventEmitter {
   didConnect: boolean;
   presenter: boolean;
   accessKey: string;
-  keyRequested: boolean;
   socket: Socket;
   channel: Channel;
 
@@ -22,12 +21,7 @@ class SessionStore extends EventEmitter {
     this.didConnect = false;
     this.presenter = false;
     this.accessKey = sessionStorage.getItem('accessKey');
-    this.keyRequested = !!sessionStorage.getItem('keyRequested');
     this.configureSocket(this.accessKey);
-  }
-
-  didRequestKey() {
-    return this.keyRequested ? true : false;
   }
 
   isPresenter() {
@@ -47,34 +41,24 @@ class SessionStore extends EventEmitter {
   }
 
   configureSocket(key: string) {
-    if (!this.keyRequested) {
+    if (!key) {
       return;
     }
-    if (key) {
-      this.socket = new Socket("/socket", {params: {key: key}});
-      this.channel = this.socket.channel('presentation', {});
-    } else {
-      this.socket = new Socket("/socket");
-      this.channel = this.socket.channel('presentation', {});
-    }
+    this.socket = new Socket("/socket", {params: {key: key}});
+    this.channel = this.socket.channel('presentation', {});
     this.socket.onError( (_error: () => void) => {
       if (!this.didConnect) {
         this.socket.disconnect();
         this.accessKey = undefined;
-        this.keyRequested = false;
         sessionStorage.removeItem('accessKey');
-        sessionStorage.removeItem('keyRequested');
         this.emitChange();
       }
     });
     this.socket.onOpen( (_data) => {
       this.didConnect = true;
-      this.presenter = key ? true : false;
-      if (key) {
-        this.accessKey = key;
-        sessionStorage.setItem('accessKey', key);
-      }
-      this.keyRequested = true;
+      this.presenter = key === ":attendee" ? false : true;
+      this.accessKey = key;
+      sessionStorage.setItem('accessKey', key);
       this.emitChange();
     });
     this.socket.connect();
@@ -112,15 +96,8 @@ store.dispatchKey = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
     case SessionConstants.SET_KEY:
       if (action.data) {
-        sessionStorage.setItem('keyRequested', "true");
-        store.keyRequested = true;
         store.configureSocket(action.data);
       }
-      break;
-    case SessionConstants.SKIP_KEY:
-      sessionStorage.setItem('keyRequested', "true");
-      store.keyRequested = true;
-      store.configureSocket(null);
       break;
     default:
   }
