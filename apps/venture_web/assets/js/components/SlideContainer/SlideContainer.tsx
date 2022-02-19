@@ -18,11 +18,11 @@ interface SlideContainerProps {
 }
 
 interface SlideStyles {
-  image?:     string;
-  size?:      string;
-  repeat?:    string;
-  position?:  string;
-  color?:     string;
+  image?:          string;
+  size?:           string;
+  repeat?:         string;
+  position?:       string;
+  color?:          string;
 }
 
 interface BackgroundStyles {
@@ -45,6 +45,10 @@ export default class SlideContainer extends React.Component<SlideContainerProps>
   static defaultProps = {
     className: "",
     active: true
+  }
+
+  deactivatePointerEvents: React.CSSProperties = {
+    pointerEvents: "none"
   }
 
   backgroundStyle({ image, size, repeat, position, color }: SlideStyles) {
@@ -84,12 +88,12 @@ export default class SlideContainer extends React.Component<SlideContainerProps>
   }
 
   render() {
-    let { slide, channel, className, active } = this.props;
-    let slideStyle = this.slideStyle();
-    let baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
-    let slideClasses = baseClasses.concat(slide.class || []);
+    const { slide, channel, className, active } = this.props;
+    const slideStyle = this.slideStyle();
+    const baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
+    const slideClasses = baseClasses.concat(slide.class || []);
     return (
-      <div className={classNames(className, "slide-container")}>
+      <div className={classNames(className, "slide-container")} style={active ? null : this.deactivatePointerEvents}>
         <div
           className={classNames("slide", ...slideClasses)}
           style={slideStyle}

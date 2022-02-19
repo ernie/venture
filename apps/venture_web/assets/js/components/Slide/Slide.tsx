@@ -7,26 +7,20 @@ interface SlideProps {
   active: boolean;
 }
 
-export default class Slide extends React.Component<SlideProps> {
+const Slide = ({content = "", active = true}: SlideProps) => {
 
-  static propTypes = {
-    content: PropTypes.string.isRequired,
-    active: PropTypes.bool
-  }
-
-  static defaultProps = {
-    active: true,
-    content: ''
-  }
-
-  render() {
-    let { content } = this.props;
-    return (
-      <div
-        className="content markdown slideMarkdown"
-        dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
-      />
-    );
-  }
+  return (
+    <div
+      className="content markdown slideMarkdown"
+      dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
+    />
+  );
 
 }
+
+Slide.propTypes = {
+  content: PropTypes.string,
+  active: PropTypes.bool.isRequired
+}
+
+export default Slide;
