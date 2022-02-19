@@ -33,25 +33,13 @@ interface BackgroundStyles {
   backgroundColor?:     string;
 }
 
-export default class SlideContainer extends React.Component<SlideContainerProps> {
+const SlideContainer = ({slide, channel, className = "", active = true}: SlideContainerProps) => {
 
-  static propTypes = {
-    slide: PropTypes.object.isRequired,
-    channel: PropTypes.object.isRequired,
-    className: PropTypes.string,
-    active: PropTypes.bool
-  }
-
-  static defaultProps = {
-    className: "",
-    active: true
-  }
-
-  deactivatePointerEvents: React.CSSProperties = {
+  const deactivatePointerEvents: React.CSSProperties = {
     pointerEvents: "none"
   }
 
-  backgroundStyle({ image, size, repeat, position, color }: SlideStyles) {
+  const backgroundStyle = ({ image, size, repeat, position, color }: SlideStyles) => {
     let bgStyles = {} as BackgroundStyles;
     if (image) {
       bgStyles.backgroundImage =
@@ -72,41 +60,45 @@ export default class SlideContainer extends React.Component<SlideContainerProps>
     return bgStyles;
   }
 
-  slideStyle = () => {
-    let slide = this.props.slide;
-    let slideStyle = {} as SlideStyles;
+  const slideStyle = () => {
+    let style = {} as SlideStyles;
     if (typeof slide.background === "string") {
       if (slide.background.startsWith("#")) {
-        slideStyle.color = slide.background;
+        style.color = slide.background;
       } else {
-        slideStyle.image = slide.background;
+        style.image = slide.background;
       }
     } else if (typeof slide.background === "object") {
-      Object.assign(slideStyle, slide.background);
+      Object.assign(style, slide.background);
     }
-    return Object.assign({}, this.backgroundStyle(slideStyle));
+    return Object.assign({}, backgroundStyle(style));
   }
 
-  render() {
-    const { slide, channel, className, active } = this.props;
-    const slideStyle = this.slideStyle();
-    const baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
-    const slideClasses = baseClasses.concat(slide.class || []);
-    return (
-      <div className={classNames(className, "slide-container")} style={active ? null : this.deactivatePointerEvents}>
-        <div
-          className={classNames("slide", ...slideClasses)}
-          style={slideStyle}
-        >
-          <Filter slide={slide} />
-          <Canvas
-            active={active}
-            channel={channel}
-            slide={slide}
-          />
-        </div>
+  const baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
+  const slideClasses = baseClasses.concat(slide.class || []);
+  return (
+    <div className={classNames(className, "slide-container")} style={active ? null : deactivatePointerEvents}>
+      <div
+        className={classNames("slide", ...slideClasses)}
+        style={slideStyle()}
+      >
+        <Filter slide={slide} />
+        <Canvas
+          active={active}
+          channel={channel}
+          slide={slide}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 
 }
+
+SlideContainer.propTypes = {
+  slide: PropTypes.object.isRequired,
+  channel: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  active: PropTypes.bool
+}
+
+export default SlideContainer;
