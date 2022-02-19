@@ -48,7 +48,7 @@ defmodule Venture.ConnectionsTest do
   @tag presenter: true
   test "broadcasts to presenters when connections change", %{socket: socket} do
     subscribe_and_join(
-      socket, VentureWeb.PresentationChannel, "presentation:presenter"
+      socket, VentureWeb.PresentationChannel, "presentation"
     )
     attendee = socket(
       VentureWeb.UserSocket, "user:a-#{@uuid}", %{uuid: "a-#{@uuid}", presenter: false}

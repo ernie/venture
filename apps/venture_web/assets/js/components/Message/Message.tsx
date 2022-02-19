@@ -9,14 +9,9 @@ interface MessageProps {
   message: MessageRecord;
 }
 
-export default class Message extends React.Component<MessageProps> {
+const Message = ({ message }: MessageProps) => {
 
-  static propTypes = {
-    message: PropTypes.instanceOf(MessageRecord).isRequired
-  }
-
-  privmsgIndicator = () => {
-    let message = this.props.message;
+  const privmsgIndicator = () => {
     switch(message.type) {
       case "priv_in":
         return (
@@ -24,29 +19,29 @@ export default class Message extends React.Component<MessageProps> {
             &rarr; you
           </div>
         );
-        break;
       case "priv_out":
         return (
           <div className="messageIndicator">
             &rarr; {message.recipient}
           </div>
         );
-        break;
       default:
     }
   }
 
-  render() {
-    let message = this.props.message;
-    return (
-      <div className="message">
-        <div className="messageNick" title={message.sender}><span>{message.sender}</span></div>
-        <div className={classNames("messageContent", "message-" + message.type)}>
-          {this.privmsgIndicator()}
-          {message.content}
-        </div>
+  return (
+    <div className="message">
+      <div className="messageNick" title={message.sender}><span>{message.sender}</span></div>
+      <div className={classNames("messageContent", "message-" + message.type)}>
+        {privmsgIndicator()}
+        {message.content}
       </div>
-    );
-  }
-
+    </div>
+  );
 }
+
+Message.propTypes = {
+  message: PropTypes.instanceOf(MessageRecord).isRequired
+}
+
+export default Message;

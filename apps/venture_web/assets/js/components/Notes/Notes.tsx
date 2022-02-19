@@ -7,25 +7,21 @@ interface NotesProps {
   notes: string;
 }
 
-export default class Notes extends React.Component<NotesProps> {
+const Notes = ({ notes = "" }: NotesProps) => {
 
-  static propTypes = {
-    notes: PropTypes.string.isRequired
-  }
-
-  static defaultProps = {
-    notes: ""
-  }
-
-  render() {
-    return (
-      <div
-        className="notes slideMarkdown"
-        dangerouslySetInnerHTML={
-          { __html: Markdown.render(this.props.notes) }
-        }
-      />
-    );
-  }
+  return (
+    <div
+      className="notes slideMarkdown"
+      dangerouslySetInnerHTML={
+        { __html: Markdown.render(notes) }
+      }
+    />
+  );
 
 }
+
+Notes.propTypes = {
+  notes: PropTypes.string.isRequired
+}
+
+export default Notes;

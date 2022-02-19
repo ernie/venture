@@ -21,7 +21,7 @@ interface JoinData {
 class ChatStore extends EventEmitter {
   nick: Nick;
   editing: boolean;
-  messages: Immutable.List<object>;
+  messages: Immutable.List<Message>;
   nicks: Immutable.Map<string, Nick>;
   channel?: Channel;
   presence?: Presence;
@@ -78,7 +78,7 @@ class ChatStore extends EventEmitter {
     if (!this.channel || this.channel.state === "closed") {
       let socket = SessionStore.getSocket();
       let channel = socket.channel(
-        "chat:channel", {name: this.nick.name}
+        "chat", {name: this.nick.name}
       );
       let presence = new Presence(channel);
       presence.onSync( () => this.presenceSync(presence));

@@ -7,18 +7,9 @@ defmodule VentureWeb.PresentationChannelTest do
 
   @moduletag presenter: true
 
-  defp subscribe(socket = %{assigns: %{presenter: true}}) do
-    case subscribe_and_join(
-      socket, PresentationChannel, "presentation:presenter"
-    ) do
-      result = {:ok, _reply, _socket} -> result
-      {:error, reply} -> {:error, reply, nil}
-    end
-  end
-
   defp subscribe(socket) do
     case subscribe_and_join(
-      socket, PresentationChannel, "presentation:attendee"
+      socket, PresentationChannel, "presentation"
     ) do
       result = {:ok, _reply, _socket} -> result
       {:error, reply} -> {:error, reply, nil}
@@ -55,7 +46,8 @@ defmodule VentureWeb.PresentationChannelTest do
   @tag presenter: false
   test "receives slides without notes or next data" do
     presenter_push "next"
-    assert_push "slide", %{slide: %{notes: nil, next: nil}}
+    assert_push "slide", %{slide: %Venture.Slide.Poll{}}
+    refute_push "slide", %{slide: %{notes: _, next: _}}
   end
 
   @tag presenter: false

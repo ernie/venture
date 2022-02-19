@@ -18,8 +18,8 @@ defmodule VentureWeb.UserSocket do
   #
   # See the [`Channels guide`](https://hexdocs.pm/phoenix/channels.html)
   # for further details.
-  channel "presentation:*", VentureWeb.PresentationChannel
-  channel "chat:*", VentureWeb.ChatChannel
+  channel "presentation", VentureWeb.PresentationChannel
+  channel "chat", VentureWeb.ChatChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

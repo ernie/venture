@@ -115,7 +115,7 @@ defmodule Venture.Stories do
     end
     meta = YamlElixir.read_from_string!(yaml)
            |> Enum.into(
-                %{type: "markdown", location: %{story: key, index: index}},
+                %{type: "slide", location: %{story: key, index: index}},
                 fn { k, v } -> { String.to_atom(k), v } end
               )
     Slide.for(Map.put(meta, :content, content))
@@ -124,7 +124,7 @@ defmodule Venture.Stories do
   # A slide without YAML front matter
   defp build_slide({ content, index }, key) do
     Slide.for(%{
-      type: "markdown",
+      type: "slide",
       location: %{story: key, index: index},
       content: String.trim(content, "\n")
     })

@@ -2,9 +2,11 @@ defmodule VentureWeb.PresentationChannel do
   use VentureWeb, :channel
   use Venture.Slide
 
+  intercept ["slide", "connections"]
+
   @impl true
   def join(
-    "presentation:presenter",
+    "presentation",
     _auth_msg,
     socket = %{assigns: %{presenter: true}}
   ) do
@@ -13,14 +15,14 @@ defmodule VentureWeb.PresentationChannel do
     connections = Venture.Connections.connect(socket)
     {
       :ok,
-      %{slide: slide, selections: selections, connections: connections},
+      %{slide: Slide.with_presenter_data(slide), selections: selections, connections: connections},
       socket
     }
   end
 
   @impl true
   def join(
-    "presentation:attendee",
+    "presentation",
     _auth_msg,
     socket = %{assigns: %{presenter: false}}
   ) do
@@ -29,13 +31,13 @@ defmodule VentureWeb.PresentationChannel do
     Venture.Connections.connect(socket)
     {
       :ok,
-      %{slide: strip_nonpresenter_data(slide), selections: selections},
+      %{slide: slide, selections: selections},
       socket
     }
   end
 
   @impl true
-  def join("presentation:" <> _any, _auth_msg, _socket) do
+  def join("presentation", _auth_msg, _socket) do
     {:error, %{reason: "unauthorized"}}
   end
 
@@ -83,12 +85,27 @@ defmodule VentureWeb.PresentationChannel do
     {:noreply, socket}
   end
 
-  defp strip_nonpresenter_data(slide = %Fork{}) do
-    %Fork{ slide | next: nil, notes: nil, paths: Enum.map(slide.paths, &strip_nonpresenter_data/1) }
+  @impl true
+  def handle_out("slide", msg, socket = %{assigns: %{presenter: true}}) do
+    push(socket, "slide", %{ msg | slide: Slide.with_presenter_data(msg.slide) })
+    {:noreply, socket}
   end
 
-  defp strip_nonpresenter_data(slide) do
-    %{ slide | next: nil, notes: nil }
+  @impl true
+  def handle_out("slide", msg, socket = %{assigns: %{presenter: false}}) do
+    push(socket, "slide", msg)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_out("connections", msg, socket = %{assigns: %{presenter: true}}) do
+    push(socket, "connections", msg)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_out("connections", _msg, socket = %{assigns: %{presenter: false}}) do
+    {:noreply, socket}
   end
 
   defp broadcast_slide!(%Fork{} = slide) do
@@ -101,25 +118,15 @@ defmodule VentureWeb.PresentationChannel do
 
   defp broadcast_slide!(slide) do
     VentureWeb.Endpoint.broadcast!(
-      "presentation:presenter", "slide", %{slide: slide}
-    )
-    VentureWeb.Endpoint.broadcast!(
-      "presentation:attendee", "slide", %{slide: strip_nonpresenter_data(slide)}
+      "presentation", "slide", %{slide: slide}
     )
   end
 
   defp broadcast_slide_with_selections!(slide) do
     selections = Venture.Selections.current
     VentureWeb.Endpoint.broadcast!(
-      "presentation:presenter", "slide",
+      "presentation", "slide",
       %{slide: slide, selections: selections}
-    )
-    VentureWeb.Endpoint.broadcast!(
-      "presentation:attendee", "slide",
-      %{
-        slide: strip_nonpresenter_data(slide),
-        selections: selections
-      }
     )
   end
 
@@ -129,10 +136,7 @@ defmodule VentureWeb.PresentationChannel do
 
   defp broadcast_selections!(selections) do
     VentureWeb.Endpoint.broadcast!(
-      "presentation:presenter", "selections", selections
-    )
-    VentureWeb.Endpoint.broadcast!(
-      "presentation:attendee", "selections", selections
+      "presentation", "selections", selections
     )
   end
 

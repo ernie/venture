@@ -11,7 +11,7 @@ defmodule VentureWeb.ChatChannelTest do
   end
 
   defp subscribe(socket, nil) do
-    case subscribe_and_join(socket, ChatChannel, "chat:channel") do
+    case subscribe_and_join(socket, ChatChannel, "chat") do
       result = {:ok, _reply, _socket} -> result
       {:error, reply} -> {:error, reply, nil}
     end
@@ -19,7 +19,7 @@ defmodule VentureWeb.ChatChannelTest do
 
   defp subscribe(socket, name) do
     case subscribe_and_join(
-      socket, ChatChannel, "chat:channel", %{ "name" => name }
+      socket, ChatChannel, "chat", %{ "name" => name }
     ) do
       result = {:ok, _reply, _socket} -> result
       {:error, reply} -> {:error, reply, nil}

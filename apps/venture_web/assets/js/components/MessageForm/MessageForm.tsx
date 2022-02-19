@@ -25,8 +25,8 @@ export default class MessageForm extends React.Component<MessageFormProps> {
   input: React.RefObject<HTMLInputElement>;
 
   static propTypes = {
-    channel: PropTypes.object.isRequired,
-    nick: PropTypes.object.isRequired,
+    channel: PropTypes.instanceOf(Channel),
+    nick: PropTypes.instanceOf(NickRecord).isRequired,
     active: PropTypes.bool.isRequired
   }
 

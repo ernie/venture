@@ -5,14 +5,14 @@ defmodule VentureWeb.ChatChannel do
   alias VentureWeb.Presence
 
   @impl true
-  def join("chat:channel", %{"name" => name}, socket) do
+  def join("chat", %{"name" => name}, socket) do
     send self(), {:after_join, name}
     Nicks.put(socket, nil)
     { :ok, %{}, assign(socket, :activity, []) }
   end
 
   @impl true
-  def join("chat:channel", _auth_msg, socket) do
+  def join("chat", _auth_msg, socket) do
     send self(), {:after_join, nil}
     Nicks.put(socket, nil)
     { :ok, %{}, assign(socket, :activity, []) }
@@ -310,7 +310,7 @@ defmodule VentureWeb.ChatChannel do
   def terminate(_reason, %{id: id, assigns: %{name: name}}) do
     name = Nicks.delete(id)
     VentureWeb.Endpoint.broadcast!(
-      "chat:channel", "leave", %{id: id, name: name}
+      "chat", "leave", %{id: id, name: name}
     )
     :ok
   end

@@ -68,7 +68,7 @@ defmodule Venture.Connections do
 
   defp broadcast!(connections) do
     VentureWeb.Endpoint.broadcast!(
-      "presentation:presenter", "connections", connections
+      "presentation", "connections", connections
     )
   end
 

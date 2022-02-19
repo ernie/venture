@@ -4,7 +4,8 @@ defmodule Venture.Slide do
   alias Venture.Slide.Chat
   alias Venture.Slide.Title
 
-  defstruct location: %{story: "", index: 0}, next: nil, content: "", notes: "",
+  @derive {Jason.Encoder, except: [:next, :notes]}
+  defstruct type: "slide", location: %{story: "", index: 0}, next: nil, content: "", notes: "",
             background: nil, class: nil, attribution: nil, align: ""
 
   defmacro __using__(_opts) do
@@ -17,14 +18,8 @@ defmodule Venture.Slide do
     end
   end
 
-  defimpl Jason.Encoder, for: __MODULE__ do
-
-    def encode(slide, options) do
-      Jason.Encode.map(
-        Map.from_struct(slide) |> Map.put(:type, "slide"), options
-      )
-    end
-
+  def with_presenter_data(slide) do
+    Map.from_struct(slide)
   end
 
   def for(%{type: "fork"} = map) do

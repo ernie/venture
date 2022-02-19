@@ -52,10 +52,10 @@ class SessionStore extends EventEmitter {
     }
     if (token) {
       this.socket = new Socket("/socket", {params: {token: token}});
-      this.channel = this.socket.channel('presentation:presenter', {});
+      this.channel = this.socket.channel('presentation', {});
     } else {
       this.socket = new Socket("/socket");
-      this.channel = this.socket.channel('presentation:attendee', {});
+      this.channel = this.socket.channel('presentation', {});
     }
     this.socket.onError( (_error: () => void) => {
       if (!this.didConnect) {

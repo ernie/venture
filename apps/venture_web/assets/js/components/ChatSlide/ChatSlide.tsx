@@ -22,6 +22,7 @@ interface ChatSlideProps {
 }
 
 export default class ChatSlide extends React.Component<ChatSlideProps> {
+  content: React.RefObject<HTMLDivElement>
 
   static propTypes = {
     content: PropTypes.string.isRequired,
@@ -33,6 +34,11 @@ export default class ChatSlide extends React.Component<ChatSlideProps> {
   }
 
   state = getState();
+
+  constructor(props: ChatSlideProps) {
+    super(props);
+    this.content = React.createRef();
+  }
 
   componentDidMount() {
     ChatStore.addChangeListener(this.handleChange);
@@ -63,7 +69,7 @@ export default class ChatSlide extends React.Component<ChatSlideProps> {
       <div
         className="content chatSlide"
         onKeyDown={this.props.active ? this.handleKeyPress : null}
-        ref="content"
+        ref={this.content}
       >
         <MessageList messages={this.state.messages} />
         <NickList
