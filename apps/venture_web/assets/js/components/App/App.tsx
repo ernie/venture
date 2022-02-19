@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SessionStore from "../../stores/SessionStore";
 import SlideStore from "../../stores/SlideStore";
 import KeyRequester from "../KeyRequester/KeyRequester";
@@ -13,37 +13,36 @@ function getState() {
   };
 }
 
-export default class App extends React.Component {
+const App = () => {
 
-  state = getState();
+  const [state, setState] = useState(getState());
 
-  componentDidMount() {
-    SlideStore.addChangeListener(this.handleChange);
-    SessionStore.addChangeListener(this.handleChange);
+  const handleChange = () => {
+    setState(getState());
   }
 
-  componentWillUnmount() {
-    SlideStore.removeChangeListener(this.handleChange);
-    SessionStore.removeChangeListener(this.handleChange);
-  }
+  useEffect(() => {
+    SlideStore.addChangeListener(handleChange);
+    SessionStore.addChangeListener(handleChange);
+    return () => {
+      SlideStore.removeChangeListener(handleChange);
+      SessionStore.removeChangeListener(handleChange);
+    };
+  });
 
-  handleChange = () => {
-    this.setState(getState());
-  }
-
-  render() {
-    return (
-      <div className="app">
-        {
-          this.state.accessKey ?
-            <SlideViewer
-              channel={this.state.channel}
-              isPresenter={this.state.isPresenter}
-              slide={this.state.slide}
-            /> :
-            <KeyRequester  />
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="app">
+      {
+        state.accessKey ?
+          <SlideViewer
+            channel={state.channel}
+            isPresenter={state.isPresenter}
+            slide={state.slide}
+          /> :
+          <KeyRequester  />
+      }
+    </div>
+  );
 }
+
+export default App;
