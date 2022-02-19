@@ -31,17 +31,11 @@ interface CanvasStyles {
   textAlign?:       "center" | "left" | "right";
 }
 
-export default class Canvas extends React.Component<CanvasProps> {
+const Canvas = (props: CanvasProps) => {
 
-  static propTypes = {
-    active: PropTypes.bool.isRequired,
-    channel: PropTypes.object.isRequired,
-    slide: PropTypes.object.isRequired
-  }
-
-  attribution = () => {
-    let slide = this.props.slide;
-    let attribution = {position: "bottom right", content: undefined};
+  const attribution = () => {
+    const slide = props.slide;
+    const attribution = {position: "bottom right", content: undefined};
     if (typeof slide.attribution === "string") {
       attribution.content = slide.attribution;
     } else if (typeof slide.attribution === "object") {
@@ -50,9 +44,9 @@ export default class Canvas extends React.Component<CanvasProps> {
     return attribution;
   }
 
-  style = () => {
-    let align = (this.props.slide.align || "").toLowerCase().trim();
-    let style = {} as CanvasStyles;
+  const style = () => {
+    const align = (props.slide.align || "").toLowerCase().trim();
+    const style = {} as CanvasStyles;
     align.split(/\s+/).forEach( (instruction) => {
       switch(instruction) {
         case "center":
@@ -80,8 +74,8 @@ export default class Canvas extends React.Component<CanvasProps> {
     return style;
   }
 
-  renderSlide() {
-    let { slide, channel, active } = this.props;
+  const renderSlide = () => {
+    const { slide, channel, active } = props;
     let typedSlide = undefined;
     switch (slide.type) {
       case "empty":
@@ -135,21 +129,27 @@ export default class Canvas extends React.Component<CanvasProps> {
     }
   }
 
-  render() {
-    let attribution = this.attribution();
+  const attrib = attribution();
 
-    return (
-      <div
-        className={"canvas"}
-        style={this.style()}
-      >
-        {this.renderSlide()}
-        <Attribution
-          content={attribution.content}
-          position={attribution.position}
-        />
-      </div>
-    );
-  }
+  return (
+    <div
+      className={"canvas"}
+      style={style()}
+    >
+      {renderSlide()}
+      <Attribution
+        content={attrib.content}
+        position={attrib.position}
+      />
+    </div>
+  );
 
 }
+
+Canvas.propTypes = {
+  active: PropTypes.bool.isRequired,
+  channel: PropTypes.object.isRequired,
+  slide: PropTypes.object.isRequired
+}
+
+export default Canvas;
