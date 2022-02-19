@@ -9,8 +9,9 @@
 # move said applications out of the umbrella.
 import Config
 
-# This default is overridden in runtime.exs for production use
-config :venture, :presenter_token, "abc123"
+# This default presenter key is overridden in runtime.exs for production use
+config :venture, :presenter_key, "presenter"
+config :venture, :attendee_key, ":attendee"
 
 config :venture, :stories, "priv/stories"
 

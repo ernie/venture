@@ -16,16 +16,16 @@ export default {
     });
   },
 
-  setToken(token: string) {
+  setKey(key: string) {
     AppDispatcher.dispatch({
-      actionType: SessionConstants.SET_TOKEN,
-      data: token
+      actionType: SessionConstants.SET_KEY,
+      data: key
     });
   },
 
-  skipToken() {
+  skipKey() {
     AppDispatcher.dispatch({
-      actionType: SessionConstants.SKIP_TOKEN
+      actionType: SessionConstants.SKIP_KEY
     });
   }
 

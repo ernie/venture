@@ -21,11 +21,11 @@ explains and demonstrates available features.
     $ mix phx.server
 
 You can then connect to the Venture app at `http://localhost:4000`. In dev mode
-mode, the presenter token is `abc123` by default. You can change this in
+mode, the presenter key is `presenter` by default. You can change this in
 `config/config.exs`, if you'd like. **If you plan to host your presentation
 from your laptop running in dev mode, you most certainly should change it.**
 
-In production, the presenter token is read from the `PRESENTER_TOKEN`
+In production, the presenter key is read from the `PRESENTER_KEY`
 environment variable.
 
 ## Creating Your Presentation

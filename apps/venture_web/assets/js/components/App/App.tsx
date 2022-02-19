@@ -1,7 +1,7 @@
 import React from "react";
 import SessionStore from "../../stores/SessionStore";
 import SlideStore from "../../stores/SlideStore";
-import TokenRequester from "../TokenRequester/TokenRequester";
+import KeyRequester from "../KeyRequester/KeyRequester";
 import SlideViewer from "../SlideViewer/SlideViewer";
 
 function getState() {
@@ -9,7 +9,7 @@ function getState() {
     slide: SlideStore.get(),
     channel: SessionStore.getChannel(),
     isPresenter: SessionStore.isPresenter(),
-    didRequestToken: SessionStore.didRequestToken()
+    didRequestKey: SessionStore.didRequestKey()
   };
 }
 
@@ -35,13 +35,13 @@ export default class App extends React.Component {
     return (
       <div className="app">
         {
-          this.state.didRequestToken ?
+          this.state.didRequestKey ?
             <SlideViewer
               channel={this.state.channel}
               isPresenter={this.state.isPresenter}
               slide={this.state.slide}
             /> :
-            <TokenRequester didRequestToken={this.state.didRequestToken} />
+            <KeyRequester didRequestKey={this.state.didRequestKey} />
         }
       </div>
     );

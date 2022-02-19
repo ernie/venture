@@ -9,11 +9,11 @@ import SessionConstants from '../constants/SessionConstants';
 import { Socket, Channel } from 'phoenix';
 
 class SessionStore extends EventEmitter {
-  dispatchToken: string;
+  dispatchKey: string;
   didConnect: boolean;
   presenter: boolean;
-  accessToken: string;
-  tokenRequested: boolean;
+  accessKey: string;
+  keyRequested: boolean;
   socket: Socket;
   channel: Channel;
 
@@ -21,21 +21,21 @@ class SessionStore extends EventEmitter {
     super();
     this.didConnect = false;
     this.presenter = false;
-    this.accessToken = sessionStorage.getItem('accessToken');
-    this.tokenRequested = !!sessionStorage.getItem('tokenRequested');
-    this.configureSocket(this.accessToken);
+    this.accessKey = sessionStorage.getItem('accessKey');
+    this.keyRequested = !!sessionStorage.getItem('keyRequested');
+    this.configureSocket(this.accessKey);
   }
 
-  didRequestToken() {
-    return this.tokenRequested ? true : false;
+  didRequestKey() {
+    return this.keyRequested ? true : false;
   }
 
   isPresenter() {
     return this.presenter;
   }
 
-  getAccessToken() {
-    return this.accessToken;
+  getAccessKey() {
+    return this.accessKey;
   }
 
   getSocket() {
@@ -46,12 +46,12 @@ class SessionStore extends EventEmitter {
     return this.channel;
   }
 
-  configureSocket(token: string) {
-    if (!this.tokenRequested) {
+  configureSocket(key: string) {
+    if (!this.keyRequested) {
       return;
     }
-    if (token) {
-      this.socket = new Socket("/socket", {params: {token: token}});
+    if (key) {
+      this.socket = new Socket("/socket", {params: {key: key}});
       this.channel = this.socket.channel('presentation', {});
     } else {
       this.socket = new Socket("/socket");
@@ -60,21 +60,21 @@ class SessionStore extends EventEmitter {
     this.socket.onError( (_error: () => void) => {
       if (!this.didConnect) {
         this.socket.disconnect();
-        this.accessToken = undefined;
-        this.tokenRequested = false;
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('tokenRequested');
+        this.accessKey = undefined;
+        this.keyRequested = false;
+        sessionStorage.removeItem('accessKey');
+        sessionStorage.removeItem('keyRequested');
         this.emitChange();
       }
     });
     this.socket.onOpen( (_data) => {
       this.didConnect = true;
-      this.presenter = token ? true : false;
-      if (token) {
-        this.accessToken = token;
-        sessionStorage.setItem('accessToken', token);
+      this.presenter = key ? true : false;
+      if (key) {
+        this.accessKey = key;
+        sessionStorage.setItem('accessKey', key);
       }
-      this.tokenRequested = true;
+      this.keyRequested = true;
       this.emitChange();
     });
     this.socket.connect();
@@ -108,18 +108,18 @@ class SessionStore extends EventEmitter {
 
 let store = new SessionStore();
 
-store.dispatchToken = AppDispatcher.register((action: Action) => {
+store.dispatchKey = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
-    case SessionConstants.SET_TOKEN:
+    case SessionConstants.SET_KEY:
       if (action.data) {
-        sessionStorage.setItem('tokenRequested', "true");
-        store.tokenRequested = true;
+        sessionStorage.setItem('keyRequested', "true");
+        store.keyRequested = true;
         store.configureSocket(action.data);
       }
       break;
-    case SessionConstants.SKIP_TOKEN:
-      sessionStorage.setItem('tokenRequested', "true");
-      store.tokenRequested = true;
+    case SessionConstants.SKIP_KEY:
+      sessionStorage.setItem('keyRequested', "true");
+      store.keyRequested = true;
       store.configureSocket(null);
       break;
     default:

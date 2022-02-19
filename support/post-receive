@@ -12,7 +12,7 @@ GIT_REPO=$APPS_DIR/venture.git
 TMP_GIT_CLONE=$APPS_DIR/tmp/venture
 
 export SECRET_KEY_BASE="you-should-probably-have-a-secret-key-base"
-export PRESENTER_TOKEN="make-sure-this-is-secure"
+export PRESENTER_KEY="make-sure-this-is-secure"
 export MIX_ENV=prod
 
 git clone $GIT_REPO $TMP_GIT_CLONE

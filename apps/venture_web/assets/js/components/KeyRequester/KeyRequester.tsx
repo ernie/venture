@@ -2,50 +2,50 @@ import React from "react";
 import PropTypes from "prop-types";
 import SessionActions from "../../actions/SessionActions";
 
-interface TokenRequesterProps {
-  didRequestToken: boolean;
+interface KeyRequesterProps {
+  didRequestKey: boolean;
 }
 
-export default class TokenRequester extends React.Component<TokenRequesterProps> {
+export default class KeyRequester extends React.Component<KeyRequesterProps> {
   form:           React.RefObject<HTMLFormElement>;
   presenterLink:  React.RefObject<HTMLParagraphElement>;
-  token:          React.RefObject<HTMLInputElement>;
+  key:            React.RefObject<HTMLInputElement>;
 
-  constructor(props: TokenRequesterProps) {
+  constructor(props: KeyRequesterProps) {
     super(props);
     this.form = React.createRef();
     this.presenterLink = React.createRef();
-    this.token = React.createRef();
+    this.key = React.createRef();
   }
 
   static propTypes = {
-    didRequestToken: PropTypes.bool.isRequired
+    didRequestKey: PropTypes.bool.isRequired
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    SessionActions.setToken(this.token.current.value);
-    this.token.current.value = "";
+    SessionActions.setKey(this.key.current.value);
+    this.key.current.value = "";
   }
 
   handleSkip(e: React.UIEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    SessionActions.skipToken();
+    SessionActions.skipKey();
   }
 
   showForm = (e: React.UIEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     this.presenterLink.current.style.display = "none";
     this.form.current.style.display = "block";
-    this.token.current.focus();
+    this.key.current.focus();
   }
 
   render() {
-    if (this.props.didRequestToken) {
+    if (this.props.didRequestKey) {
       return false;
     } else {
       return (
-        <div className="tokenRequester">
+        <div className="keyRequester">
           <p className="attendeeLink">
             <a href="#" onClick={this.handleSkip}>I'm an attendee!</a>
           </p>
@@ -61,14 +61,14 @@ export default class TokenRequester extends React.Component<TokenRequesterProps>
             </a>
           </p>
           <form
-            className="tokenForm"
+            className="keyForm"
             onSubmit={this.handleSubmit}
             ref={this.form}
           >
             <input
-              name="token"
-              placeholder="Presenter Token"
-              ref={this.token}
+              name="key"
+              placeholder="Presenter Key"
+              ref={this.key}
               type="password"
             />
             <button type="submit">Present</button>

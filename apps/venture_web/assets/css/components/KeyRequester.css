@@ -1,4 +1,4 @@
-.tokenRequester {
+.keyRequester {
   text-align: center;
   background-color: #fff;
   position: absolute;
@@ -9,14 +9,14 @@
   border-radius: 2%;
 }
 
-.tokenForm {
+.keyForm {
   position: absolute;
   bottom: 5%;
   right: 5%;
   display: none;
   font-size: 50%;
 }
-.tokenForm * {
+.keyForm * {
   margin-left: 0.5em;
 }
 
