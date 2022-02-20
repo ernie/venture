@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { Channel } from "phoenix";
 
@@ -35,48 +35,34 @@ interface Location {
   index: number;
 }
 
-export default class ForkSlide extends React.Component<ForkSlideProps> {
+const ForkSlide = ({ paths, content, channel, active = true }: ForkSlideProps) => {
+  const [state, setState] = useState(getState);
+  useLayoutEffect(() => {
+    SelectionsStore.addChangeListener(handleChange);
+    return () => {
+      SelectionsStore.removeChangeListener(handleChange);
+    };
+  }, []);
 
-  static propTypes = {
-    paths: PropTypes.array.isRequired,
-    content: PropTypes.string.isRequired,
-    channel: PropTypes.object.isRequired,
-    active: PropTypes.bool
-  }
-
-  static defaultProps = {
-    active: true
-  }
-
-  state = getState();
-
-  componentDidMount() {
-    SelectionsStore.addChangeListener(this.handleChange);
-  }
-
-  componentWillUnmount() {
-    SelectionsStore.removeChangeListener(this.handleChange);
-  }
-
-  selectOption = (e: React.UIEvent<HTMLLIElement>) => {
+  const selectOption = (e: React.UIEvent<HTMLLIElement>) => {
     e.preventDefault();
-    if (this.props.active) {
-      this.setState({ selected: e.currentTarget.dataset.option });
-      SlideActions.selectOption(this.props.channel, e.currentTarget.dataset.option);
+    if (active) {
+      setState({...state, selected: e.currentTarget.dataset.option });
+      SlideActions.selectOption(channel, e.currentTarget.dataset.option);
     }
   }
 
-  handleChange = () => {
-    this.setState(getState());
+  const handleChange = () => {
+    setState(getState);
   }
 
-  locationString(loc: Location) {
+  const locationString = (loc: Location) => {
     return `${loc.story}:${loc.index}`;
   }
 
-  maxSelections = () => {
+  const maxSelections = () => {
     let max = 0;
-    let selections = this.state.selections;
+    let selections = state.selections;
     for (var key in selections) {
       if (selections.hasOwnProperty(key)) {
         if (selections[key] > max) {
@@ -87,12 +73,12 @@ export default class ForkSlide extends React.Component<ForkSlideProps> {
     return max;
   }
 
-  renderPath = (pathSlide: Slide) => {
-    let max = this.maxSelections();
-    let location = this.locationString(pathSlide.location);
-    let selected = (this.state.selected === location ? "selected" : null);
+  const renderPath = (pathSlide: Slide) => {
+    let max = maxSelections();
+    let location = locationString(pathSlide.location);
+    let selected = (state.selected === location ? "selected" : null);
     let winner = null;
-    if (max > 0 && this.state.selections[location] === max) {
+    if (max > 0 && state.selections[location] === max) {
       winner = "winner";
     }
     return (
@@ -100,33 +86,39 @@ export default class ForkSlide extends React.Component<ForkSlideProps> {
         className={classNames("forkOption", selected, winner)}
         data-option={location}
         key={location}
-        onClick={this.selectOption}>
+        onClick={selectOption}>
         <SlideContainer
           active={false}
-          channel={this.props.channel}
+          channel={channel}
           slide={pathSlide}
         />
         <div className="forkSelectionCount">
-          {this.state.selections[location] || 0}
+          {state.selections[location] || 0}
         </div>
       </li>
     );
   }
 
-  render() {
-    return (
-      <div className="content">
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={
-            { __html: Markdown.render(this.props.content) }
-          }
-        />
-        <ul className="forkOptions">
-          {this.props.paths.map(this.renderPath)}
-        </ul>
-      </div>
-    );
-  }
+  return (
+    <div className="content">
+      <div
+        className="markdown"
+        dangerouslySetInnerHTML={
+          { __html: Markdown.render(content) }
+        }
+      />
+      <ul className="forkOptions">
+        {paths.map(renderPath)}
+      </ul>
+    </div>
+  );
 
 }
+ForkSlide.propTypes = {
+  paths: PropTypes.array.isRequired,
+  content: PropTypes.string.isRequired,
+  channel: PropTypes.object.isRequired,
+  active: PropTypes.bool
+}
+
+export default ForkSlide;

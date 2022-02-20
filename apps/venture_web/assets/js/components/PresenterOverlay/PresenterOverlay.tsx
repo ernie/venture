@@ -14,28 +14,27 @@ interface PresenterOverlayProps {
   isPresenter: boolean;
 }
 
-export default class PresenterOverlay extends React.Component<PresenterOverlayProps> {
+const PresenterOverlay = ({ slide, channel, isPresenter }: PresenterOverlayProps) => {
 
-  static propTypes = {
-    slide: PropTypes.object.isRequired,
-    channel: PropTypes.object.isRequired,
-    isPresenter: PropTypes.bool.isRequired
-  }
-
-  render() {
-    let { slide, channel } = this.props;
-    if (this.props.isPresenter) {
-      return (
-        <div className="presenterOverlay">
-          <PresenterControls channel={channel} />
-          <ConnectionsDisplay />
-          <Notes notes={slide.notes} />
-          <SlidePreview channel={channel} slide={slide.next} />
-        </div>
-      );
-    } else {
-      return false;
-    }
+  if (isPresenter) {
+    return (
+      <div className="presenterOverlay">
+        <PresenterControls channel={channel} />
+        <ConnectionsDisplay />
+        <Notes notes={slide.notes} />
+        <SlidePreview channel={channel} slide={slide.next} />
+      </div>
+    );
+  } else {
+    return false;
   }
 
 }
+
+PresenterOverlay.propTypes = {
+  slide: PropTypes.object.isRequired,
+  channel: PropTypes.object.isRequired,
+  isPresenter: PropTypes.bool.isRequired
+}
+
+export default PresenterOverlay;

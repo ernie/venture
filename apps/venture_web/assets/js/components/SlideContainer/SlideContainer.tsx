@@ -12,9 +12,9 @@ import classNames from "classnames";
 
 interface SlideContainerProps {
   slide: Slide;
-  channel: Channel;
-  className: string;
-  active: boolean;
+  channel?: Channel;
+  className?: string;
+  active?: boolean;
 }
 
 interface SlideStyles {

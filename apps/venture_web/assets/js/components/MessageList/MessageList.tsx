@@ -1,7 +1,6 @@
 import Immutable from "immutable";
 
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useRef, useState, useEffect } from "react";
 
 import Message from "../Message/Message";
 import MessageRecord from "../../records/Message";
@@ -10,22 +9,19 @@ interface MessageListProps {
   messages: Immutable.List<MessageRecord>;
 }
 
-export default class MessageList extends React.Component<MessageListProps> {
-  messages: React.RefObject<HTMLDivElement>
-  autoScrolling = false;
-  userScrolling = false;
+const MessageList = ({ messages }: MessageListProps) => {
+  const messagesDiv = useRef(null);
+  const [state, setState] = useState({ autoScrolling: false, userScrolling: false });
 
-  static propTypes = {
-    messages: PropTypes.instanceOf(Immutable.List).isRequired
-  }
+  useEffect(() => {
+    if (!state.userScrolling) {
+      setState({...state, autoScrolling: true});
+      messagesDiv.current.scrollTop = messagesDiv.current.scrollHeight;
+      setState({...state, autoScrolling: false});
+    }
+  }, [messages, state.userScrolling]);
 
-  constructor(props: MessageListProps) {
-    super(props);
-    this.messages = React.createRef();
-  }
-
-
-  renderMessage(message: MessageRecord, index: number) {
+  const renderMessage = (message: MessageRecord, index: number) => {
     return (
       <Message
         key={index}
@@ -34,37 +30,29 @@ export default class MessageList extends React.Component<MessageListProps> {
     );
   }
 
-  scrolled = () => {
-    let msgs = this.messages.current;
-    if (!this.autoScrolling) {
+  const scrolled = () => {
+    let msgs = messagesDiv.current;
+    if (!state.autoScrolling) {
       if (msgs.scrollTop < (msgs.scrollHeight - (msgs.clientHeight + 5))) {
-        this.userScrolling = true;
+        setState({...state, userScrolling: true});
       } else {
-        this.userScrolling = false;
+        setState({...state, userScrolling: false});
       }
     }
   }
 
-  componentDidUpdate() {
-    if (!this.userScrolling) {
-      this.autoScrolling = true;
-      this.messages.current.scrollTop = this.messages.current.scrollHeight;
-      this.autoScrolling = false;
-    }
-  }
-
-  render() {
-    return (
-      <div
-        className="messages"
-        onScroll={this.scrolled}
-        ref={this.messages}
-      >
-        <div className="messageList">
-          {this.props.messages.map(this.renderMessage)}
-        </div>
+  return (
+    <div
+      className="messages"
+      onScroll={scrolled}
+      ref={messagesDiv}
+    >
+      <div className="messageList">
+        {messages.map(renderMessage)}
       </div>
-    );
-  }
+    </div>
+  );
 
 }
+
+export default MessageList;

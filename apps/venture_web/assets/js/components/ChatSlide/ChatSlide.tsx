@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChatStore from '../../stores/ChatStore';
 
@@ -21,34 +21,22 @@ interface ChatSlideProps {
   active:  boolean;
 }
 
-export default class ChatSlide extends React.Component<ChatSlideProps> {
-  content: React.RefObject<HTMLDivElement>
+const ChatSlide = ({ active = true }: ChatSlideProps) => {
+  const contentDiv = useRef(null);
+  const [state, setState] = useState(getState);
 
-  static propTypes = {
-    content: PropTypes.string.isRequired,
-    active: PropTypes.bool
+  const handleChange = () => {
+    setState(getState);
   }
 
-  static defaultProps = {
-    active: true
-  }
+  useLayoutEffect(() => {
+    ChatStore.addChangeListener(handleChange);
+    return () => {
+      ChatStore.removeChangeListener(handleChange);
+    };
+  }, []);
 
-  state = getState();
-
-  constructor(props: ChatSlideProps) {
-    super(props);
-    this.content = React.createRef();
-  }
-
-  componentDidMount() {
-    ChatStore.addChangeListener(this.handleChange);
-  }
-
-  componentWillUnmount() {
-    ChatStore.removeChangeListener(this.handleChange);
-  }
-
-  handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     switch(e.key) {
       case "PageUp":
       case "PageDown":
@@ -60,30 +48,31 @@ export default class ChatSlide extends React.Component<ChatSlideProps> {
     }
   }
 
-  handleChange = () => {
-    this.setState(getState());
-  }
-
-  render() {
-    return (
-      <div
-        className="content chatSlide"
-        onKeyDown={this.props.active ? this.handleKeyPress : null}
-        ref={this.content}
-      >
-        <MessageList messages={this.state.messages} />
-        <NickList
-          active={this.props.active}
-          nicks={this.state.nicks}
-        />
-        <ChatInput
-          active={this.props.active}
-          channel={this.state.channel}
-          editing={this.state.editing}
-          nick={this.state.nick}
-        />
-      </div>
-    );
-  }
+  return (
+    <div
+      className="content chatSlide"
+      onKeyDown={active ? handleKeyPress : null}
+      ref={contentDiv}
+    >
+      <MessageList messages={state.messages} />
+      <NickList
+        active={active}
+        nicks={state.nicks}
+      />
+      <ChatInput
+        active={active}
+        channel={state.channel}
+        editing={state.editing}
+        nick={state.nick}
+      />
+    </div>
+  );
 
 }
+
+ChatSlide.propTypes = {
+  content: PropTypes.string.isRequired,
+  active: PropTypes.bool
+}
+
+export default ChatSlide;

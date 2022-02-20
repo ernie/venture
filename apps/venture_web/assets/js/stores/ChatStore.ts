@@ -14,10 +14,6 @@ import SessionStore from "../stores/SessionStore";
 import Message from "../records/Message";
 import Nick from "../records/Nick";
 
-interface JoinData {
-  nicks: Immutable.Map<string, Nick>;
-}
-
 class ChatStore extends EventEmitter {
   nick: Nick;
   editing: boolean;
@@ -65,23 +61,14 @@ class ChatStore extends EventEmitter {
     });
   }
 
-  presenceSync(presence: Presence) {
-    this.nicks = Immutable.Map(
-      presence.list((_id, {metas: [meta, ..._rest]}) => {
-        return([meta.id, new Nick({ id: meta.id, name: meta.name })]);
-      })
-    );
-    this.emitChange();
-  }
-
   joinChannel() {
     if (!this.channel || this.channel.state === "closed") {
-      let socket = SessionStore.getSocket();
-      let channel = socket.channel(
+      const socket = SessionStore.getSocket();
+      const channel = socket.channel(
         "chat", {name: this.nick.name}
       );
-      let presence = new Presence(channel);
-      presence.onSync( () => this.presenceSync(presence));
+      const presence = new Presence(channel);
+      presence.onSync( () => ChatActions.receivePresence(presence));
       channel.onError( () => channel.leave() );
       channel.on("message", (message: Message) => {
         ChatActions.receiveMessage(message);
@@ -101,15 +88,10 @@ class ChatStore extends EventEmitter {
       channel.on("nick_error", (error: Message) => {
         ChatActions.receiveNickError(error);
       });
-      channel.join()
-        .receive("ok", (data: JoinData) => {
-          AppDispatcher.dispatch({
-            actionType: ChatConstants.CHANNEL_JOINED,
-            data: data
-          });
-        });
       this.channel = channel;
       this.presence = presence;
+      channel.join()
+        .receive("ok", () => this.emitChange() );
     }
   }
 
@@ -117,6 +99,7 @@ class ChatStore extends EventEmitter {
     if (this.channel) {
       this.channel.leave();
       this.channel = undefined;
+      this.emitChange();
     }
   }
 
@@ -149,6 +132,7 @@ store.dispatchToken = AppDispatcher.register((action: Action) => {
         store.leaveChannel();
       }
       store.emitChange();
+      break;
     case ChatConstants.EDIT_NICK:
       store.editing = true;
       store.emitChange();
@@ -170,6 +154,14 @@ store.dispatchToken = AppDispatcher.register((action: Action) => {
       store.emitChange();
       break;
     case ChatConstants.USER_JOINED:
+      store.emitChange();
+      break;
+    case ChatConstants.PRESENCE_RECEIVED:
+      store.nicks = Immutable.Map(
+        action.data.list((_id: string, {metas: [meta, ..._rest]}) => {
+          return([meta.id, new Nick({ id: meta.id, name: meta.name })]);
+        })
+      );
       store.emitChange();
       break;
     case ChatConstants.USER_CHANGED:

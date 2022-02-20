@@ -13,7 +13,7 @@ interface NickListProps {
 const NickList = ({nicks, active}: NickListProps) => {
 
   const nickClicked = (e: React.UIEvent<HTMLDivElement>) => {
-    ChatActions.nickClicked((e.target as HTMLDivElement).innerText);
+    ChatActions.nickClicked(e.currentTarget.innerText);
   }
 
   const renderNick = (nick: NickRecord, index: number) => {

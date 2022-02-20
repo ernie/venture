@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Channel } from "phoenix";
 
@@ -8,47 +8,41 @@ interface PresenterControlsProps {
   channel: Channel;
 }
 
-export default class PresenterControls extends React.Component<PresenterControlsProps> {
+const PresenterControls = ({ channel }: PresenterControlsProps) => {
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress, false);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress, false);
+    };
+  }, []);
 
-  static propTypes = {
-    channel: PropTypes.object.isRequired
+  const nextSlide = () => {
+    SlideActions.nextSlide(channel);
   }
 
-  componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyPress, false);
+  const prevSlide = () => {
+    SlideActions.prevSlide(channel);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyPress, false);
+  const resetPresentation = () => {
+    SlideActions.resetPresentation(channel);
   }
 
-  nextSlide = () => {
-    SlideActions.nextSlide(this.props.channel);
+  const reloadDeck = () => {
+    SlideActions.reloadDeck(channel);
   }
 
-  prevSlide = () => {
-    SlideActions.prevSlide(this.props.channel);
-  }
-
-  resetPresentation = () => {
-    SlideActions.resetPresentation(this.props.channel);
-  }
-
-  reloadDeck = () => {
-    SlideActions.reloadDeck(this.props.channel);
-  }
-
-  handleKeyPress = (e: KeyboardEvent) => {
+  const handleKeyPress = (e: KeyboardEvent) => {
     switch(e.key) {
       case "PageUp":
       case "ArrowLeft":
-        this.prevSlide();
+        prevSlide();
         break;
       case " ":
       case "Spacebar": // Older browsers
       case "PageDown":
       case "ArrowRight":
-        this.nextSlide();
+        nextSlide();
         break
       case "Escape":
       case "F5":
@@ -62,19 +56,23 @@ export default class PresenterControls extends React.Component<PresenterControls
     }
   }
 
-  render() {
-    return (
-      <div className="presenterControls">
-        <div className="presenterControlsLeft">
-          <button onClick={this.prevSlide}>Prev</button>
-          <button onClick={this.nextSlide}>Next</button>
-        </div>
-        <div className="presenterControlsRight">
-          <button onClick={this.resetPresentation}>Reset</button>
-          <button onClick={this.reloadDeck}>Reload</button>
-        </div>
+  return (
+    <div className="presenterControls">
+      <div className="presenterControlsLeft">
+        <button onClick={prevSlide}>Prev</button>
+        <button onClick={nextSlide}>Next</button>
       </div>
-    );
-  }
+      <div className="presenterControlsRight">
+        <button onClick={resetPresentation}>Reset</button>
+        <button onClick={reloadDeck}>Reload</button>
+      </div>
+    </div>
+  );
 
 }
+
+PresenterControls.propTypes = {
+  channel: PropTypes.object.isRequired
+}
+
+export default PresenterControls;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { Channel } from "phoenix";
 
@@ -26,41 +26,27 @@ interface PollSlideState {
   selected?:    string;
 }
 
-export default class PollSlide extends React.Component<PollSlideProps> {
+const PollSlide = ({ options, content, channel, active = true }: PollSlideProps) => {
+  const [state, setState] = useState(getState);
+  useLayoutEffect(() => {
+    SelectionsStore.addChangeListener(handleChange);
+    return () => {
+      SelectionsStore.removeChangeListener(handleChange);
+    };
+  }, []);
 
-  static propTypes = {
-    options: PropTypes.array.isRequired,
-    content: PropTypes.string.isRequired,
-    channel: PropTypes.object.isRequired,
-    active: PropTypes.bool
+  const selectOption = (e: React.UIEvent<HTMLLIElement>) => {
+    setState({ ...state, selected: e.currentTarget.dataset.option });
+    SlideActions.selectOption(channel, e.currentTarget.dataset.option);
   }
 
-  static defaultProps = {
-    active: true
+  const handleChange = () => {
+    setState(getState);
   }
 
-  state = getState();
-
-  componentDidMount() {
-    SelectionsStore.addChangeListener(this.handleChange);
-  }
-
-  componentWillUnmount() {
-    SelectionsStore.removeChangeListener(this.handleChange);
-  }
-
-  selectOption = (e: React.UIEvent<HTMLLIElement>) => {
-    this.setState({ selected: e.currentTarget.dataset.option });
-    SlideActions.selectOption(this.props.channel, e.currentTarget.dataset.option);
-  }
-
-  handleChange = () => {
-    this.setState(getState());
-  }
-
-  maxSelections = () => {
+  const maxSelections = () => {
     let max = 0;
-    let selections = this.state.selections;
+    let selections = state.selections;
     for (var key in selections) {
       if (selections.hasOwnProperty(key)) {
         if (selections[key] > max) {
@@ -71,20 +57,20 @@ export default class PollSlide extends React.Component<PollSlideProps> {
     return max;
   }
 
-  stylesFor = (option: string) => {
-    let max = this.maxSelections();
+  const stylesFor = (option: string) => {
+    let max = maxSelections();
     if (max === 0) {
       return { width: 0 }
     } else {
-      return { width: `${(this.state.selections[option] / max * 100)}%` }
+      return { width: `${(state.selections[option] / max * 100)}%` }
     }
   }
 
-  renderOption = (option: string) => {
-    let max = this.maxSelections();
-    let selected = (this.state.selected === option ? "selected" : null);
+  const renderOption = (option: string) => {
+    let max = maxSelections();
+    let selected = (state.selected === option ? "selected" : null);
     let winner = null;
-    if (max > 0 && this.state.selections[option] === max) {
+    if (max > 0 && state.selections[option] === max) {
       winner = "winner";
     }
     return (
@@ -92,33 +78,40 @@ export default class PollSlide extends React.Component<PollSlideProps> {
         className={classNames("pollOption", selected, winner)}
         data-option={option}
         key={option}
-        onClick={this.props.active ? this.selectOption : null}
+        onClick={active ? selectOption : null}
       >
-        {option} ({this.state.selections[option] || 0})
+        {option} ({state.selections[option] || 0})
         <div
           className="pollBar"
-          style={this.stylesFor(option)}
+          style={stylesFor(option)}
         >
-          {option} ({this.state.selections[option] || 0})
+          {option} ({state.selections[option] || 0})
         </div>
       </li>
     );
   }
 
-  render() {
-    return (
-      <div className="content">
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={
-            { __html: Markdown.render(this.props.content) }
-          }
-        />
-        <ul className="pollOptions">
-          {this.props.options.map(this.renderOption)}
-        </ul>
-      </div>
-    );
-  }
+  return (
+    <div className="content">
+      <div
+        className="markdown"
+        dangerouslySetInnerHTML={
+          { __html: Markdown.render(content) }
+        }
+      />
+      <ul className="pollOptions">
+        {options.map(renderOption)}
+      </ul>
+    </div>
+  );
 
 }
+
+PollSlide.propTypes = {
+  options: PropTypes.array.isRequired,
+  content: PropTypes.string.isRequired,
+  channel: PropTypes.object.isRequired,
+  active: PropTypes.bool
+}
+
+export default PollSlide;

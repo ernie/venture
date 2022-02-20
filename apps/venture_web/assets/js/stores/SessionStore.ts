@@ -9,7 +9,7 @@ import SessionConstants from '../constants/SessionConstants';
 import { Socket, Channel } from 'phoenix';
 
 class SessionStore extends EventEmitter {
-  dispatchKey: string;
+  dispatchToken: string;
   didConnect: boolean;
   presenter: boolean;
   accessKey: string;
@@ -92,7 +92,7 @@ class SessionStore extends EventEmitter {
 
 let store = new SessionStore();
 
-store.dispatchKey = AppDispatcher.register((action: Action) => {
+store.dispatchToken = AppDispatcher.register((action: Action) => {
   switch(action.actionType) {
     case SessionConstants.SET_KEY:
       if (action.data) {

@@ -12,15 +12,11 @@ interface FilterStyles {
   opacity: number;
 }
 
-export default class Filter extends React.Component<FilterProps> {
+const Filter = ({ slide }: FilterProps) => {
 
-  static propTypes = {
-    slide: PropTypes.object.isRequired
-  }
-
-  style = () => {
+  const style = () => {
     let style = {} as FilterStyles;
-    let bg = this.props.slide.background || {};
+    let bg = slide.background || {};
     if (typeof bg === "object") {
       if (bg.darken) {
         style.backgroundColor = "#000";
@@ -33,13 +29,17 @@ export default class Filter extends React.Component<FilterProps> {
     return style;
   }
 
-  render() {
-    return (
-      <div
-        className="filter"
-        style={this.style()}
-      />
-    );
-  }
+  return (
+    <div
+      className="filter"
+      style={style()}
+    />
+  );
 
 }
+
+Filter.propTypes = {
+  slide: PropTypes.object.isRequired
+}
+
+export default Filter;

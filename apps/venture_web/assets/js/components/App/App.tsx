@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import SessionStore from "../../stores/SessionStore";
 import SlideStore from "../../stores/SlideStore";
 import KeyRequester from "../KeyRequester/KeyRequester";
@@ -15,20 +15,20 @@ function getState() {
 
 const App = () => {
 
-  const [state, setState] = useState(getState());
+  const [state, setState] = useState(getState);
 
   const handleChange = () => {
-    setState(getState());
+    setState(getState);
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     SlideStore.addChangeListener(handleChange);
     SessionStore.addChangeListener(handleChange);
     return () => {
       SlideStore.removeChangeListener(handleChange);
       SessionStore.removeChangeListener(handleChange);
     };
-  });
+  }, []);
 
   return (
     <div className="app">

@@ -1,6 +1,6 @@
 import AppDispatcher from "../dispatcher/AppDispatcher";
 import ChatConstants from "../constants/ChatConstants";
-import { Channel } from "phoenix";
+import { Channel, Presence } from "phoenix";
 import NickRecord from "../records/Nick";
 import Message from "../records/Message";
 
@@ -75,6 +75,13 @@ export default {
     AppDispatcher.dispatch({
       actionType: ChatConstants.USER_JOINED,
       data: nick
+    });
+  },
+
+  receivePresence(presence: Presence) {
+    AppDispatcher.dispatch({
+      actionType: ChatConstants.PRESENCE_RECEIVED,
+      data: presence
     });
   },
 

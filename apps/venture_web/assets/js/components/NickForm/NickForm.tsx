@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Channel } from "phoenix";
 
@@ -12,60 +12,53 @@ interface NickFormProps {
   active:   boolean;
 }
 
-export default class NickForm extends React.Component<NickFormProps> {
-  input: React.RefObject<HTMLInputElement>;
+const NickForm = ({ channel, active, nick = new NickRecord({ id: "", name: "" }) }: NickFormProps) => {
+  const input = useRef(null);
+  const [state, setState] = useState({ name: nick.name });
+  useEffect(() => {
+    input.current.focus();
+  });
 
-  static propTypes = {
-    channel: PropTypes.object,
-    nick: PropTypes.object.isRequired,
-    active: PropTypes.bool.isRequired
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setState({ name: e.currentTarget.value });
   }
 
-  constructor(props: NickFormProps) {
-    super(props);
-    this.input = React.createRef();
-  }
-
-  state = { name: this.props.nick.name || "" };
-
-  componentDidMount() {
-    this.input.current.focus();
-  }
-
-  handleInput = (e) => {
-    this.setState({ name: e.target.value });
-  }
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e: React.UIEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (this.props.active) {
-      ChatActions.setNick(this.props.channel, this.state.name.trim());
+    if (active) {
+      ChatActions.setNick(channel, state.name.trim());
     }
   }
 
-  render() {
-    return (
-      <form
-        className="nickForm"
-        onSubmit={this.handleSubmit}
+  return (
+    <form
+      className="nickForm"
+      onSubmit={handleSubmit}
+    >
+      <input
+        name="input"
+        onChange={active ? handleInput : null}
+        placeholder="Nickname"
+        readOnly={!active}
+        ref={input}
+        tabIndex={-1}
+        value={state.name}
+      />
+      <button
+        className="nickSetButton"
+        type="submit"
       >
-        <input
-          name="input"
-          onChange={this.props.active ? this.handleInput : null}
-          placeholder="Nickname"
-          readOnly={!this.props.active}
-          ref={this.input}
-          tabIndex={-1}
-          value={this.state.name}
-        />
-        <button
-          className="nickSetButton"
-          type="submit"
-        >
-          Set Nick
-        </button>
-      </form>
-    );
-  }
+        Set Nick
+      </button>
+    </form>
+  );
 
 }
+
+NickForm.propTypes = {
+  channel: PropTypes.object,
+  nick: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired
+}
+
+export default NickForm;

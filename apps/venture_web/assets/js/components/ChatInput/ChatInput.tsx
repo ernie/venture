@@ -14,37 +14,37 @@ interface ChatInputProps {
   editing: boolean;
 }
 
-export default class ChatInput extends React.Component<ChatInputProps> {
+const ChatInput = ({ active, nick, channel, editing}: ChatInputProps) => {
 
-  static propTypes = {
-    active: PropTypes.bool.isRequired,
-    nick: PropTypes.object.isRequired,
-    channel: PropTypes.object,
-    editing: PropTypes.bool.isRequired
-  }
-
-  render() {
-    if (this.props.editing) {
-      return (
-        <div className="chatInput">
-          <NickForm
-            active={this.props.active}
-            channel={this.props.channel}
-            nick={this.props.nick}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div className="chatInput">
-          <MessageForm
-            active={this.props.active}
-            channel={this.props.channel}
-            nick={this.props.nick}
-          />
-        </div>
-      );
-    }
+  if (editing) {
+    return (
+      <div className="chatInput">
+        <NickForm
+          active={active}
+          channel={channel}
+          nick={nick}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="chatInput">
+        <MessageForm
+          active={active}
+          channel={channel}
+          nick={nick}
+        />
+      </div>
+    );
   }
 
 }
+
+ChatInput.propTypes = {
+  active: PropTypes.bool.isRequired,
+  nick: PropTypes.object.isRequired,
+  channel: PropTypes.object,
+  editing: PropTypes.bool.isRequired
+}
+
+export default ChatInput;

@@ -7,6 +7,7 @@ export default keyMirror({
   NICK_ERROR: null,
   MESSAGE_SENT: null,
   CHANNEL_JOINED: null,
+  PRESENCE_RECEIVED: null,
   CHANNEL_JOIN_ERROR: null,
   CHANNEL_LEFT: null,
 

@@ -15,17 +15,11 @@ interface AttributionStyle {
   textAlign?: "left" | "center" | "right";
 }
 
-export default class Attribution extends React.Component<AttributionProps> {
+const Attribution = ({content, position}: AttributionProps) => {
 
-  static propTypes = {
-    content: PropTypes.string,
-    position: PropTypes.string.isRequired
-  }
-
-  style = () => {
-    let position = (this.props.position || 'bottom right').toLowerCase().trim();
-    let style = {} as AttributionStyle;
-    position.split(/\s+/).forEach( (instruction) => {
+  const style = () => {
+    const style = {} as AttributionStyle;
+    (position || 'bottom right').toLowerCase().trim().split(/\s+/).forEach( (instruction) => {
       switch(instruction) {
         case 'top':
           style.top = 0;
@@ -53,20 +47,25 @@ export default class Attribution extends React.Component<AttributionProps> {
     return style;
   }
 
-  render() {
-    if (this.props.content) {
-      return (
-        <div
-          className="attribution"
-          dangerouslySetInnerHTML={
-            { __html: Markdown.render(this.props.content) }
-          }
-          style={this.style()}
-        />
-      );
-    } else {
-      return false;
-    }
+  if (content) {
+    return (
+      <div
+        className="attribution"
+        dangerouslySetInnerHTML={
+          { __html: Markdown.render(content) }
+        }
+        style={style()}
+      />
+    );
+  } else {
+    return false;
   }
 
 }
+
+Attribution.propTypes = {
+  content: PropTypes.string,
+  position: PropTypes.string.isRequired
+}
+
+export default Attribution;

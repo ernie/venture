@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { Channel } from "phoenix";
 
@@ -21,53 +21,45 @@ interface MessageFormProps {
   active: boolean;
 }
 
-export default class MessageForm extends React.Component<MessageFormProps> {
-  input: React.RefObject<HTMLInputElement>;
+const MessageForm = ({ channel, nick, active}: MessageFormProps) => {
+  const input = useRef(null);
+  const [state, setState] = useState(getState);
+  useLayoutEffect(() => {
+    MessageStore.addChangeListener(handleChange);
+    return () => {
+      MessageStore.removeChangeListener(handleChange);
+    };
+  }, []);
+  useEffect(() => {
+    input.current.focus();
+  });
 
-  static propTypes = {
-    channel: PropTypes.instanceOf(Channel),
-    nick: PropTypes.instanceOf(NickRecord).isRequired,
-    active: PropTypes.bool.isRequired
-  }
-
-  constructor(props: MessageFormProps) {
-    super(props);
-    this.input = React.createRef();
-  }
-
-  state = getState();
-
-  componentDidMount() {
-    MessageStore.addChangeListener(this.handleChange);
-  }
-
-  componentWillUnmount() {
-    MessageStore.removeChangeListener(this.handleChange);
-  }
-
-  handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    let index = this.state.index;
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    let index = state.index;
     switch(e.key) {
       case "ArrowUp":
         e.stopPropagation();
-        if (index + 1 < this.state.history.length) {
-          this.setState({
+        if (index + 1 < state.history.length) {
+          setState({
             index: index + 1,
-            message: this.state.history[index + 1]
+            message: state.history[index + 1],
+            history: state.history
           });
         }
         break;
       case "ArrowDown":
         e.stopPropagation();
         if (index - 1 < 0) {
-          this.setState({
+          setState({
             index: -1,
-            message: ''
+            message: '',
+            history: state.history
           });
         } else {
-          this.setState({
+          setState({
             index: index - 1,
-            message: this.state.history[index - 1]
+            message: state.history[index - 1],
+            history: state.history
           });
         }
         break;
@@ -75,58 +67,64 @@ export default class MessageForm extends React.Component<MessageFormProps> {
     }
   }
 
-  handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ message: e.target.value });
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({
+      message: e.currentTarget.value,
+      index: state.index,
+      history: state.history
+    });
   }
 
-  handleChange = () => {
-    this.setState(getState());
+  const handleChange = () => {
+    setState(getState);
   }
 
-  handleSubmit = (e: React.UIEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.UIEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (this.props.active) {
-      ChatActions.sendMessage(this.props.channel, this.state.message.trim());
+    if (active) {
+      ChatActions.sendMessage(channel, state.message.trim());
     }
   }
 
-  editNick = () => {
+  const editNick = () => {
     ChatActions.editNick();
   }
 
-  componentDidUpdate() {
-    this.input.current.focus();
-  }
-
-  render() {
-    return (
-      <div className="messageFormInputs">
-        <button
-          className="nickButton"
-          onClick={this.props.active ? this.editNick : null}
-          title={this.props.nick.name}
-        >
-          <span>{ this.props.nick.name }</span>
-        </button>
-        <form
-          className="messageForm"
-          onSubmit={this.handleSubmit}
-        >
-          <input
-            autoFocus
-            name="input"
-            onChange={this.props.active ? this.handleInput : null}
-            onKeyDown={this.props.active ? this.handleKeyPress : null}
-            placeholder="Message"
-            readOnly={!this.props.active}
-            ref={this.input}
-            tabIndex={-1}
-            value={this.state.message}
-          />
-          <button type="submit">Send</button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div className="messageFormInputs">
+      <button
+        className="nickButton"
+        onClick={active ? editNick : null}
+        title={nick.name}
+      >
+        <span>{ nick.name }</span>
+      </button>
+      <form
+        className="messageForm"
+        onSubmit={handleSubmit}
+      >
+        <input
+          autoFocus
+          name="input"
+          onChange={active ? handleInput : null}
+          onKeyDown={active ? handleKeyPress : null}
+          placeholder="Message"
+          readOnly={!active}
+          ref={input}
+          tabIndex={-1}
+          value={state.message}
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
 
 }
+
+MessageForm.propTypes = {
+  channel: PropTypes.instanceOf(Channel),
+  nick: PropTypes.instanceOf(NickRecord).isRequired,
+  active: PropTypes.bool.isRequired
+}
+
+export default MessageForm;
