@@ -11,15 +11,13 @@ interface MessageListProps {
 
 const MessageList = ({ messages }: MessageListProps) => {
   const messagesDiv = useRef(null);
-  const [state, setState] = useState({ autoScrolling: false, userScrolling: false });
+  const [userScrolling, setUserScrolling] = useState(false);
 
   useEffect(() => {
-    if (!state.userScrolling) {
-      setState({...state, autoScrolling: true});
+    if (!userScrolling) {
       messagesDiv.current.scrollTop = messagesDiv.current.scrollHeight;
-      setState({...state, autoScrolling: false});
     }
-  }, [messages, state.userScrolling]);
+  }, [messages, userScrolling]);
 
   const renderMessage = (message: MessageRecord, index: number) => {
     return (
@@ -32,12 +30,10 @@ const MessageList = ({ messages }: MessageListProps) => {
 
   const scrolled = () => {
     let msgs = messagesDiv.current;
-    if (!state.autoScrolling) {
-      if (msgs.scrollTop < (msgs.scrollHeight - (msgs.clientHeight + 5))) {
-        setState({...state, userScrolling: true});
-      } else {
-        setState({...state, userScrolling: false});
-      }
+    if (msgs.scrollTop < (msgs.scrollHeight - (msgs.clientHeight + 5))) {
+      setUserScrolling(true);
+    } else {
+      setUserScrolling(false);
     }
   }
 
