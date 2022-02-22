@@ -12,7 +12,7 @@ notes: |
 
 # **Venture**
 
-* [![1](images/twitter.png) erniemiller](https://twitter.com/erniemiller)
+* [![1](twitter.png) erniemiller](https://twitter.com/erniemiller)
 * Ernie Miller
 * [&#128279; ernie.io](https://ernie.io)
 
@@ -20,8 +20,11 @@ notes: |
 
 ---
 notes: |
-  A Venture presentation is made up of files called `stories`. You can find the
-  story files that make up this presentation in `apps/venture/priv/stories`.
+  A Venture presentation is made up of files called `stories`, and any
+  accompanying assets. These files live in `/presentation`, and you can see the
+  files used in this presentation there. When you're ready to make your own
+  presentation, you'll replace the files here with your own!
+
   The entry point for the presentation is the file named `main.story`.
 ---
 
@@ -434,20 +437,23 @@ notes: |
 
   Note how `2x1` is sized the same as `1`, because the image is square and can
   only scale as large as the smallest constraint.
+
+  Unless your image name starts with `/`, it will be interpreted as relative to
+  the `/presentation/assets` directory.
 ---
 
 ### <label>Images</label>
 
-![1](images/rhindle.png)
-![2x1](images/rhindle.png)
-![2x2](images/rhindle.png)
-![x3](images/rhindle.png)
+![1](rhindle.png)
+![2x1](rhindle.png)
+![2x2](rhindle.png)
+![x3](rhindle.png)
 
 ```markdown:70%
-![1](images/rhindle.png)
-![2x1](images/rhindle.png)
-![2x2](images/rhindle.png)
-![x3](images/rhindle.png)
+![1](rhindle.png)
+![2x1](rhindle.png)
+![2x2](rhindle.png)
+![x3](rhindle.png)
 ```
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -461,11 +467,11 @@ notes: |
 
 ### <label>Images</label>
 
-![6](images/rhindle.png "A **fearsome** red dragon.
+![6](rhindle.png "A **fearsome** red dragon.
 Or maybe a duck.")
 
 ```markdown:70%
-![6](images/rhindle.png "A **fearsome** red dragon.
+![6](rhindle.png "A **fearsome** red dragon.
 Or maybe a duck.")
 ```
 
@@ -478,7 +484,7 @@ notes: |
   [Solarized](http://ethanschoonover.com/solarized), specifically the "light"
   variant. You can see this in
   `apps/venture_web/assets/css/solarized_light.css`, swap to the the dark
-  version in `app.css`, or supply your own alternative.
+  version in `root.css`, or supply your own alternative.
 ---
 
 ### <label>Code</label>

@@ -16,4 +16,5 @@ config :venture, Venture.Mailer, adapter: Swoosh.Adapters.Test
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :venture, :stories, "priv/test_stories"
+config :venture, :presentation, Path.expand("../apps/venture/priv/test_presentation", __DIR__)
+

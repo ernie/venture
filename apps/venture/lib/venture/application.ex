@@ -2,7 +2,7 @@ defmodule Venture.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-  @default_stories_dir Application.get_env(:venture, :stories)
+  @default_presentation_dir Application.get_env(:venture, :presentation)
 
   use Application
 
@@ -16,7 +16,7 @@ defmodule Venture.Application do
         start: {Task.Supervisor, :start_link, [[name: Venture.TaskSupervisor]]},
         type: :supervisor
       },
-      {Venture.Deck, @default_stories_dir},
+      {Venture.Deck, @default_presentation_dir},
       {Venture.Presentation, ets},
       Venture.Selections,
       Venture.Connections,

@@ -6,5 +6,5 @@ notes: |
   [@erniemiller](https://twitter.com/erniemiller)!
 ---
 
-![4](images/rhindle.png)
+![4](rhindle.png)
 ## **THANK YOU!**

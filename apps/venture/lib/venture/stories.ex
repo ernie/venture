@@ -1,16 +1,16 @@
 defmodule Venture.Stories do
   use Venture.Slide
 
-  def load(stories_dir) do
-    read_files(stories_dir)
+  def load(presentation_dir) do
+    read_files(presentation_dir)
     |> expand_forks()
     |> expand_nexts()
   end
 
-  defp read_files(stories) do
-    absolute_path = Application.app_dir(:venture, stories)
-    for path <- Path.wildcard("#{absolute_path}/*.story"),
-        content = process_file(path, absolute_path),
+  defp read_files(presentation_dir) do
+    stories_path = "#{presentation_dir}/stories"
+    for path <- Path.wildcard("#{stories_path}/*.story"),
+        content = process_file(path, stories_path),
         story_name = Path.basename(path, ".story"),
         into: %{}
     do

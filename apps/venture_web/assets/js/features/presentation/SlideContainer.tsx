@@ -38,8 +38,10 @@ const SlideContainer = ({slide, className = "", active = true}: SlideContainerPr
   const backgroundStyle = ({ image, size, repeat, position, color }: SlideStyles) => {
     let bgStyles = {} as BackgroundStyles;
     if (image) {
-      bgStyles.backgroundImage =
-        `url("/backgrounds/${image}")`;
+      image.startsWith("/") ?
+        bgStyles.backgroundImage = `url("${image}")` :
+        bgStyles.backgroundImage =
+          `url("assets/${image}")`;
     }
     if (size) {
       bgStyles.backgroundSize = size;

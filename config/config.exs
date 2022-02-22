@@ -13,7 +13,7 @@ import Config
 config :venture, :presenter_key, "presenter"
 config :venture, :attendee_key, ":attendee"
 
-config :venture, :stories, "priv/stories"
+config :venture, :presentation, Path.expand("../presentation", __DIR__)
 
 # Configures the mailer
 #
@@ -42,7 +42,7 @@ config :esbuild,
   version: "0.14.0",
   default: [
     args:
-      ~w(js/root.tsx --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --external:/audio/* --external:/backgrounds/*),
+      ~w(js/root.tsx --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/audio/*),
     cd: Path.expand("../apps/venture_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]

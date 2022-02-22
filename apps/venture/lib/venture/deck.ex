@@ -3,8 +3,8 @@ defmodule Venture.Deck do
 
   ## Client API
 
-  def start_link(stories_dir) do
-    GenServer.start_link(__MODULE__, stories_dir, name: __MODULE__)
+  def start_link(presentation_dir) do
+    GenServer.start_link(__MODULE__, presentation_dir, name: __MODULE__)
   end
 
   def slide_at(location) do
@@ -21,12 +21,12 @@ defmodule Venture.Deck do
 
   ## Server Callbacks
 
-  def init(stories_dir) do
+  def init(presentation_dir) do
     {
       :ok,
       %{
-        stories_dir: stories_dir,
-        stories: Venture.Stories.load(stories_dir)
+        presentation_dir: presentation_dir,
+        stories: Venture.Stories.load(presentation_dir)
       }
     }
   end
@@ -47,7 +47,7 @@ defmodule Venture.Deck do
     {
       :reply,
       :ok,
-      %{ state | stories: Venture.Stories.load(state.stories_dir) }
+      %{ state | stories: Venture.Stories.load(state.presentation_dir) }
     }
   end
 

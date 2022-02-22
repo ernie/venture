@@ -3,10 +3,10 @@ defmodule Venture.StoriesTest do
 
   alias Venture.Stories
 
-  @stories_dir Application.get_env(:venture, :stories)
+  @presentation_dir Path.expand("../../priv/test_presentation", __DIR__)
 
   setup do
-    stories = Stories.load(@stories_dir)
+    stories = Stories.load(@presentation_dir)
     {:ok, stories: stories}
   end
 

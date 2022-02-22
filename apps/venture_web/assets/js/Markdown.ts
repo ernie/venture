@@ -31,7 +31,7 @@ class Renderer extends marked.Renderer {
     let [w, h] = dims.split('x');
     if (!w || /^\s*$/.test(w)) { w = 'auto' } else { w = `${w}em` }
     if (!h || /^\s*$/.test(h)) { h = 'auto' } else { h = `${h}em` }
-
+    href = href.startsWith("/") ? href : `assets/${href}`
     let img = `<img src="${href}" style="width: ${w}; height: ${h}"`;
     img += this.options.xhtml ? '/>' : '>';
 
