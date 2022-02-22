@@ -111,9 +111,9 @@ notes: |
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ---
-class: [font-50, shadow]
+class: font-50 shadow
 notes: |
-  You can also combine classes. Here's `[font-50, shadow]`.
+  You can also combine classes. Here's `font-50 shadow`.
 ---
 
 # Behold the power of CSS.
@@ -583,7 +583,7 @@ What is your favorite color?
 ---
 type: fork
 background: fork.jpg
-class: [dark, shadow]
+class: dark shadow
 paths:
   - left
   - right

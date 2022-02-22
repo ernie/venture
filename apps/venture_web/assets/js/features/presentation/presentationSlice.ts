@@ -7,7 +7,7 @@ export interface SlideState {
   next?: SlideState;
   background?: string |
               { color?: string, image?: string, darken?: number, lighten?: number };
-  class?: string | Array<string>;
+  class?: string;
   notes?: string;
   attribution?: string |
                 { content: string, position?: string };
