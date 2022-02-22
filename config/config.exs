@@ -42,7 +42,7 @@ config :esbuild,
   version: "0.14.0",
   default: [
     args:
-      ~w(js/app.tsx --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --external:/audio/* --external:/backgrounds/*),
+      ~w(js/root.tsx --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --external:/audio/* --external:/backgrounds/*),
     cd: Path.expand("../apps/venture_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
