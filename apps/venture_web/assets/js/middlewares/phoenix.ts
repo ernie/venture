@@ -9,7 +9,7 @@ import {
 } from "../features/presentation/presentationSlice";
 import {
   Message, Nick, messageSent, selectNick, receivePresence, receiveMessage,
-  receiveJoin, receiveLeave, receiveNickChange, receiveNickSet, receiveNickError,
+  receiveLeave, receiveNickChange, receiveNickSet, receiveNickError,
   clearChat, join, leave, setNick, sendMessage
 } from "../features/chat/chatSlice";
 
@@ -83,9 +83,6 @@ export const phoenixMiddleware: Middleware = store => next => action => {
         chatChannel.onError( () => chatChannel.leave() );
         chatChannel.on("message", (message: Message) => {
           store.dispatch(receiveMessage(message));
-        });
-        chatChannel.on("join", (join: Nick) => {
-          store.dispatch(receiveJoin(join));
         });
         chatChannel.on("leave", (leave: Nick) => {
           store.dispatch(receiveLeave(leave));

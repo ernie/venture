@@ -88,9 +88,6 @@ export const chatSlice = createSlice({
         return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       });
     },
-    receiveJoin: (_state, _action: PayloadAction<Nick>) => {
-      // Nothing to see here?
-    },
     receiveLeave: (state, action: PayloadAction<Nick>) => {
       const { name } = action.payload;
       if (name) {
@@ -145,9 +142,8 @@ export const chatSlice = createSlice({
 });
 
 export const {
-  messageSent, receiveMessage, receivePresence, receiveJoin, receiveLeave,
-  receiveNickChange, receiveNickSet, receiveNickError, clearChat, editNick,
-  prefillDirectMessage
+  messageSent, receiveMessage, receivePresence, receiveLeave, receiveNickChange,
+  receiveNickSet, receiveNickError, clearChat, editNick, prefillDirectMessage
 } = chatSlice.actions
 
 export const join = createAction("chat/join");
