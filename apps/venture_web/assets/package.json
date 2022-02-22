@@ -2,21 +2,13 @@
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.7.2",
 		"classnames": "^2.3.1",
-		"events": "^3.3.0",
-		"flux": "^4.0.3",
 		"highlight.js": "^11.4.0",
-		"immutable": "^4.0.0",
-		"keymirror": "^0.1.1",
 		"marked": "^4.0.12",
-		"prop-types": "^15.8.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-redux": "^7.2.6"
 	},
 	"devDependencies": {
-		"@types/events": "^3.0.0",
-		"@types/flux": "^3.1.11",
-		"@types/keymirror": "^0.1.1",
 		"@types/marked": "^4.0.2",
 		"@types/phoenix": "^1.5.4",
 		"@types/phoenix_live_view": "^0.15.1",
