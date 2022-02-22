@@ -4,7 +4,7 @@ import { connected, selectConnected } from "../features/session/sessionSlice";
 
 import { connect } from "../features/session/sessionSlice";
 import {
-  slideReceived, selectionsReceived, connectionsReceived, nextSlide, prevSlide,
+  receiveSlide, receiveSelections, receiveConnections, nextSlide, prevSlide,
   reset, reload, optionSelect
 } from "../features/presentation/presentationSlice";
 import {
@@ -36,21 +36,21 @@ export const phoenixMiddleware: Middleware = store => next => action => {
           }
         });
         presentationChannel.on("slide", (slide) => {
-          store.dispatch(slideReceived(slide));
+          store.dispatch(receiveSlide(slide));
         });
         presentationChannel.on("selections", (selections) => {
-          store.dispatch(selectionsReceived(selections));
+          store.dispatch(receiveSelections(selections));
         });
         presentationChannel.on("connections", (connections) => {
-          store.dispatch(connectionsReceived(connections));
+          store.dispatch(receiveConnections(connections));
         });
         socket.connect();
         presentationChannel.join()
           .receive('ok', (data) => {
             if (data.connections) {
-              store.dispatch(connectionsReceived(data.connections));
+              store.dispatch(receiveConnections(data.connections));
             }
-            store.dispatch(slideReceived(data));
+            store.dispatch(receiveSlide(data));
           });
         break;
       case `${nextSlide}`:

@@ -53,22 +53,22 @@ export const presentationSlice = createSlice({
   name: "presentation",
   initialState,
   reducers: {
-    slideReceived: (state, action: PayloadAction<SlidePayload>) => {
+    receiveSlide: (state, action: PayloadAction<SlidePayload>) => {
       state.slide = action.payload.slide;
       if (action.payload.selections) {
         state.selections = action.payload.selections;
       }
     },
-    selectionsReceived: (state, action: PayloadAction<SelectionsPayload>) => {
+    receiveSelections: (state, action: PayloadAction<SelectionsPayload>) => {
       state.selections = action.payload;
     },
-    connectionsReceived: (state, action: PayloadAction<ConnectionsPayload>) => {
+    receiveConnections: (state, action: PayloadAction<ConnectionsPayload>) => {
       state.connections = action.payload;
     }
   }
 });
 
-export const { slideReceived, selectionsReceived, connectionsReceived } = presentationSlice.actions
+export const { receiveSlide, receiveSelections, receiveConnections } = presentationSlice.actions
 export const nextSlide = createAction("presentation/nextSlide");
 export const prevSlide = createAction("presentation/prevSlide");
 export const reset = createAction("presentation/reset");
