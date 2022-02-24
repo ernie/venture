@@ -30,10 +30,8 @@ environment variable.
 
 ## Creating Your Presentation
 
-The updated version of Venture is an umbrella app. The static assets for your
-presentation live in
-`apps/venture_web/priv/static` and the story files themselves live in
-`apps/venture/priv/stories`.
+Venture is an umbrella app. Your presentation files live in `/presentation`,
+and you can check out the slides for the tutorial presentation there.
 
 ## Running Tests
 

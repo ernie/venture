@@ -166,9 +166,12 @@ notes: |
   poinsettia tree.
 
   If you supply a string to the `background` property of the slide, it'll load a
-  corresponding file in the `apps/venture_web/priv/static/backgrounds`
-  directory. Or, you can supply an `image` inside the `background` property,
-  along with other values we'll discuss shortly.
+  corresponding file from your `/presentations/assets` directory. Or, you can
+  supply an `image` inside the `background` property, along with other values
+  we'll discuss shortly.
+
+  In either case, if you prefix the background image with a `/`, you can provide
+  an absolute path.
 
   By default, backgrounds use `contain`. This means they will resize as large
   as possible while still allowing their dimensions to fit within the slide.
