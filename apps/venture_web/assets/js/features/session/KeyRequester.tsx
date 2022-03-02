@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "js/hooks";
 import { connect } from "./sessionSlice";
 
 const KeyRequester = () => {
@@ -27,12 +27,12 @@ const KeyRequester = () => {
   }
 
   return (
-    <div className="keyRequester">
-      <p className="attendeeLink">
+    <div id="keyRequester">
+      <p id="attendeeLink">
         <a href="#" onClick={handleSkip}>I'm an attendee!</a>
       </p>
       <p
-        className="presenterLink"
+        id="presenterLink"
         ref={presenterLink}
       >
         <a
@@ -43,11 +43,13 @@ const KeyRequester = () => {
         </a>
       </p>
       <form
-        className="keyForm"
+        id="keyForm"
         onSubmit={handleSubmit}
         ref={form}
+        style={ { display: "none" } }
       >
         <input
+          id="keyInput"
           name="key"
           placeholder="Presenter Key"
           ref={key}

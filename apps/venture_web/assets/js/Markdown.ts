@@ -8,10 +8,11 @@ marked.setOptions({
     } else {
       return highlight.highlightAuto(code).value;
     }
-  }
+  },
+  headerPrefix: "heading-"
 });
 
-function escape(html, encode) {
+function escape(html: string, encode: boolean) {
   return html
     .replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -23,11 +24,11 @@ function escape(html, encode) {
 
 class Renderer extends marked.Renderer {
 
-  link(href, title, text) {
+  link(href: string, title: string, text: string) {
     return super.link(href, title, text).replace('<a ', '<a target="_blank" ');
   }
 
-  image(href, title, dims) {
+  image(href: string, title: string, dims: string): string {
     let [w, h] = dims.split('x');
     if (!w || /^\s*$/.test(w)) { w = 'auto' } else { w = `${w}em` }
     if (!h || /^\s*$/.test(h)) { h = 'auto' } else { h = `${h}em` }
@@ -42,14 +43,14 @@ class Renderer extends marked.Renderer {
     }
   }
 
-  code(code, lang, escaped) {
+  code(code: string, lang: string, escaped: boolean) {
     let size = '100%';
     if (lang && lang.includes(':')) {
       [lang, size] = lang.split(':');
     }
     if (this.options.highlight) {
       var out = this.options.highlight(code, lang);
-      if (out != null && out !== code) {
+      if (out && out !== code) {
         escaped = true;
         code = out;
       }
@@ -75,7 +76,7 @@ let renderer = new Renderer();
 
 export default class Markdown {
 
-  static render(content) {
+  static render(content: string) {
     return marked(content, { renderer: renderer })
   }
 

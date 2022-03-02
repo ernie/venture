@@ -1,15 +1,27 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore, combineReducers, createAction, ThunkAction, Action, AnyAction } from "@reduxjs/toolkit";
 import { phoenixMiddleware } from "./middlewares/phoenix";
-import sessionReducer, { connect } from "./features/session/sessionSlice";
+import sessionReducer from "./features/session/sessionSlice";
 import presentationReducer from "./features/presentation/presentationSlice";
 import chatReducer from "./features/chat/chatSlice";
 
+export const reset = createAction("venture/reset");
+
+const reducers = combineReducers({
+  session: sessionReducer,
+  presentation: presentationReducer,
+  chat: chatReducer
+});
+
+const rootReducer = (state: any, action: AnyAction) => {
+  if (action.type === `${reset}`) {
+    state = undefined;
+  }
+
+  return reducers(state, action);
+}
+
 export const store = configureStore({
-  reducer: {
-    session: sessionReducer,
-    presentation: presentationReducer,
-    chat: chatReducer
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(phoenixMiddleware)
 });
@@ -22,6 +34,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
-
-// If we have previously connected, we'll have a key here.
-store.dispatch(connect(sessionStorage.getItem("accessKey")));

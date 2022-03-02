@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { selectHistory, selectCurrentMessage, sendMessage, editNick } from "./chatSlice";
+import { selectHistory, selectPrefilledMessage, sendMessage, editNick } from "./chatSlice";
 
 interface MessageFormProps {
   nick: string;
@@ -10,14 +10,17 @@ interface MessageFormProps {
 const MessageForm = ({ nick, active}: MessageFormProps) => {
   const input = useRef(null);
   const dispatch = useAppDispatch();
-  const currentMessage = useAppSelector(selectCurrentMessage);
+  const prefilledMessage = useAppSelector(selectPrefilledMessage);
   const history = useAppSelector(selectHistory);
-  const [state, setState] = useState({ historyIndex: -1, message: "" });
+  const [state, setState] = useState({ historyIndex: -1, message: prefilledMessage });
 
   useEffect(() => {
-    input.current.value = currentMessage;
+    setState({
+      message: prefilledMessage,
+      historyIndex: -1
+    });
     input.current.focus();
-  });
+  }, [prefilledMessage]);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let index = state.historyIndex;

@@ -1,27 +1,43 @@
 import { createSlice, createAction, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
-let notificationAudio = undefined;
+const audioContext = (typeof AudioContext !== "undefined") ? new AudioContext() : undefined;
 
-const configureChatNotification = () => {
-  if (window.HTMLAudioElement) {
-    notificationAudio = new Audio("/audio/notification.mp3");
-  }
+const playNotification = () => {
+  if (!audioContext) { return }
+  const oscillatorNode = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
 
-  const loadAudio = () => {
-    notificationAudio.load();
-    window.removeEventListener("click", loadAudio, false);
-  }
+  oscillatorNode.type = 'sine';
+  oscillatorNode.frequency.setValueAtTime(850, audioContext.currentTime);
+  oscillatorNode.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.15);
 
-  window.addEventListener("click", loadAudio, false);
+  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+
+  oscillatorNode.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  oscillatorNode.start();
+  oscillatorNode.stop(audioContext.currentTime + 0.15);
 }
 
-configureChatNotification();
+const warmupAudioContext = () => {
+  if (!audioContext) { return }
+  const buffer = audioContext.createBuffer(1, 1, 22050);
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioContext.destination);
+  source.start(0);
+  document.removeEventListener("click", warmupAudioContext);
+}
+
+document.addEventListener("click", warmupAudioContext);
 
 export interface Message {
   type?: "system" | "error" | "priv_in" | "priv_out";
-  sender: string;
-  recipient: string;
+  sender?: string;
+  recipient?: string;
   content: string;
 }
 
@@ -39,7 +55,7 @@ export interface NickChange {
 export interface ChatState {
   nick?: string;
   editingNick: boolean;
-  currentMessage: string;
+  prefilledMessage: string;
   messages: Array<Message>;
   nicks: Array<Nick>;
   history: Array<string>;
@@ -48,15 +64,15 @@ export interface ChatState {
 const initialState = {
   nick: sessionStorage.getItem("name"),
   editingNick: true,
-  currentMessage: "",
+  prefilledMessage: "",
   messages: [],
   nicks: [],
   history: []
-}
+} as ChatState;
 
 export const selectNick = (state: RootState) => state.chat.nick;
 export const selectEditingNick = (state: RootState) => state.chat.editingNick;
-export const selectCurrentMessage = (state: RootState) => state.chat.currentMessage;
+export const selectPrefilledMessage = (state: RootState) => state.chat.prefilledMessage;
 export const selectNicks = (state: RootState) => state.chat.nicks;
 export const selectMessages = (state: RootState) => state.chat.messages;
 export const selectHistory = (state: RootState) => state.chat.history;
@@ -70,13 +86,11 @@ export const chatSlice = createSlice({
           state.history.indexOf(action.payload) === -1) {
         state.history = [action.payload].concat(state.history.slice(0, 19));
       }
-      state.currentMessage = "";
+      state.prefilledMessage = "";
     },
     receiveMessage: (state, action: PayloadAction<Message>) => {
-      if (action.payload.type === "priv_in" && notificationAudio) {
-        notificationAudio.pause();
-        notificationAudio.currentTime = 0;
-        notificationAudio.play();
+      if (action.payload.type === "priv_in") {
+        playNotification();
       }
       state.messages.push(action.payload);
     },
@@ -135,8 +149,11 @@ export const chatSlice = createSlice({
       state.nicks = [];
       state.messages = [];
     },
+    messageEdited: (state, action: PayloadAction<string>) => {
+      state.prefilledMessage = action.payload;
+    },
     prefillDirectMessage: (state, action: PayloadAction<string>) => {
-      state.currentMessage = `/msg "${action.payload}" `;
+      state.prefilledMessage = `/msg "${action.payload}" `;
     }
   }
 });

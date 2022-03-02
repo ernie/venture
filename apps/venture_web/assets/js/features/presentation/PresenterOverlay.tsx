@@ -15,7 +15,7 @@ const PresenterOverlay = ({ slide, isPresenter }: PresenterOverlayProps) => {
 
   if (isPresenter) {
     return (
-      <div className="presenterOverlay">
+      <div id="presenterOverlay">
         <PresenterControls />
         <ConnectionsDisplay />
         <Notes notes={slide.notes} />

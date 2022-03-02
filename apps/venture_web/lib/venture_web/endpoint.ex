@@ -23,7 +23,7 @@ defmodule VentureWeb.Endpoint do
     at: "/",
     from: :venture_web,
     gzip: false,
-    only: ~w(assets audio backgrounds fonts images apple-touch-icon.png favicon.ico robots.txt)
+    only: ~w(assets fonts apple-touch-icon.png favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

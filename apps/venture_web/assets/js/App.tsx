@@ -12,7 +12,7 @@ const App = () => {
   const accessKey = useAppSelector(selectAccessKey);
 
   return (
-    <div className="app">
+    <div id="app">
       {
         accessKey ?
           <SlideViewer

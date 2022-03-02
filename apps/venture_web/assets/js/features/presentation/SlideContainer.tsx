@@ -75,7 +75,11 @@ const SlideContainer = ({slide, className = "", active = true}: SlideContainerPr
   const baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
   const slideClasses = baseClasses.concat(slide.class || []);
   return (
-    <div className={classNames(className, "slide-container")} style={active ? null : deactivatePointerEvents}>
+    <div
+      id={slide.location ? `slide-${slide.location.story}-${slide.location.index}` : null}
+      className={classNames(className, "slide-container")}
+      style={active ? null : deactivatePointerEvents}
+    >
       <div
         className={classNames("slide", ...slideClasses)}
         style={slideStyle()}

@@ -13,7 +13,7 @@ interface SlideViewerProps {
 const SlideViewer = ({ slide, isPresenter }: SlideViewerProps) => {
   const className = isPresenter ? "presenter" : "attendee";
   return (
-    <div className="viewer">
+    <div id="slideViewer" className="viewer">
       <PresenterOverlay
         isPresenter={isPresenter}
         slide={slide}

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "outDir": "../priv/static/assets",
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "noImplicitAny": true
+  }
+}

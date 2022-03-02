@@ -52,6 +52,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import { connect } from "./features/session/sessionSlice";
+
+// If we have previously connected, we'll have a key here.
+store.dispatch(connect(sessionStorage.getItem("accessKey")));
 
 ReactDOM.render(
   <React.StrictMode>
