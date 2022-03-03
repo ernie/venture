@@ -35,7 +35,7 @@ const warmupAudioContext = () => {
 document.addEventListener("click", warmupAudioContext);
 
 export interface Message {
-  type?: "system" | "error" | "priv_in" | "priv_out";
+  type?: "system" | "error" | "emote" | "priv_in" | "priv_out";
   sender?: string;
   recipient?: string;
   content: string;

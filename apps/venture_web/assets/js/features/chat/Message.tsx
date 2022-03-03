@@ -31,7 +31,7 @@ const Message = ({ message }: MessageProps) => {
   return (
     <div className="message">
       <div className="messageNick" title={message.sender}><span>{message.sender}</span></div>
-      <div className={classNames("messageContent", "message-" + message.type)}>
+      <div className={classNames("messageContent", message.type ? "message-" + message.type : null)}>
         {privmsgIndicator()}
         {message.content}
       </div>

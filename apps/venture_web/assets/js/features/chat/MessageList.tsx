@@ -7,12 +7,12 @@ interface MessageListProps {
 }
 
 const MessageList = ({ messages }: MessageListProps) => {
-  const messagesDiv = useRef(null);
+  const scrollableDiv = useRef(null);
   const [userScrolling, setUserScrolling] = useState(false);
 
   useEffect(() => {
     if (!userScrolling) {
-      messagesDiv.current.scrollTop = messagesDiv.current.scrollHeight;
+      scrollableDiv.current.scrollTop = scrollableDiv.current.scrollHeight;
     }
   }, [messages, userScrolling]);
 
@@ -26,7 +26,7 @@ const MessageList = ({ messages }: MessageListProps) => {
   }
 
   const scrolled = () => {
-    let msgs = messagesDiv.current;
+    let msgs = scrollableDiv.current;
     if (msgs.scrollTop < (msgs.scrollHeight - (msgs.clientHeight + 5))) {
       setUserScrolling(true);
     } else {
@@ -36,11 +36,11 @@ const MessageList = ({ messages }: MessageListProps) => {
 
   return (
     <div
-      className="messages"
+      id="messageListContainer"
       onScroll={scrolled}
-      ref={messagesDiv}
+      ref={scrollableDiv}
     >
-      <div className="messageList">
+      <div id="messageList">
         {messages.map(renderMessage)}
       </div>
     </div>
