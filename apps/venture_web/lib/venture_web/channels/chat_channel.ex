@@ -268,7 +268,7 @@ defmodule VentureWeb.ChatChannel do
   end
 
   defp nick_and_message(arg) do
-    String.split(arg, " ", parts: 2)
+    String.split(arg, ~r{\s+}, parts: 2)
   end
 
   defp welcome(socket, nil) do

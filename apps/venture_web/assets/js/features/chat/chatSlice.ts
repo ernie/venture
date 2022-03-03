@@ -61,14 +61,14 @@ export interface ChatState {
   history: Array<string>;
 }
 
-const initialState = {
+const initialState: ChatState = {
   nick: sessionStorage.getItem("name"),
   editingNick: true,
   prefilledMessage: "",
   messages: [],
   nicks: [],
   history: []
-} as ChatState;
+}
 
 export const selectNick = (state: RootState) => state.chat.nick;
 export const selectEditingNick = (state: RootState) => state.chat.editingNick;

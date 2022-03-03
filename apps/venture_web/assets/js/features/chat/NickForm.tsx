@@ -31,10 +31,11 @@ const NickForm = ({ active, nick }: NickFormProps) => {
 
   return (
     <form
-      className="nickForm"
-      onSubmit={handleSubmit}
+      id="nickForm"
+      onSubmit={active ? handleSubmit : null}
     >
       <input
+        id="nickInput"
         name="input"
         onChange={active ? handleInput : null}
         placeholder="Nickname"
@@ -44,7 +45,7 @@ const NickForm = ({ active, nick }: NickFormProps) => {
         value={nickInput}
       />
       <button
-        className="nickSetButton"
+        id="nickSetButton"
         type="submit"
       >
         Set Nick

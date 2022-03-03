@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
-import { useStore, wrappedRender } from "jest.helpers";
+import { useStore, wrappedRender, UseStoreOptions } from "jest.helpers";
 import { store } from "js/store";
 
 declare global {
-  function useStore(): typeof store;
+  function useStore(options?: UseStoreOptions): typeof store;
   function render(...params: Parameters<typeof wrappedRender>): ReturnType<typeof wrappedRender>;
 }
 
