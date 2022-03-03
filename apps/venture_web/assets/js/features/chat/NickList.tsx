@@ -14,7 +14,7 @@ const NickList = ({nicks, active}: NickListProps) => {
   const dispatch = useAppDispatch();
 
   const nickClicked = (e: React.UIEvent<HTMLDivElement>) => {
-    dispatch(prefillDirectMessage(e.currentTarget.innerText));
+    dispatch(prefillDirectMessage(e.currentTarget.title));
   }
 
   const renderNick = (nick: Nick, index: number) => {
@@ -36,16 +36,16 @@ const NickList = ({nicks, active}: NickListProps) => {
         return null;
       case 1:
         return (
-          <div className="lurkers">1 lurker</div>
+          <div id="lurkers">1 lurker</div>
         );
       default:
         return (
-          <div className="lurkers">{count} lurkers</div>
+          <div id="lurkers">{count} lurkers</div>
         );
     }
   }
 
-  let named = [];
+  let named: Array<Nick> = [];
   let anonymousCount = 0;
   nicks.forEach(
     (nick) => {
@@ -57,10 +57,10 @@ const NickList = ({nicks, active}: NickListProps) => {
     }
   )
   return (
-    <div className="nickList">
-      <div className="nickListHeader">Who's here?</div>
+    <div id="nickList">
+      <div id="nickListHeader">Who's here?</div>
       {lurkers(anonymousCount)}
-      <div className="nicks">
+      <div id="nicks">
         {named.map(renderNick)}
       </div>
     </div>
