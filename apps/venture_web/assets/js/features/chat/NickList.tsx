@@ -36,11 +36,11 @@ const NickList = ({nicks, active}: NickListProps) => {
         return null;
       case 1:
         return (
-          <div id="lurkers">1 lurker</div>
+          <div className="lurkers">1 lurker</div>
         );
       default:
         return (
-          <div id="lurkers">{count} lurkers</div>
+          <div className="lurkers">{count} lurkers</div>
         );
     }
   }
@@ -57,10 +57,10 @@ const NickList = ({nicks, active}: NickListProps) => {
     }
   )
   return (
-    <div id="nickList">
-      <div id="nickListHeader">Who's here?</div>
+    <div className="nickList">
+      <div className="nickListHeader">Who's here?</div>
       {lurkers(anonymousCount)}
-      <div id="nicks">
+      <div className="nicks">
         {named.map(renderNick)}
       </div>
     </div>

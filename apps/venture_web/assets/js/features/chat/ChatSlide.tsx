@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import {
   join, leave, selectEditingNick, selectNick, selectNicks, selectMessages
@@ -9,12 +9,10 @@ import MessageList from './MessageList';
 import NickList from './NickList';
 
 interface ChatSlideProps {
-  content: string;
   active:  boolean;
 }
 
 const ChatSlide = ({ active = true }: ChatSlideProps) => {
-  const contentDiv = useRef(null);
   const dispatch = useAppDispatch();
   const nick = useAppSelector(selectNick);
   const editingNick = useAppSelector(selectEditingNick);
@@ -44,7 +42,6 @@ const ChatSlide = ({ active = true }: ChatSlideProps) => {
     <div
       className="content chatSlide"
       onKeyDown={active ? handleKeyPress : null}
-      ref={contentDiv}
     >
       <MessageList messages={messages} />
       <NickList

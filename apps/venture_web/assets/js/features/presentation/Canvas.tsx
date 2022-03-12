@@ -23,7 +23,7 @@ const Canvas = (props: CanvasProps) => {
 
   const attribution = () => {
     const slide = props.slide;
-    const attribution = {position: "bottom right", content: undefined};
+    const attribution = { position: "bottom right", content: "" };
     if (typeof slide.attribution === "string") {
       attribution.content = slide.attribution;
     } else if (typeof slide.attribution === "object") {
@@ -97,7 +97,6 @@ const Canvas = (props: CanvasProps) => {
         return (
           <ChatSlide
             active={active}
-            content={slide.content}
           />
         );
       default:

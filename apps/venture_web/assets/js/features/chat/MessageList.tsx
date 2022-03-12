@@ -36,11 +36,11 @@ const MessageList = ({ messages }: MessageListProps) => {
 
   return (
     <div
-      id="messageListContainer"
+      className="messageListContainer"
       onScroll={scrolled}
       ref={scrollableDiv}
     >
-      <div id="messageList">
+      <div className="messageList">
         {messages.map(renderMessage)}
       </div>
     </div>

@@ -1,4 +1,4 @@
-#chatInput {
+.chatInput {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -6,7 +6,7 @@
   border-top: 1px solid #eee;
 }
 
-#chatInput button {
+.chatInput button {
   max-width: 10em;
   text-overflow: ellipsis;
 }

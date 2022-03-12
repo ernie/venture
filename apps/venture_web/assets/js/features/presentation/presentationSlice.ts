@@ -6,7 +6,15 @@ export interface SlideState {
   location: {story: string, index: number};
   next?: SlideState;
   background?: string |
-              { color?: string, image?: string, darken?: number, lighten?: number };
+              {
+                color?: string,
+                image?: string,
+                size?: string,
+                position?: string,
+                repeat?: string,
+                darken?: number,
+                lighten?: number
+              };
   class?: string;
   notes?: string;
   attribution?: string |

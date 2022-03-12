@@ -1,13 +1,14 @@
-#nickForm {
+.nickForm {
   width: 100%;
   height: 2em;
   display: flex;
 }
-#nickInput {
+
+.nickInput {
   flex-basis: 80%;
 }
 
-#nickSetButton {
+.nickSetButton {
   flex-basis: 20%;
   height: 100%;
   flex-grow: 0;

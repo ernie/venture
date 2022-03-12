@@ -12,8 +12,8 @@ const messages = [
 
 test("renders the messages supplied", () => {
   render(<MessageList messages={messages} />);
-  expect(document.getElementById("messageList")).toContainHTML("message 1")
-  expect(document.getElementById("messageList")).toContainHTML("message 2")
+  expect(document.getElementsByClassName("messageList")[0]).toContainHTML("message 1")
+  expect(document.getElementsByClassName("messageList")[0]).toContainHTML("message 2")
 });
 
 // The scrolling behavior would be interesting to test, but in a headless browser

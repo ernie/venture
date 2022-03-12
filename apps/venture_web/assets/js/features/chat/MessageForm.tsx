@@ -74,18 +74,18 @@ const MessageForm = ({ nick, active}: MessageFormProps) => {
   return (
     <div className="messageFormInputs">
       <button
-        id="nickButton"
+        className="nickButton"
         onClick={active ? editNickClicked : null}
         title={nick}
       >
         <span>{ nick }</span>
       </button>
       <form
-        id="messageForm"
+        className="messageForm"
         onSubmit={active ? handleSubmit : null}
       >
         <input
-          id="messageInput"
+          className="messageInput"
           autoFocus
           name="input"
           onChange={active ? handleInput : null}
@@ -96,7 +96,7 @@ const MessageForm = ({ nick, active}: MessageFormProps) => {
           tabIndex={-1}
           value={state.message}
         />
-        <button id="messageSendButton" type="submit">Send</button>
+        <button className="messageSendButton" type="submit">Send</button>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
-import React from 'react';
-import Markdown from '../../Markdown';
+import React from "react";
+import Markdown from "../../Markdown";
 
 interface AttributionProps {
   content: string;
@@ -18,27 +18,27 @@ const Attribution = ({content, position}: AttributionProps) => {
 
   const style = () => {
     const style = {} as AttributionStyle;
-    (position || 'bottom right').toLowerCase().trim().split(/\s+/).forEach( (instruction) => {
+    (position).toLowerCase().trim().split(/\s+/).forEach( (instruction) => {
       switch(instruction) {
-        case 'top':
+        case "top":
           style.top = 0;
           style.left = 0;
           style.right = 0;
-          style.textAlign = 'center';
+          style.textAlign = "center";
           break;
-        case 'bottom':
+        case "bottom":
           style.bottom = 0;
           style.left = 0;
           style.right = 0;
-          style.textAlign = 'center';
+          style.textAlign = "center";
           break;
-        case 'left':
+        case "left":
           style.left = 0;
-          style.textAlign = 'left';
+          style.textAlign = "left";
           break;
-        case 'right':
+        case "right":
           style.right = 0;
-          style.textAlign = 'right';
+          style.textAlign = "right";
           break;
         default:
       }

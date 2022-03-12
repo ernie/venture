@@ -12,7 +12,7 @@ interface ChatInputProps {
 const ChatInput = ({ active, nick, editingNick }: ChatInputProps) => {
 
   return (
-    <div id="chatInput">
+    <div className="chatInput">
       {
         editingNick ?
           <NickForm

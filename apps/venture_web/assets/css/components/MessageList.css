@@ -1,4 +1,4 @@
-#messageListContainer {
+.messageListContainer {
   position: absolute;
   width: 80%;
   top: 0;
@@ -8,7 +8,7 @@
   overflow-y: auto;
 }
 
-#messageList {
+.messageList {
   width: 100%;
   height: 100%;
 }

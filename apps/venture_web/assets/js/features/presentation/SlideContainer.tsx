@@ -73,7 +73,7 @@ const SlideContainer = ({slide, className = "", active = true}: SlideContainerPr
   }
 
   const baseClasses = slide.type !== "slide" ? [`${slide.type}-slide`] : [];
-  const slideClasses = baseClasses.concat(slide.class || []);
+  const slideClasses = baseClasses.concat(slide.class);
   return (
     <div
       id={slide.location ? `slide-${slide.location.story}-${slide.location.index}` : null}

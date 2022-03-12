@@ -32,29 +32,29 @@ afterEach(() => {
 
 test("renders the nick on the nick button", () => {
   render(<MessageForm active={true} nick="Ernie" />);
-  expect(document.getElementById("nickButton").innerHTML).toContain("Ernie");
+  expect(document.getElementsByClassName("nickButton")[0].innerHTML).toContain("Ernie");
 });
 
 test("dispatches editNick on nick button click if active", () => {
   render(<MessageForm active={true} nick="Ernie" />);
-  fireEvent.click(document.getElementById("nickButton"));
+  fireEvent.click(document.getElementsByClassName("nickButton")[0]);
   expect(store.dispatch).toBeCalledWith(editNick());
 });
 
 test("does not dispatch on nick button click if inactive", () => {
   render(<MessageForm active={false} nick="Ernie" />);
-  fireEvent.click(document.getElementById("nickButton"));
+  fireEvent.click(document.getElementsByClassName("nickButton")[0]);
   expect(store.dispatch).not.toBeCalledWith(editNick());
 });
 
 test("populates the message input based on prefilledMessage", () => {
   render(<MessageForm active={true} nick="Ernie" />);
-  expect(document.getElementById("messageInput").getAttribute("value")).toEqual(mockState.chat.prefilledMessage);
+  expect(document.getElementsByClassName("messageInput")[0].getAttribute("value")).toEqual(mockState.chat.prefilledMessage);
 });
 
 test("browses history with up/down arrows", () => {
   render(<MessageForm active={true} nick="Ernie" />);
-  const messageInput = document.getElementById("messageInput");
+  const messageInput = document.getElementsByClassName("messageInput")[0];
   fireEvent.keyDown(messageInput, { key: "ArrowUp" });
   expect(messageInput.getAttribute("value")).toEqual(mockState.chat.history.at(-0));
   fireEvent.keyDown(messageInput, { key: "ArrowUp" });
@@ -67,7 +67,7 @@ test("browses history with up/down arrows", () => {
 
 test("sends the message in the input field when submit is clicked", () => {
   render(<MessageForm active={true} nick="Ernie" />);
-  const messageForm = document.getElementById("messageForm");
+  const messageForm = document.getElementsByClassName("messageForm")[0];
   fireEvent.submit(messageForm);
   expect(store.dispatch).toBeCalledWith(sendMessage(mockState.chat.prefilledMessage));
 });
