@@ -1,9 +1,14 @@
 import { createSlice, createAction, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
+export interface Location {
+  story: string;
+  index: number;
+}
+
 export interface SlideState {
   type: "chat" | "fork" | "poll" | "slide" | "title";
-  location: {story: string, index: number};
+  location: Location;
   next?: SlideState;
   background?: string |
               {

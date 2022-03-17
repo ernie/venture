@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { SlideState, optionSelect, selectSelections } from "./presentationSlice";
+import { Location, SlideState, optionSelect, selectSelections } from "./presentationSlice";
 
 import Markdown from "../../Markdown";
 import classNames from "classnames";
@@ -11,11 +11,6 @@ interface ForkSlideProps {
   paths: Array<SlideState>;
   content: string;
   active: boolean;
-}
-
-interface Location {
-  story: string;
-  index: number;
 }
 
 const ForkSlide = ({ paths, content, active = true }: ForkSlideProps) => {
