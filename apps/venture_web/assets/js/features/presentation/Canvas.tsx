@@ -107,10 +107,7 @@ const Canvas = (props: CanvasProps) => {
   const attrib = attribution();
 
   return (
-    <div
-      className={"canvas"}
-      style={style()}
-    >
+    <div className="canvas" style={style()}>
       {renderSlide()}
       <Attribution
         content={attrib.content}

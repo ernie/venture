@@ -6,7 +6,7 @@ const ConnectionsDisplay = () => {
   const { presenters, attendees } = useAppSelector(selectConnections);
 
   return (
-    <dl className="connections">
+    <dl id="connections">
       <dt>Presenters:</dt><dd>{presenters}</dd>
       <dt>Attendees:</dt><dd>{attendees}</dd>
     </dl>

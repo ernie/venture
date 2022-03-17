@@ -8,10 +8,12 @@ interface SlideProps {
 const Slide = ({content = ""}: SlideProps) => {
 
   return (
-    <div
-      className="content markdown slideMarkdown"
-      dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
-    />
+    <div className="content">
+      <div
+        className="markdown"
+        dangerouslySetInnerHTML={{ __html: Markdown.render(content) }}
+      />
+    </div>
   );
 
 }

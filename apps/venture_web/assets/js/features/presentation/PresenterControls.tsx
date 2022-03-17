@@ -15,13 +15,13 @@ const PresenterControls = () => {
     switch(e.key) {
       case "PageUp":
       case "ArrowLeft":
-        prevSlide();
+        dispatch(prevSlide());
         break;
       case " ":
       case "Spacebar": // Older browsers
       case "PageDown":
       case "ArrowRight":
-        nextSlide();
+        dispatch(nextSlide());
         break
       case "Escape":
       case "F5":
@@ -38,12 +38,12 @@ const PresenterControls = () => {
   return (
     <div className="presenterControls">
       <div className="presenterControlsLeft">
-        <button onClick={() => dispatch(prevSlide())}>Prev</button>
-        <button onClick={() => dispatch(nextSlide())}>Next</button>
+        <button id="prevButton" onClick={() => dispatch(prevSlide())}>Prev</button>
+        <button id="nextButton" onClick={() => dispatch(nextSlide())}>Next</button>
       </div>
       <div className="presenterControlsRight">
-        <button onClick={() => dispatch(reset())}>Reset</button>
-        <button onClick={() => dispatch(reload())}>Reload</button>
+        <button id="resetButton" onClick={() => dispatch(reset())}>Reset</button>
+        <button id="reloadButton" onClick={() => dispatch(reload())}>Reload</button>
       </div>
     </div>
   );

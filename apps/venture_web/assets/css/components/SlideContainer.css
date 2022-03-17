@@ -58,7 +58,6 @@
   background-color: #fff;
   color: #000;
 }
-.slide.shadow > .canvas > .content.markdown h1, .slide.shadow > .canvas > .content.markdown h2, .slide.shadow > .canvas > .content.markdown h3, .slide.shadow > .canvas > .content.markdown h4, .slide.shadow > .canvas > .content.markdown h5, .slide.shadow > .canvas > .content.markdown h6,
 .slide.shadow > .canvas > .content > .markdown h1,
 .slide.shadow > .canvas > .content > .markdown h2,
 .slide.shadow > .canvas > .content > .markdown h3,
@@ -67,11 +66,9 @@
 .slide.shadow > .canvas > .content > .markdown h6 {
   text-shadow: 0 0 0.1em #333;
 }
-.slide.font-75 > .canvas > .content.markdown,
 .slide.font-75 > .canvas > .content > .markdown {
   font-size: 75%;
 }
-.slide.font-50 > .canvas > .content.markdown,
 .slide.font-50 > .canvas > .content > .markdown {
   font-size: 50%;
 }

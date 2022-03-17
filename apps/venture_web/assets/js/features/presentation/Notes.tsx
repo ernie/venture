@@ -10,7 +10,7 @@ const Notes = ({ notes = "" }: NotesProps) => {
   return (
     <div
       id="presentationNotes"
-      className="notes slideMarkdown"
+      className="notes markdown"
       dangerouslySetInnerHTML={
         { __html: Markdown.render(notes) }
       }
