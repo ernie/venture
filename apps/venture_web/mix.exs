@@ -60,7 +60,8 @@ defmodule VentureWeb.MixProject do
   defp aliases do
     [
       setup: ["deps.get"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      "test.frontend": ["cmd pnpm run test --prefix assets"]
     ]
   end
 

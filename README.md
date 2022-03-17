@@ -35,14 +35,9 @@ and you can check out the slides for the tutorial presentation there.
 
 ## Running Tests
 
-**Backend: /**
+    $ mix test.all
 
-    $ mix test
-
-**Frontend: /apps/venture_web/assets**
-
-Test bankruptcy declared. Will be rewriting all of these tests (and the FE code
-itself) as a learning exercise in the future.
+This will run all backend and frontend tests.
 
 ## Deploying
 

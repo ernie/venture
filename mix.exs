@@ -7,7 +7,8 @@ defmodule Venture.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      preferred_cli_env: ["test.all": :test]
     ]
   end
 
@@ -40,7 +41,8 @@ defmodule Venture.Umbrella.MixProject do
     [
       # run `mix setup` in all child apps
       setup: ["cmd mix setup"],
-      "assets.deploy": ["cmd --app venture_web mix assets.deploy"]
+      "assets.deploy": ["cmd --app venture_web mix assets.deploy"],
+      "test.all": ["test", "cmd --app venture_web mix test.frontend"]
     ]
   end
 end
