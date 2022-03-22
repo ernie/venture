@@ -5,6 +5,8 @@
 
 export MIX_ENV=prod
 export PORT=3000
+export SECRET_KEY_BASE="you-should-probably-have-a-secret-key-base"
+export PRESENTER_KEY="make-sure-this-is-secure"
 
 # Point this at your checked-out copy of Venture.
 cd /var/www/<your-domain>/apps/venture
