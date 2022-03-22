@@ -485,9 +485,8 @@ notes: |
   Venture performs syntax highlighting of code in fenced code blocks using
   [highlight.js](https://highlightjs.org). Its default theme is
   [Solarized](http://ethanschoonover.com/solarized), specifically the "light"
-  variant. You can see this in
-  `apps/venture_web/assets/css/solarized_light.css`, swap to the the dark
-  version in `root.css`, or supply your own alternative.
+  variant. You can see this in `presentation/assets/css/solarized_light.css`,
+  swap to the the dark version in `config.css`, or supply your own alternative.
 ---
 
 ### <label>Code</label>

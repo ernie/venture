@@ -47,6 +47,7 @@ config :venture_web, VentureWeb.Endpoint,
 config :venture_web, VentureWeb.Endpoint,
   live_reload: [
     patterns: [
+      ~r"presentation/assets/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/venture_web/(live|views)/.*(ex)$",
