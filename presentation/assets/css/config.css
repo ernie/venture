@@ -3,8 +3,8 @@
 /* @import "solarized_dark.css"; */
 
 /* Import only one of these to set your Venture presentation's aspect ratio. */
-@import "aspect-16-9.css";
-/* @import "aspect-4-3.css"; */
+@import "aspect-4-3.css";
+/* @import "aspect-16-9.css"; */
 
 /* If you'd like to make further customizations to presentation styling, do so
  * below. */

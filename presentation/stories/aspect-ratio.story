@@ -1,13 +1,13 @@
 ---
 next: thank-you
 notes: |
-  Speaking of aspect ratio, while Venture defaults to presenting in 16:9 aspect
+  Speaking of aspect ratio, while Venture defaults to presenting in 4:3 aspect
   ratio, you can toggle this setting in its CSS. Take a look at the relevant
   lines in `presentation/assets/css/config.css`:
 
   ```css
-  @import "aspect-16-9.css";
-  /* @import "aspect-4-3.css"; */
+  @import "aspect-4-3.css";
+  /* @import "aspect-16-9.css"; */
   ```
 
   As you might imagine, swapping the line that's commented out will adjust the
@@ -20,4 +20,4 @@ notes: |
 ---
 
 # **Aspect Ratio**
-(16:9 and 4:3 supported out of the box)
+(4:3 and 16:9 supported out of the box)
