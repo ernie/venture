@@ -74,7 +74,7 @@ const ForkSlide = ({ paths, content, active = true }: ForkSlideProps) => {
           { __html: Markdown.render(content) }
         }
       />
-      <ul className="forkOptions">
+      <ul className={classNames("forkOptions", paths.length > 4 ? "more" : null)}>
         {paths.map(renderPath)}
       </ul>
     </div>

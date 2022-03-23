@@ -616,6 +616,9 @@ notes: |
   clicked. On this slide, we used a trick of setting each slide's background to
   a cropped version of the main slide's image so they seem to be transparent.
 
+  For 2-4 choices, you'll see previews of this size. With more than 4, they'll
+  shrink a bit to accommodate up to 9 choices comfortably.
+
   Note that the presenter overlay doesn't show a preview of the next slide,
   since we don't know what the next slide will be until we pick one.
 

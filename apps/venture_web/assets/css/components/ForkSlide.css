@@ -1,4 +1,4 @@
-.fork-slide p {
+.fork-slide .markdown p {
   margin: 0.25em;
 }
 
@@ -16,12 +16,21 @@
   font-size: 40%;
   margin: 0.5% 1%;
 }
+
+.forkOptions.more .forkOption {
+  width: 25%;
+  font-size: 25%;
+  margin: 0.15% 0.5%;
+}
+
 .forkOption >.slide-container {
   border: 1px solid #000;
 }
+
 .forkOption.selected {
   box-shadow: 0 0 1em #b33;
 }
+
 .forkOption.winner > .forkSelectionCount {
   background-color: #3b3;
 }
