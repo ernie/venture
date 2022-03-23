@@ -20,7 +20,7 @@ explains and demonstrates available features.
 
     $ mix phx.server
 
-You can then connect to the Venture app at `http://localhost:4000`. In dev mode
+You can then connect to the Venture app at `http://localhost:4000`. In dev
 mode, the presenter key is `presenter` by default. You can change this in
 `config/config.exs`, if you'd like. **If you plan to host your presentation
 from your laptop running in dev mode, you most certainly should change it.**
