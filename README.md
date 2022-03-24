@@ -1,8 +1,10 @@
 # Venture
 
-An application built for hosting interactive, choose-your-own-adventure-style
-presentations, originally built for the sole purpose of running a
-[single conference talk at Keep Ruby Weird 2015](http://confreaks.tv/videos/keeprubyweird2015-choices).
+A "choose-your-own-presentation" app. It was created for the purpose of giving
+such a presentation at [Keep Ruby Weird 2015](https://www.youtube.com/watch?v=_5D0rBIEsZc),
+and used again at [Ruby on Ales 2016](https://www.youtube.com/watch?v=kJkJ_dRAAzQ).
+My hope is that you'll use it to give a fun, interactive presentation at some
+conference I attend in the future!
 
 It's built with Elixir, Phoenix, and React.
 
@@ -49,5 +51,7 @@ If you have a VPS (or, I suppose, a non-virtual server -- some folks still have
 those, right?) you can take a look at the files in `support` for a post-receive
 hook and a simple start/restart script for a git-based deploy setup. Tweak as
 necessary.
+
+You'll also find a sample nginx configuration snippet to get you started.
 
 You'll need Elixir and node.js on the server, just as you did locally.
