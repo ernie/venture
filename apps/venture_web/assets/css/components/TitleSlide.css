@@ -15,6 +15,6 @@
 .title-slide .markdown ul > li {
   text-align: center;
   margin: 0.5em;
-  margin-bottom: 0;
+  margin-bottom: 0.1em;
   text-indent: 0;
 }
