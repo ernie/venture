@@ -57,7 +57,7 @@ class Renderer extends marked.Renderer {
     }
 
     if (!lang) {
-      return '<pre><code>'
+      return '<pre><code class="hljs">'
         + (escaped ? code : escape(code, true))
         + '\n</code></pre>';
     }
